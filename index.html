@@ -7,7 +7,7 @@
 <title>وسم</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Reem+Kufi:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Reem+Kufi:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --paper:#F4F0E5;--paper-2:#ECE6D5;--line:#E0D8C3;
@@ -207,6 +207,44 @@
   .cbar i{display:block;height:100%;background:var(--leaf);border-radius:5px}
   .ccount{font-family:'Cairo',sans-serif;font-weight:800;color:var(--soil-2);font-size:.9rem}
   .admin-note{color:var(--muted);font-size:.85rem;margin-top:14px;text-align:center;line-height:1.8}
+  /* لوحة التحكم — تبويبات وإدارة */
+  .admin-box.dash{max-width:560px}
+  .adm-tabs{display:flex;gap:5px;background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:5px;margin:8px 0 18px}
+  .adm-tabs button{flex:1;padding:9px 3px;border:none;background:none;border-radius:10px;font-family:'Cairo',sans-serif;font-weight:700;font-size:.8rem;color:var(--muted);cursor:pointer;white-space:nowrap}
+  .adm-tabs button.active{background:var(--leaf);color:#fff}
+  .adm-panel[hidden]{display:none}
+  .adm-field{margin-bottom:13px}
+  .adm-field label{display:block;font-family:'Cairo',sans-serif;font-weight:700;font-size:.86rem;color:var(--soil-2);margin-bottom:6px}
+  .adm-field input,.adm-field textarea{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:11px;font-family:'Cairo',sans-serif;font-size:.95rem;background:var(--paper-2);color:var(--ink)}
+  .adm-field textarea{min-height:62px;resize:vertical;line-height:1.7}
+  .adm-card{background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:14px}
+  .adm-card h4{font-family:'Reem Kufi',sans-serif;font-size:1.02rem;color:var(--soil);font-weight:700;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .adm-prev{width:100%;aspect-ratio:16/6;border-radius:10px;background:var(--paper);border:1px dashed var(--line);object-fit:cover;margin-top:9px;display:none}
+  .adm-prev.on{display:block}
+  .adm-switch{display:inline-flex;align-items:center;gap:8px;cursor:pointer;font-family:'Cairo',sans-serif;font-weight:700;font-size:.8rem;color:var(--soil-2)}
+  .adm-switch input{display:none}
+  .adm-switch .tg{width:40px;height:23px;border-radius:14px;background:#C9CDBF;position:relative;transition:background .2s;flex:none}
+  .adm-switch .tg::after{content:"";position:absolute;top:2px;right:2px;width:19px;height:19px;border-radius:50%;background:#fff;transition:transform .2s}
+  .adm-switch input:checked + .tg{background:var(--leaf)}
+  .adm-switch input:checked + .tg::after{transform:translateX(-17px)}
+  .lnk-row{display:flex;gap:8px;align-items:center;margin-bottom:9px}
+  .lnk-row input{flex:1;padding:10px;border:1px solid var(--line);border-radius:10px;font-family:'Cairo',sans-serif;font-size:.88rem;background:var(--paper-2);color:var(--ink);min-width:0}
+  .lnk-del{flex:none;width:38px;height:38px;border:none;border-radius:10px;background:#F2DAD5;color:#C0392B;font-size:1.2rem;cursor:pointer}
+  .adm-add{width:100%;padding:11px;border:1px dashed var(--leaf);border-radius:11px;background:transparent;color:var(--leaf);font-family:'Cairo',sans-serif;font-weight:700;cursor:pointer;margin-top:2px}
+  .adm-ok{color:var(--leaf);text-align:center;font-weight:700;font-size:.9rem;margin-top:10px;min-height:1.1em}
+  .adm-hint{color:var(--muted);font-size:.8rem;line-height:1.7;margin:2px 0 12px}
+  /* شريط إعلان عاجل */
+  .annc{margin:14px 16px 0;background:linear-gradient(135deg,#FBEAB9,#E9C25E);color:#5A3D0E;border-radius:14px;
+    padding:11px 15px;font-family:'Cairo',sans-serif;font-weight:700;font-size:.95rem;text-align:center;line-height:1.7;box-shadow:0 4px 14px rgba(194,147,60,.3)}
+  .annc[hidden]{display:none}
+  /* روابط مهمة */
+  .links-sec{margin:26px 16px 0}
+  .links-sec[hidden]{display:none}
+  .links-sec h2{font-family:'Reem Kufi',sans-serif;font-size:1.15rem;color:var(--soil);font-weight:700;margin-bottom:13px;text-align:center}
+  .links-grid{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+  .link-btn{display:inline-flex;align-items:center;gap:8px;background:var(--paper-2);border:1px solid var(--line);border-radius:12px;
+    padding:11px 16px;text-decoration:none;color:var(--soil);font-family:'Cairo',sans-serif;font-weight:700;font-size:.95rem;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+  .link-btn svg{width:17px;height:17px;color:var(--leaf);flex:none}
 
   /* ===== التقويم الزراعي ===== */
   .cal-screen{position:fixed;inset:0;z-index:40;background:var(--paper);overflow-y:auto;-webkit-overflow-scrolling:touch;
@@ -232,11 +270,14 @@
     background:var(--paper);border:1px solid var(--line);border-radius:11px;padding:7px 8px;line-height:1.3;
     font-family:'Cairo',sans-serif;font-size:.81rem;font-weight:600;color:var(--soil)}
   .cal-empty{font-family:'Cairo',sans-serif;font-size:.82rem;color:var(--muted);font-weight:600;padding:14px 13px;line-height:1.7}
-  .cal-month.now{border-color:var(--gold);box-shadow:0 0 0 2px var(--gold)}
-  .cal-badge{margin-right:auto;display:inline-flex;align-items:center;gap:6px;font-family:'Cairo',sans-serif;font-size:.74rem;font-weight:800;
-    color:#5A3D0E;background:linear-gradient(135deg,#F6DC92,#C2933C);padding:4px 12px;border-radius:20px;white-space:nowrap}
-  .cal-now-dot{width:7px;height:7px;border-radius:50%;background:#5A3D0E;animation:pulse 1.6s ease-in-out infinite}
-  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.65)}}
+  .cal-month.now{border-color:var(--gold);box-shadow:0 0 0 2px var(--gold),0 6px 20px rgba(194,147,60,.22)}
+  .cal-badge{margin-right:auto;display:inline-flex;align-items:center;gap:5px;font-family:'Cairo',sans-serif;font-size:.78rem;font-weight:800;
+    color:#5A3D0E;letter-spacing:.01em;background:linear-gradient(135deg,#FBEAB9 0%,#E9C25E 45%,#C2933C 100%);
+    padding:5px 12px 5px 10px;border-radius:999px;white-space:nowrap;border:1px solid rgba(255,255,255,.55);
+    box-shadow:0 2px 7px rgba(194,147,60,.45),inset 0 1px 0 rgba(255,255,255,.45);animation:badgeGlow 2.2s ease-in-out infinite}
+  .cal-badge svg{width:13px;height:13px;flex:none;animation:pinBob 2.2s ease-in-out infinite}
+  @keyframes badgeGlow{0%,100%{box-shadow:0 2px 7px rgba(194,147,60,.4),inset 0 1px 0 rgba(255,255,255,.45)}50%{box-shadow:0 2px 14px rgba(194,147,60,.78),inset 0 1px 0 rgba(255,255,255,.55)}}
+  @keyframes pinBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-1.5px)}}
   .card.cal-open{cursor:pointer}
   @media (min-width:680px){.cal-grid{grid-template-columns:1fr 1fr}}
   /* مساحة إعلانية داخل التقويم (تمتد بعرض كامل) */
@@ -262,21 +303,21 @@
     border-right:4px solid var(--leaf);border-radius:14px;padding:14px 15px;cursor:pointer;text-align:right;transition:transform .15s ease}
   .tip-card:active{transform:scale(.99)}
   .tip-card .n{flex:none;width:30px;height:30px;border-radius:9px;background:rgba(78,122,58,.13);color:var(--leaf);
-    display:grid;place-items:center;font-family:'Cairo',sans-serif;font-weight:800;font-size:.9rem}
-  .tip-card .ttl{flex:1;font-family:'Reem Kufi',sans-serif;font-size:1.1rem;font-weight:600;color:var(--soil);line-height:1.4}
+    display:grid;place-items:center;font-family:'Noto Naskh Arabic',sans-serif;font-weight:800;font-size:.9rem}
+  .tip-card .ttl{flex:1;font-family:'Noto Naskh Arabic',sans-serif;font-size:1.1rem;font-weight:600;color:var(--soil);line-height:1.4}
   .tip-card .arr{flex:none;color:var(--muted);display:grid;place-items:center}
   .article{max-width:680px;margin:0 auto;padding:16px 18px 34px;background:#FBF8EE}
-  .a-back{display:inline-flex;align-items:center;gap:6px;font-family:'Cairo',sans-serif;font-weight:700;font-size:.9rem;
+  .a-back{display:inline-flex;align-items:center;gap:6px;font-family:'Noto Naskh Arabic',sans-serif;font-weight:700;font-size:.9rem;
     color:var(--leaf);background:none;border:none;cursor:pointer;padding:6px 0;margin-bottom:4px}
-  .article h1{font-family:'Reem Kufi',sans-serif;font-size:1.65rem;font-weight:700;color:var(--soil);line-height:1.45;margin:6px 0 0}
+  .article h1{font-family:'Noto Naskh Arabic',sans-serif;font-size:1.65rem;font-weight:700;color:var(--soil);line-height:1.45;margin:6px 0 0}
   .a-rule{height:3px;width:72px;background:linear-gradient(90deg,var(--gold),transparent);border-radius:3px;margin:12px 0 18px}
-  .article p{font-family:'Cairo',sans-serif;font-size:1.02rem;line-height:2.05;color:#2C3A2C;margin:0 0 15px;font-weight:400}
-  .article h2{font-family:'Reem Kufi',sans-serif;font-size:1.26rem;font-weight:700;color:var(--soil-2);margin:24px 0 10px}
+  .article p{font-family:'Noto Naskh Arabic',sans-serif;font-size:1.02rem;line-height:2.05;color:#2C3A2C;margin:0 0 15px;font-weight:400}
+  .article h2{font-family:'Noto Naskh Arabic',sans-serif;font-size:1.26rem;font-weight:700;color:var(--soil-2);margin:24px 0 10px}
   .article ul{margin:0 0 16px;padding-right:20px}
-  .article li{font-family:'Cairo',sans-serif;font-size:1rem;line-height:1.95;color:#2C3A2C;margin-bottom:8px}
+  .article li{font-family:'Noto Naskh Arabic',sans-serif;font-size:1rem;line-height:1.95;color:#2C3A2C;margin-bottom:8px}
   .article b{color:var(--soil);font-weight:700}
   .a-note{background:rgba(78,122,58,.08);border:1px solid var(--line);border-radius:12px;padding:13px 15px;
-    font-family:'Cairo',sans-serif;font-size:.93rem;color:var(--soil-2);line-height:1.95;margin-top:10px}
+    font-family:'Noto Naskh Arabic',sans-serif;font-size:.93rem;color:var(--soil-2);line-height:1.95;margin-top:10px}
 
   /* ===== تصميم اللابتوب / الشاشات الكبيرة ===== */
   @media (min-width:920px){
@@ -317,8 +358,10 @@
     <div class="stars" id="stars"></div>
     <h1 class="mark" id="mark">وسم</h1>
     <div class="rainline"></div>
-    <div class="subtitle">تقويم المواسم والزراعة في الخليج</div>
+    <div class="subtitle" id="subtitle">تقويم المواسم والزراعة في الخليج</div>
   </header>
+
+  <div class="annc" id="annc" hidden></div>
 
   <div class="clock-card">
     <svg id="clockSvg" viewBox="-40 -40 480 480" role="img" aria-label="ساعة الوسم"></svg>
@@ -376,11 +419,16 @@
     </div>
   </section>
 
+  <section class="links-sec" id="linksSec" hidden>
+    <h2>روابط مهمة</h2>
+    <div class="links-grid" id="linksGrid"></div>
+  </section>
+
   <footer><span class="dot" id="adminDot"></span></footer>
 
   <!-- لوحة التحكم (مخفية - ٥ ضغطات على وسم) -->
   <div class="admin-ov" id="adminOv" hidden>
-    <div class="admin-box">
+    <div class="admin-box dash">
       <button class="admin-x" id="adminX">×</button>
       <div id="adminLogin">
         <h2 class="admin-h">لوحة التحكم</h2>
@@ -390,22 +438,74 @@
         <div class="admin-err" id="adminErr"></div>
       </div>
       <div id="adminDash" hidden>
-        <h2 class="admin-h">حركة الزوار</h2>
-        <div class="admin-filters" id="admFilters">
-          <button data-r="today" class="active">اليوم</button>
-          <button data-r="month">هذا الشهر</button>
-          <button data-r="all">الكل</button>
-          <button data-r="custom">من - إلى</button>
+        <h2 class="admin-h">لوحة الإدارة</h2>
+        <div class="adm-tabs" id="admTabs">
+          <button data-t="visitors" class="active">الزوّار</button>
+          <button data-t="ads">الإعلانات</button>
+          <button data-t="links">الروابط</button>
+          <button data-t="settings">إعدادات</button>
         </div>
-        <div class="admin-range" id="admRange" hidden>
-          <input type="date" id="admFrom"><span>إلى</span><input type="date" id="admTo">
-          <button class="admin-btn sm" id="admGo">عرض</button>
+
+        <div class="adm-panel" id="panel-visitors">
+          <div class="admin-filters" id="admFilters">
+            <button data-r="today" class="active">اليوم</button>
+            <button data-r="month">هذا الشهر</button>
+            <button data-r="all">الكل</button>
+            <button data-r="custom">من - إلى</button>
+          </div>
+          <div class="admin-range" id="admRange" hidden>
+            <input type="date" id="admFrom"><span>إلى</span><input type="date" id="admTo">
+            <button class="admin-btn sm" id="admGo">عرض</button>
+          </div>
+          <div class="admin-total"><span id="admTotal">—</span><small>زائر</small></div>
+          <div class="admin-chart" id="admChart"></div>
+          <h3 class="admin-h3">حسب الدولة</h3>
+          <div class="admin-countries" id="admCountries"></div>
+          <div class="admin-note" id="admNote"></div>
         </div>
-        <div class="admin-total"><span id="admTotal">—</span><small>زائر</small></div>
-        <div class="admin-chart" id="admChart"></div>
-        <h3 class="admin-h3">حسب الدولة</h3>
-        <div class="admin-countries" id="admCountries"></div>
-        <div class="admin-note" id="admNote"></div>
+
+        <div class="adm-panel" id="panel-ads" hidden>
+          <p class="adm-hint">الصق رابط صورة الإعلان ورابط الوجهة. ارفع الصورة على أي موقع استضافة صور ثم الصق رابطها هنا.</p>
+          <div class="adm-card">
+            <h4>إعلان الرئيسية <label class="adm-switch"><input type="checkbox" id="ad0on"><span class="tg"></span>ظاهر</label></h4>
+            <div class="adm-field"><label>رابط الصورة</label><input type="url" id="ad0img" placeholder="https://...jpg"></div>
+            <div class="adm-field"><label>رابط الوجهة</label><input type="url" id="ad0href" placeholder="https://..."></div>
+            <img class="adm-prev" id="ad0prev" alt="">
+          </div>
+          <div class="adm-card">
+            <h4>إعلان التقويم (١) <label class="adm-switch"><input type="checkbox" id="ad1on"><span class="tg"></span>ظاهر</label></h4>
+            <div class="adm-field"><label>رابط الصورة</label><input type="url" id="ad1img" placeholder="https://...jpg"></div>
+            <div class="adm-field"><label>رابط الوجهة</label><input type="url" id="ad1href" placeholder="https://..."></div>
+            <img class="adm-prev" id="ad1prev" alt="">
+          </div>
+          <div class="adm-card">
+            <h4>إعلان التقويم (٢) <label class="adm-switch"><input type="checkbox" id="ad2on"><span class="tg"></span>ظاهر</label></h4>
+            <div class="adm-field"><label>رابط الصورة</label><input type="url" id="ad2img" placeholder="https://...jpg"></div>
+            <div class="adm-field"><label>رابط الوجهة</label><input type="url" id="ad2href" placeholder="https://..."></div>
+            <img class="adm-prev" id="ad2prev" alt="">
+          </div>
+          <button class="admin-btn" id="saveAds">حفظ الإعلانات</button>
+          <div class="adm-ok" id="adsOk"></div>
+        </div>
+
+        <div class="adm-panel" id="panel-links" hidden>
+          <p class="adm-hint">روابط تظهر في قسم «روابط مهمة» بالصفحة الرئيسية (إنستغرام، واتساب، الموقع…).</p>
+          <div id="linksEditor"></div>
+          <button class="adm-add" id="addLink">+ إضافة رابط</button>
+          <button class="admin-btn" id="saveLinks">حفظ الروابط</button>
+          <div class="adm-ok" id="linksOk"></div>
+        </div>
+
+        <div class="adm-panel" id="panel-settings" hidden>
+          <div class="adm-field"><label>العنوان الفرعي بالصفحة الرئيسية</label><input type="text" id="setSubtitle" placeholder="تقويم المواسم والزراعة في الخليج"></div>
+          <div class="adm-card">
+            <h4>شريط إعلان عاجل <label class="adm-switch"><input type="checkbox" id="setAnncOn"><span class="tg"></span>ظاهر</label></h4>
+            <div class="adm-field"><label>نص الإعلان</label><textarea id="setAnncText" placeholder="مثال: خصم خاص على أنظمة الري هذا الأسبوع"></textarea></div>
+          </div>
+          <div class="adm-field"><label>كلمة مرور اللوحة (اتركها فارغة لعدم التغيير)</label><input type="password" id="setPass" placeholder="كلمة مرور جديدة"></div>
+          <button class="admin-btn" id="saveSettings">حفظ الإعدادات</button>
+          <div class="adm-ok" id="setOk"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -461,8 +561,8 @@
   <div class="cal-top">
     <button class="cal-back" id="tipsBack" aria-label="رجوع">→</button>
     <div class="cal-htext">
-      <div class="t">نصائح ومقالات</div>
-      <div class="s">مقالات زراعية مبسّطة للمزارع</div>
+      <div class="t" id="tipsTitle">نصائح ومقالات</div>
+      <div class="s" id="tipsSub">مقالات زراعية مبسّطة للمزارع</div>
     </div>
   </div>
   <div id="tipsList" class="tips-list"></div>
@@ -924,12 +1024,15 @@
     if(img && img.getAttribute('src') && ph){ ph.style.display='none'; }
   })();
 
-  // ===== الزوار + لوحة التحكم =====
+  // ===== الزوار + لوحة الإدارة المتكاملة =====
   (function(){
     var mark=document.getElementById('mark'); if(!mark) return;
     var ov=document.getElementById('adminOv');
-    var PASS='admin123'; // كلمة مرور لوحة التحكم — غيّرها
+    var PASS='admin123'; // كلمة المرور الافتراضية
     var db=null;
+
+    window.WSM_CFG=window.WSM_CFG||{ads:[{},{},{}],links:[],subtitle:'',annOn:false,annText:'',pass:''};
+    var CFG=window.WSM_CFG;
 
     function getDB(){
       if(db) return db;
@@ -961,6 +1064,54 @@
         .catch(function(){ write('غير معروف'); });
     })();
 
+    // ---- إعلانات التقويم تقرأ من الإعدادات ----
+    window.wsmCalAd=function(i){ var a=(CFG.ads&&CFG.ads[i+1])||{}; return {img:a.img||'', href:a.href||'#', on:a.on}; };
+
+    // ---- تطبيق الإعدادات على الصفحة العامة ----
+    function linkIcon(u){
+      u=(u||'').toLowerCase();
+      if(u.indexOf('wa.me')>=0||u.indexOf('whatsapp')>=0) return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.5 8.5 0 0 1-12.7 7.4L3 21l2.2-5.2A8.5 8.5 0 1 1 21 11.5Z"/></svg>';
+      if(u.indexOf('instagram')>=0) return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>';
+      return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7 0l2-2a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-2 2a5 5 0 0 0 7 7l1-1"/></svg>';
+    }
+    function applyPublic(){
+      // العنوان الفرعي
+      var sub=$('subtitle'); if(sub&&CFG.subtitle) sub.textContent=CFG.subtitle;
+      // شريط الإعلان العاجل
+      var an=$('annc'); if(an){ if(CFG.annOn&&CFG.annText){ an.textContent=CFG.annText; an.hidden=false; } else an.hidden=true; }
+      // إعلان الرئيسية
+      var slot=$('adSlot');
+      if(slot){
+        if(!slot.getAttribute('data-ph')) slot.setAttribute('data-ph', slot.innerHTML);
+        var a0=CFG.ads&&CFG.ads[0]?CFG.ads[0]:{};
+        if(a0.on&&a0.img){ slot.href=a0.href||'#'; slot.setAttribute('target','_blank'); slot.setAttribute('rel','noopener');
+          slot.innerHTML='<img src="'+a0.img+'" alt="إعلان">'; }
+        else { slot.href='#'; slot.removeAttribute('target'); slot.innerHTML=slot.getAttribute('data-ph'); }
+      }
+      // الروابط المهمة
+      var lg=$('linksGrid'), ls=$('linksSec');
+      if(lg&&ls){
+        var L=CFG.links||[], h='', i;
+        for(i=0;i<L.length;i++){ if(!L[i]||!L[i].url||!L[i].label) continue;
+          h+='<a class="link-btn" href="'+L[i].url+'" target="_blank" rel="noopener">'+linkIcon(L[i].url)+'<span>'+L[i].label+'</span></a>'; }
+        lg.innerHTML=h; ls.hidden=!h;
+      }
+    }
+    // ---- تحميل الإعدادات ----
+    (function loadCfg(){
+      var d=getDB();
+      if(!d){ applyPublic(); return; }
+      d.collection('wsm_config').doc('site').get().then(function(doc){
+        if(doc&&doc.exists){ var x=doc.data()||{};
+          if(x.ads) CFG.ads=x.ads; if(x.links) CFG.links=x.links;
+          if(typeof x.subtitle==='string') CFG.subtitle=x.subtitle;
+          CFG.annOn=!!x.annOn; if(typeof x.annText==='string') CFG.annText=x.annText;
+          if(typeof x.pass==='string') CFG.pass=x.pass;
+        }
+        applyPublic();
+      }).catch(function(){ applyPublic(); });
+    })();
+
     if(!ov) return;
     var CN={KW:'الكويت',SA:'السعودية',AE:'الإمارات',QA:'قطر',BH:'البحرين',OM:'عُمان',IQ:'العراق',EG:'مصر',JO:'الأردن',SY:'سوريا',LB:'لبنان',PS:'فلسطين',YE:'اليمن',SD:'السودان',LY:'ليبيا',TN:'تونس',DZ:'الجزائر',MA:'المغرب',US:'أمريكا',GB:'بريطانيا',IN:'الهند',PK:'باكستان',BD:'بنغلاديش',PH:'الفلبين',ID:'إندونيسيا',TR:'تركيا',IR:'إيران',DE:'ألمانيا',FR:'فرنسا',CA:'كندا',AU:'أستراليا'};
     function cname(c){ return CN[c]||c; }
@@ -973,9 +1124,20 @@
     function openLogin(){ ov.hidden=false; $('adminDash').hidden=true; $('adminLogin').hidden=false; $('adminErr').textContent=''; $('adminPass').value=''; }
     $('adminX').onclick=function(){ ov.hidden=true; };
     $('adminLoginBtn').onclick=function(){
-      if($('adminPass').value===PASS){ $('adminLogin').hidden=true; $('adminDash').hidden=false; setActive('today'); setRange('today'); }
+      if($('adminPass').value===(CFG.pass||PASS)){ $('adminLogin').hidden=true; $('adminDash').hidden=false; fillForms(); showTab('visitors'); setActive('today'); setRange('today'); }
       else $('adminErr').textContent='كلمة المرور غير صحيحة';
     };
+
+    // ---- التبويبات ----
+    var tabs=$('admTabs');
+    if(tabs) tabs.addEventListener('click',function(e){ var b=e.target; while(b&&b.tagName!=='BUTTON') b=b.parentNode; if(!b) return; showTab(b.getAttribute('data-t')); });
+    function showTab(name){
+      var bs=tabs.children,i; for(i=0;i<bs.length;i++) bs[i].classList.toggle('active', bs[i].getAttribute('data-t')===name);
+      var names=['visitors','ads','links','settings'];
+      for(i=0;i<names.length;i++){ var p=$('panel-'+names[i]); if(p) p.hidden=(names[i]!==name); }
+    }
+
+    // ===== الزوّار =====
     var filters=$('admFilters');
     filters.addEventListener('click',function(e){
       var b=e.target; while(b&&b.tagName!=='BUTTON') b=b.parentNode; if(!b) return;
@@ -993,7 +1155,7 @@
     }
     function query(from,to){
       var d=getDB(), note=$('admNote');
-      if(!d){ note.textContent='لم يتم ربط قاعدة البيانات بعد — أضف إعدادات Firebase أعلى الكود.'; $('admTotal').textContent='—'; $('admCountries').innerHTML=''; $('admChart').innerHTML=''; return; }
+      if(!d){ note.textContent='لم يتم ربط قاعدة البيانات بعد.'; $('admTotal').textContent='—'; $('admCountries').innerHTML=''; $('admChart').innerHTML=''; return; }
       note.textContent='جارٍ التحميل…';
       d.collection('wsm_stats').where('date','>=',from).where('date','<=',to).get().then(function(snap){
         var total=0, bc={}, daily=[];
@@ -1017,6 +1179,65 @@
       }
       $('admCountries').innerHTML=html || '<div style="color:var(--muted);font-size:.85rem">—</div>';
     }
+
+    // ===== تعبئة النماذج من الإعدادات =====
+    function fillForms(){
+      var a=CFG.ads||[{},{},{}],i;
+      for(i=0;i<3;i++){ var x=a[i]||{};
+        $('ad'+i+'img').value=x.img||''; $('ad'+i+'href').value=x.href||''; $('ad'+i+'on').checked=!!x.on;
+        prev(i);
+      }
+      $('setSubtitle').value=CFG.subtitle||'';
+      $('setAnncOn').checked=!!CFG.annOn; $('setAnncText').value=CFG.annText||'';
+      $('setPass').value='';
+      renderLinks();
+    }
+    function prev(i){ var im=$('ad'+i+'img').value.trim(), p=$('ad'+i+'prev'); if(im){ p.src=im; p.classList.add('on'); } else { p.classList.remove('on'); p.removeAttribute('src'); } }
+    [0,1,2].forEach(function(i){ $('ad'+i+'img').addEventListener('input',function(){ prev(i); }); });
+
+    // ===== حفظ عام =====
+    function saveCfg(partial, okId){
+      var ok=$(okId), d=getDB();
+      var k; for(k in partial) CFG[k]=partial[k];
+      applyPublic();
+      if(!d){ ok.style.color='#C0392B'; ok.textContent='تعذّر الحفظ — قاعدة البيانات غير مربوطة'; return; }
+      ok.style.color='var(--leaf)'; ok.textContent='جارٍ الحفظ…';
+      d.collection('wsm_config').doc('site').set(partial,{merge:true})
+        .then(function(){ ok.textContent='تم الحفظ ✓'; setTimeout(function(){ ok.textContent=''; },2500); })
+        .catch(function(){ ok.style.color='#C0392B'; ok.textContent='تعذّر الحفظ — تحقّق من قواعد Firestore'; });
+    }
+
+    // ===== الإعلانات =====
+    $('saveAds').onclick=function(){
+      var ads=[],i; for(i=0;i<3;i++){ ads.push({img:$('ad'+i+'img').value.trim(), href:$('ad'+i+'href').value.trim()||'#', on:$('ad'+i+'on').checked}); }
+      saveCfg({ads:ads},'adsOk');
+    };
+
+    // ===== الروابط =====
+    function renderLinks(){
+      var L=CFG.links||[], box=$('linksEditor'), h='', i;
+      for(i=0;i<L.length;i++){ h+=linkRow(L[i].label||'', L[i].url||''); }
+      box.innerHTML=h;
+    }
+    function linkRow(label,url){
+      return '<div class="lnk-row"><input class="lk-label" placeholder="الاسم (مثال: إنستغرام)" value="'+esc(label)+'"><input class="lk-url" placeholder="الرابط https://..." value="'+esc(url)+'"><button class="lnk-del" type="button">×</button></div>';
+    }
+    function esc(s){ return (s||'').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+    $('addLink').onclick=function(){ $('linksEditor').insertAdjacentHTML('beforeend', linkRow('','')); };
+    $('linksEditor').addEventListener('click',function(e){ if(e.target.classList.contains('lnk-del')){ var row=e.target.closest('.lnk-row'); if(row) row.parentNode.removeChild(row); } });
+    $('saveLinks').onclick=function(){
+      var rows=$('linksEditor').querySelectorAll('.lnk-row'), L=[],i;
+      for(i=0;i<rows.length;i++){ var lb=rows[i].querySelector('.lk-label').value.trim(), u=rows[i].querySelector('.lk-url').value.trim(); if(lb&&u) L.push({label:lb,url:u}); }
+      saveCfg({links:L},'linksOk');
+    };
+
+    // ===== الإعدادات =====
+    $('saveSettings').onclick=function(){
+      var partial={subtitle:$('setSubtitle').value.trim(), annOn:$('setAnncOn').checked, annText:$('setAnncText').value.trim()};
+      var np=$('setPass').value; if(np) partial.pass=np;
+      saveCfg(partial,'setOk');
+      if(np) $('setPass').value='';
+    };
   })();
 </script>
 <script>
@@ -1103,12 +1324,9 @@
     ];
 
     /* مساحتان إعلانيتان داخل التقويم — لتفعيل إعلان: ضع رابط الصورة في img ورابط الإعلان في href */
-    var ADS=[ {img:'', href:'#'}, {img:'', href:'#'} ];
     function adHTML(a){
-      var inner = a.img
-        ? '<img src="'+a.img+'" alt="إعلان">'
-        : '<div class="ad-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.7"/><path d="M21 16l-5-5L5 20"/></svg><span>مساحة إعلانية</span></div>';
-      return '<a class="cal-ad" href="'+(a.href||'#')+'"'+(a.img?' target="_blank" rel="noopener"':'')+'>'+inner+'</a>';
+      if(!a||!a.img||a.on===false) return '';
+      return '<a class="cal-ad" href="'+(a.href||'#')+'" target="_blank" rel="noopener"><img src="'+a.img+'" alt="إعلان"></a>';
     }
 
     function hexRgba(h,a){ var n=parseInt(h.slice(1),16); return 'rgba('+((n>>16)&255)+','+((n>>8)&255)+','+(n&255)+','+a+')'; }
@@ -1121,7 +1339,7 @@
         html+='<div class="cal-m-head" style="background:'+hexRgba(col,0.14)+';border-top-color:'+col+'">';
         html+='<span class="cal-m-dot" style="background:'+col+'"></span>';
         html+='<span class="cal-m-name">'+MON[mo-1]+'</span>';
-        if(isNow){ html+='<span class="cal-badge"><span class="cal-now-dot"></span>نحن هنا</span>'; }
+        if(isNow){ html+='<span class="cal-badge"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>نحن هنا</span>'; }
         else { html+='<span class="cal-m-count">'+list.length+' صنف</span>'; }
         html+='</div>';
         if(list.length){
@@ -1132,8 +1350,8 @@
           html+='<div class="cal-empty">حرارة الشهر مرتفعة جدًا — يُفضّل الزراعة داخل البيوت المحمية فقط.</div>';
         }
         html+='</div>';
-        if(mo===4) html+=adHTML(ADS[0]);
-        if(mo===8) html+=adHTML(ADS[1]);
+        if(mo===4) html+=adHTML(window.wsmCalAd&&wsmCalAd(0));
+        if(mo===8) html+=adHTML(window.wsmCalAd&&wsmCalAd(1));
       }
       grid.innerHTML=html;
     }
@@ -1242,12 +1460,9 @@
     ];
 
     /* مساحتان إعلانيتان داخل التقويم — لتفعيل إعلان: ضع رابط الصورة في img ورابط الإعلان في href */
-    var ADS=[ {img:'', href:'#'}, {img:'', href:'#'} ];
     function adHTML(a){
-      var inner = a.img
-        ? '<img src="'+a.img+'" alt="إعلان">'
-        : '<div class="ad-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.7"/><path d="M21 16l-5-5L5 20"/></svg><span>مساحة إعلانية</span></div>';
-      return '<a class="cal-ad" href="'+(a.href||'#')+'"'+(a.img?' target="_blank" rel="noopener"':'')+'>'+inner+'</a>';
+      if(!a||!a.img||a.on===false) return '';
+      return '<a class="cal-ad" href="'+(a.href||'#')+'" target="_blank" rel="noopener"><img src="'+a.img+'" alt="إعلان"></a>';
     }
 
     function build(){
@@ -1258,7 +1473,7 @@
         html+='<div class="cal-m-head" style="background:'+hexRgba(col,0.14)+';border-top-color:'+col+'">';
         html+='<span class="cal-m-dot" style="background:'+col+'"></span>';
         html+='<span class="cal-m-name">'+MON[mo-1]+'</span>';
-        if(isNow){ html+='<span class="cal-badge"><span class="cal-now-dot"></span>نحن هنا</span>'; }
+        if(isNow){ html+='<span class="cal-badge"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>نحن هنا</span>'; }
         else { html+='<span class="cal-m-count">'+ops.length+' عمليات</span>'; }
         html+='</div><div class="pc-list">';
         for(var k=0;k<ops.length;k++){
@@ -1266,8 +1481,8 @@
               +'<span class="pc-txt"><span class="t">'+ops[k].t+'</span><span class="d">'+ops[k].d+'</span></span></div>';
         }
         html+='</div></div>';
-        if(mo===4) html+=adHTML(ADS[0]);
-        if(mo===8) html+=adHTML(ADS[1]);
+        if(mo===4) html+=adHTML(window.wsmCalAd&&wsmCalAd(0));
+        if(mo===8) html+=adHTML(window.wsmCalAd&&wsmCalAd(1));
       }
       grid.innerHTML=html;
     }
@@ -1372,12 +1587,9 @@
     ];
 
     /* مساحتان إعلانيتان داخل التقويم — لتفعيل إعلان: ضع رابط الصورة في img ورابط الإعلان في href */
-    var ADS=[ {img:'', href:'#'}, {img:'', href:'#'} ];
     function adHTML(a){
-      var inner = a.img
-        ? '<img src="'+a.img+'" alt="إعلان">'
-        : '<div class="ad-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.7"/><path d="M21 16l-5-5L5 20"/></svg><span>مساحة إعلانية</span></div>';
-      return '<a class="cal-ad" href="'+(a.href||'#')+'"'+(a.img?' target="_blank" rel="noopener"':'')+'>'+inner+'</a>';
+      if(!a||!a.img||a.on===false) return '';
+      return '<a class="cal-ad" href="'+(a.href||'#')+'" target="_blank" rel="noopener"><img src="'+a.img+'" alt="إعلان"></a>';
     }
 
     function build(){
@@ -1388,7 +1600,7 @@
         html+='<div class="cal-m-head" style="background:'+hexRgba(col,0.14)+';border-top-color:'+col+'">';
         html+='<span class="cal-m-dot" style="background:'+col+'"></span>';
         html+='<span class="cal-m-name">'+MON[mo-1]+'</span>';
-        if(isNow){ html+='<span class="cal-badge"><span class="cal-now-dot"></span>نحن هنا</span>'; }
+        if(isNow){ html+='<span class="cal-badge"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>نحن هنا</span>'; }
         else { html+='<span class="cal-m-count">'+ops.length+' عمليات</span>'; }
         html+='</div><div class="pc-list">';
         for(var k=0;k<ops.length;k++){
@@ -1396,8 +1608,8 @@
               +'<span class="pc-txt"><span class="t">'+ops[k].t+'</span><span class="d">'+ops[k].d+'</span></span></div>';
         }
         html+='</div></div>';
-        if(mo===4) html+=adHTML(ADS[0]);
-        if(mo===8) html+=adHTML(ADS[1]);
+        if(mo===4) html+=adHTML(window.wsmCalAd&&wsmCalAd(0));
+        if(mo===8) html+=adHTML(window.wsmCalAd&&wsmCalAd(1));
       }
       grid.innerHTML=html;
     }
@@ -1410,6 +1622,7 @@
   (function(){
     var screen=document.getElementById('tipsScreen'); if(!screen) return;
     var listEl=document.getElementById('tipsList'), artEl=document.getElementById('tipsArticle');
+    var titleEl=document.getElementById('tipsTitle'), subEl=document.getElementById('tipsSub');
     var chev='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>';
     var backIc='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>';
 
@@ -1674,6 +1887,8 @@
 
     function showList(){
       artEl.hidden=true; artEl.innerHTML=''; listEl.hidden=false;
+      if(titleEl) titleEl.textContent='نصائح ومقالات';
+      if(subEl){ subEl.textContent='مقالات زراعية مبسّطة للمزارع'; subEl.style.display=''; }
       var h='';
       for(var i=0;i<ART.length;i++){
         h+='<div class="tip-card" data-i="'+i+'"><span class="n">'+(i+1)+'</span><span class="ttl">'+ART[i].t+'</span><span class="arr">'+chev+'</span></div>';
@@ -1682,9 +1897,10 @@
     }
     function openArticle(i){
       var a=ART[i]; if(!a) return;
-      artEl.innerHTML='<div class="article"><button class="a-back" id="aBack">'+backIc+' كل المقالات</button><h1>'+a.t+'</h1><div class="a-rule"></div>'+a.body+'</div>';
+      artEl.innerHTML='<div class="article"><h1>'+a.t+'</h1><div class="a-rule"></div>'+a.body+'</div>';
+      if(titleEl) titleEl.textContent='المقالات';
+      if(subEl) subEl.style.display='none';
       listEl.hidden=true; artEl.hidden=false; screen.scrollTop=0;
-      var b=document.getElementById('aBack'); if(b){ b.addEventListener('click',function(){ showList(); }); }
     }
     listEl.addEventListener('click',function(e){
       var c=e.target.closest?e.target.closest('.tip-card'):null;
