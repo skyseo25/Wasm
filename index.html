@@ -321,9 +321,9 @@
         <div class="ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21c5-3 7-7 7-11a7 7 0 0 0-14 0c0 4 2 8 7 11Z"/><path d="M12 12c0-3 2-5 2-5"/></svg></div>
         <span class="soon">قريباً</span><h3>نصائح ومقالات</h3>
       </div>
-      <div class="card">
-        <div class="ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg></div>
-        <span class="soon">قريباً</span><h3>حالة الطقس</h3>
+      <div class="card cal-open" id="cardSidr" role="button" tabindex="0">
+        <div class="ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-6"/><path d="M12 15a6.5 6.5 0 1 0-4.6-1.9A5 5 0 0 0 12 15Z"/><path d="M9.5 21h5"/></svg></div>
+        <h3>تقويم السدرة</h3>
       </div>
     </div>
   </section>
@@ -421,6 +421,18 @@
     </div>
   </div>
   <div class="cal-grid" id="palmGrid"></div>
+</div>
+
+<!-- ===== شاشة تقويم السدرة ===== -->
+<div class="cal-screen" id="sidrScreen" hidden>
+  <div class="cal-top">
+    <button class="cal-back" id="sidrBack" aria-label="رجوع">→</button>
+    <div class="cal-htext">
+      <div class="t">تقويم السدرة</div>
+      <div class="s">عمليات خدمة شجرة السدر (النبق) — شهرًا بشهر</div>
+    </div>
+  </div>
+  <div class="cal-grid" id="sidrGrid"></div>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
@@ -1241,6 +1253,143 @@
     function bind(el,fn){ if(el){ el.addEventListener('click',function(e){ e.preventDefault(); fn(); }); } }
     bind(document.getElementById('cardPalm'),open);
     bind(document.getElementById('palmBack'),close);
+    bind(navHome,close);
+  })();
+</script>
+<script>
+  /* ===== تقويم السدرة — عمليات خدمة شجرة السدر/النبق شهريًا (الكويت/الخليج) ===== */
+  /* المصادر: زراعة وإنتاج النبق (بوابة أراضينا/فيركون) + موضوع زراعة + عالم الزراعة */
+  (function(){
+    var screen=document.getElementById('sidrScreen'); if(!screen) return;
+    var grid=document.getElementById('sidrGrid');
+    var MON=['يناير','فبراير','مارس','إبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+    var COL=['#4F86C4','#5E91B8','#6FA85A','#8CA646','#C99A33','#DD8A33','#D7702F','#CC5A2C','#C58A3C','#3F9E78','#4FA38C','#4E83A8'];
+    function hexRgba(h,a){ var n=parseInt(h.slice(1),16); return 'rgba('+((n>>16)&255)+','+((n>>8)&255)+','+(n&255)+','+a+')'; }
+
+    var IC={
+      water:'<path d="M12 3c4 5 6 8 6 11a6 6 0 1 1-12 0c0-3 2-6 6-11Z"/>',
+      fert:'<path d="M12 22V11"/><path d="M12 11C9 11 7 9 7 6c3 0 5 2 5 5Z"/><path d="M12 9c0-3 2-5 5-5 0 3-2 5-5 5Z"/>',
+      flower:'<circle cx="12" cy="12" r="2.3"/><path d="M12 9.7V5M12 14.3V19M9.7 12H5M14.3 12H19M9.8 9.8 6.6 6.6M17.4 17.4l-3.2-3.2M14.2 9.8l3.2-3.2M6.6 17.4l3.2-3.2"/>',
+      cut:'<circle cx="6" cy="6" r="2.3"/><circle cx="6" cy="18" r="2.3"/><path d="M8 7.5 20 16M8 16.5 20 8"/>',
+      harvest:'<path d="M4 9h16l-1.4 9.2a2 2 0 0 1-2 1.8H7.4a2 2 0 0 1-2-1.8L4 9Z"/><path d="M9 9 11 4M15 9 13 4"/>',
+      shield:'<path d="M12 3l7 3v5c0 4.2-2.9 7.6-7 9-4.1-1.4-7-4.8-7-9V6l7-3Z"/><path d="m9.4 12 1.9 1.9L15 10.2"/>',
+      bee:'<ellipse cx="12" cy="14" rx="4" ry="5"/><path d="M8.5 10.5 6.5 8M15.5 10.5 17.5 8M8 13h8M8 16h8"/>',
+      soil:'<path d="M12 3 2 8l10 5 10-5-10-5Z"/><path d="M2 13l10 5 10-5"/>',
+      tree:'<path d="M12 21v-6"/><path d="M12 15a6 6 0 1 0-4.2-1.8A4.6 4.6 0 0 0 12 15Z"/>'
+    };
+    function icon(k){ return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+(IC[k]||IC.fert)+'</svg>'; }
+
+    var SIDR=[
+      [ /* يناير */
+        {ic:'cut',t:'التقليم وتكوين الهيكل',d:'إزالة الأفرع المتزاحمة والمتشابكة والمكسورة، وتقليم التربية للأشجار الصغيرة في طور السكون.'},
+        {ic:'fert',t:'بدء التسميد النيتروجيني',d:'إضافة الأسمدة النيتروجينية على دفعات تبدأ من يناير حتى نهاية الربيع.'},
+        {ic:'water',t:'ري متباعد',d:'السدر يتحمل الجفاف؛ الاحتياج المائي منخفض شتاءً فتكفي ريّة متباعدة.'},
+        {ic:'harvest',t:'متابعة الثمار العاقدة',d:'ثمار إزهار الخريف تكبر ببطء استعدادًا لنضج محصول الربيع.'}
+      ],
+      [ /* فبراير */
+        {ic:'cut',t:'التقليم الجائر للمثمرة',d:'تقليم قوي لتشجيع نموات جديدة حاملة للنورات الزهرية (السدر غزير النمو).'},
+        {ic:'fert',t:'التسميد العضوي + النيتروجين',d:'دعم الشجرة قبل انطلاق النمو الربيعي.'},
+        {ic:'tree',t:'الزراعة والإكثار بالعقلة',d:'موسم مناسب لزراعة العقل/الأغصان في مكان مشمس.'},
+        {ic:'water',t:'ري معتدل',d:'ريّة كافية مع اعتدال الجو دون إفراط.'}
+      ],
+      [ /* مارس */
+        {ic:'cut',t:'استكمال التقليم',d:'أنسب وقت للتقليم (آذار) وإزالة الأفرخ والسرطانات الزائدة.'},
+        {ic:'tree',t:'زراعة الشتلات/العقل',d:'الموسم المثالي للزراعة في مكان مشمس وتربة جيدة التصريف.'},
+        {ic:'fert',t:'استمرار التسميد',d:'دفعات نيتروجين + سماد متوازن لدعم النمو الربيعي.'},
+        {ic:'water',t:'ري منتظم',d:'ريّ منتظم خلال موسم النمو لدعم الثمار النامية.'}
+      ],
+      [ /* إبريل */
+        {ic:'harvest',t:'جني النبق (المحصول الرئيسي)',d:'نضج ثمار إزهار الخريف مع ارتفاع الحرارة — المحصول الأساسي.'},
+        {ic:'water',t:'تقليل الري عند النضج',d:'خفض الري أثناء نضج الثمار لتحسين الطعم والتخزين.'},
+        {ic:'cut',t:'استكمال التقليم (نيسان)',d:'إزالة ما تبقّى من أفرع متهدلة أو مكسورة بعد الجني.'},
+        {ic:'shield',t:'مكافحة ذبابة الفاكهة والمن',d:'متابعة الإصابات على الثمار والأوراق والمعالجة عند الحاجة.'}
+      ],
+      [ /* مايو */
+        {ic:'flower',t:'الإزهار الثاني',d:'ظهور نورات زهرية في أواخر الربيع تعطي محصولًا ثانيًا ينضج آخر الصيف.'},
+        {ic:'water',t:'ري خفيف أثناء الإزهار',d:'عدم الإفراط في الري وقت التزهير والعقد لتفادي تساقط الأزهار.'},
+        {ic:'harvest',t:'استكمال جني المحصول الربيعي',d:'جمع ما تأخّر من ثمار المحصول الرئيسي.'},
+        {ic:'fert',t:'تسميد متوازن',d:'دعم عقد الثمار الجديدة.'}
+      ],
+      [ /* يونيو */
+        {ic:'water',t:'زيادة الري (2–3 مرات)',d:'مع اشتداد الحرارة يرتفع الاحتياج المائي لدعم الثمار النامية.'},
+        {ic:'shield',t:'متابعة الآفات',d:'مراقبة المنّ والحشرات القشرية وذبابة الفاكهة.'},
+        {ic:'cut',t:'إزالة النموات المائية',d:'إزالة السرطانات والأفرع المائية الزائدة لتوجيه نمو الشجرة.'},
+        {ic:'tree',t:'العناية بالشتلات الحديثة',d:'تظليل وري منتظم للشتلات الصغيرة في حرارة الصيف.'}
+      ],
+      [ /* يوليو */
+        {ic:'water',t:'ري غزير منتظم (2–3 مرات)',d:'الذروة الحرارية — الحفاظ على رطوبة منطقة الجذور.'},
+        {ic:'shield',t:'حماية الثمار والآفات',d:'متابعة الآفات وحماية الثمار النامية للمحصول الثاني.'},
+        {ic:'soil',t:'تنظيف وتغطية التربة',d:'إزالة الأعشاب حول الجذع وتغطية التربة لتقليل فقد الماء.'}
+      ],
+      [ /* أغسطس */
+        {ic:'harvest',t:'بداية جني المحصول الثاني',d:'نضج ثمار إزهار مايو في أواخر الصيف.'},
+        {ic:'water',t:'ري منتظم',d:'الاستمرار بالري المنتظم حتى انتهاء جني الثمار.'},
+        {ic:'shield',t:'مكافحة ذبابة الفاكهة',d:'نشطة على الثمار الناضجة — متابعة ومصائد عند الحاجة.'}
+      ],
+      [ /* سبتمبر */
+        {ic:'flower',t:'الإزهار الرئيسي (الخريفي)',d:'بداية الخريف أهم موسم إزهار؛ تعقد ثماره لتنضج في الربيع.'},
+        {ic:'bee',t:'وضع خلايا النحل (عسل السدر)',d:'الاستفادة من رحيق أزهار السدر لإنتاج عسل السدر المميّز.'},
+        {ic:'water',t:'ري خفيف أثناء الإزهار',d:'تجنّب الإفراط في الري وقت التزهير لتحسين العقد.'},
+        {ic:'harvest',t:'استكمال جني المحصول الثاني',d:'جمع ما تبقّى من ثمار الصيف.'}
+      ],
+      [ /* أكتوبر */
+        {ic:'fert',t:'التسميد العضوي السنوي',d:'إضافة السماد العضوي مرة واحدة (تشرين الأول) حول منطقة الجذور.'},
+        {ic:'flower',t:'استمرار الإزهار والعقد',d:'متابعة عقد الثمار الجديدة لمحصول الربيع القادم.'},
+        {ic:'tree',t:'الزراعة الخريفية',d:'موسم ثانٍ مناسب لزراعة الشتلات لاعتدال الحرارة.'},
+        {ic:'water',t:'ري معتدل',d:'ريّة خريفية كافية مع انخفاض الحرارة.'}
+      ],
+      [ /* نوفمبر */
+        {ic:'harvest',t:'متابعة الثمار العاقدة',d:'نمو ثمار المحصول الرئيسي القادم تدريجيًا.'},
+        {ic:'water',t:'ري متباعد',d:'انخفاض الاحتياج المائي مع برودة الجو.'},
+        {ic:'shield',t:'فحص الحشرات القشرية والمن',d:'كشف ومعالجة مبكرة لأي إصابة على الأفرع.'},
+        {ic:'cut',t:'إزالة الأفرع الجافة',d:'تنظيف الشجرة استعدادًا للشتاء.'}
+      ],
+      [ /* ديسمبر */
+        {ic:'cut',t:'التقليم الشتوي وتكوين الهيكل',d:'إزالة الأفرع الجافة والمكسورة وتقليم التربية للأشجار الصغيرة.'},
+        {ic:'water',t:'ري قليل متباعد',d:'الشجرة في أدنى احتياج مائي خلال الشتاء.'},
+        {ic:'soil',t:'خدمة التربة',d:'عزق التربة حول الجذع وتحسين تهويتها.'},
+        {ic:'harvest',t:'متابعة نمو الثمار',d:'ثمار محصول الربيع تواصل نموها ببطء.'}
+      ]
+    ];
+
+    /* مساحتان إعلانيتان داخل التقويم — لتفعيل إعلان: ضع رابط الصورة في img ورابط الإعلان في href */
+    var ADS=[ {img:'', href:'#'}, {img:'', href:'#'} ];
+    function adHTML(a){
+      var inner = a.img
+        ? '<img src="'+a.img+'" alt="إعلان">'
+        : '<div class="ad-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.7"/><path d="M21 16l-5-5L5 20"/></svg><span>مساحة إعلانية</span></div>';
+      return '<a class="cal-ad" href="'+(a.href||'#')+'"'+(a.img?' target="_blank" rel="noopener"':'')+'>'+inner+'</a>';
+    }
+
+    function build(){
+      var nowM=new Date().getMonth()+1, html='';
+      for(var mo=1;mo<=12;mo++){
+        var ops=SIDR[mo-1], isNow=(mo===nowM), col=COL[mo-1];
+        html+='<div class="cal-month'+(isNow?' now':'')+'">';
+        html+='<div class="cal-m-head" style="background:'+hexRgba(col,0.14)+';border-top-color:'+col+'">';
+        html+='<span class="cal-m-dot" style="background:'+col+'"></span>';
+        html+='<span class="cal-m-name">'+MON[mo-1]+'</span>';
+        if(isNow){ html+='<span class="cal-badge"><span class="cal-now-dot"></span>نحن هنا</span>'; }
+        else { html+='<span class="cal-m-count">'+ops.length+' عمليات</span>'; }
+        html+='</div><div class="pc-list">';
+        for(var k=0;k<ops.length;k++){
+          html+='<div class="pc-item"><span class="pc-ic">'+icon(ops[k].ic)+'</span>'
+              +'<span class="pc-txt"><span class="t">'+ops[k].t+'</span><span class="d">'+ops[k].d+'</span></span></div>';
+        }
+        html+='</div></div>';
+        if(mo===4) html+=adHTML(ADS[0]);
+        if(mo===8) html+=adHTML(ADS[1]);
+      }
+      grid.innerHTML=html;
+    }
+
+    var navHome=document.getElementById('navHome');
+    function open(){ build(); screen.hidden=false; screen.scrollTop=0; document.body.style.overflow='hidden';
+      if(navHome) navHome.classList.remove('active'); }
+    function close(){ screen.hidden=true; document.body.style.overflow=''; if(navHome) navHome.classList.add('active'); }
+    function bind(el,fn){ if(el){ el.addEventListener('click',function(e){ e.preventDefault(); fn(); }); } }
+    bind(document.getElementById('cardSidr'),open);
+    bind(document.getElementById('sidrBack'),close);
     bind(navHome,close);
   })();
 </script>
