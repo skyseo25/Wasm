@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#20352A">
+<title>وسم</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Reem+Kufi:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4F0E5;--paper-2:#ECE6D5;--line:#E0D8C3;
+    --soil:#20352A;--soil-2:#2E5248;--leaf:#4E7A3A;--gold:#C2933C;
+    --ink:#243024;--muted:#6E7468;--nav-h:76px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:'Cairo',system-ui,sans-serif;background:var(--paper);color:var(--ink);
+    line-height:1.8;font-size:17px;min-height:100vh;overflow-x:hidden;
+    padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom));
+  }
+  .wrap{max-width:560px;margin:0 auto;position:relative}
+
+  header.brand{text-align:center;padding:40px 20px 6px;position:relative}
+  .stars{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+  .star{fill:var(--gold);opacity:0;animation:twinkle 4s ease-in-out infinite}
+  @keyframes twinkle{0%,100%{opacity:.16}50%{opacity:.55}}
+  .mark{font-family:'Reem Kufi',sans-serif;font-weight:700;color:var(--soil);
+    font-size:clamp(4.6rem,25vw,7.2rem);line-height:1;letter-spacing:.01em;
+    position:relative;display:inline-block;user-select:none}
+  .rainline{width:0;height:3px;margin:12px auto 0;
+    background:linear-gradient(90deg,transparent,var(--gold),transparent);
+    border-radius:3px;animation:grow 1.2s .3s cubic-bezier(.2,.8,.2,1) forwards}
+  @keyframes grow{to{width:130px}}
+  .subtitle{font-family:'Reem Kufi',sans-serif;font-size:1.18rem;color:var(--soil-2);margin-top:14px;font-weight:500}
+
+  /* ===== ساعة الوسم ===== */
+  .clock-card{margin:22px auto 0;padding:0 8px;text-align:center}
+  .clock-card svg{width:100%;max-width:404px;height:auto;display:block;margin:0 auto}
+  .clock-readout{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;
+    gap:9px;margin-top:18px}
+  .r-date{font-family:'Cairo',sans-serif;font-size:1.28rem;font-weight:800;color:var(--soil)}
+  .r-fasl,.r-moosem{font-family:'Reem Kufi',sans-serif;font-size:1.06rem;font-weight:600;color:var(--soil-2)}
+  .r-sep{color:var(--line);font-weight:700}
+  .r-wx{font-size:.92rem;font-weight:700;padding:4px 14px;border-radius:22px;color:#33402F}
+  .clock-cap{font-size:.92rem;color:var(--muted);margin-top:10px;font-weight:600}
+
+  /* مربعا الموسم */
+  .moosem-boxes{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:18px 16px 0;align-items:stretch}
+  .mbox{background:var(--paper-2);border:1px solid var(--line);border-top:4px solid var(--ac);
+    border-radius:18px;padding:15px 15px 16px;display:flex;flex-direction:column}
+  .mb-head{display:flex;align-items:center;gap:7px;margin-bottom:8px}
+  .mb-dot{width:9px;height:9px;border-radius:50%;background:var(--ac);flex:none}
+  .mb-label{font-family:'Cairo',sans-serif;font-size:.8rem;font-weight:700;color:var(--muted)}
+  .mb-name{font-family:'Reem Kufi',sans-serif;font-size:1.55rem;font-weight:700;color:var(--soil);line-height:1.15}
+  .mb-bar{height:7px;border-radius:6px;background:rgba(32,53,42,.10);overflow:hidden;margin-top:11px}
+  .mb-bar i{display:block;height:100%;border-radius:6px;background:var(--ac)}
+  .mb-stats{display:flex;flex-direction:column;margin-top:11px}
+  .mb-row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+    padding:6px 0;border-bottom:1px dashed rgba(32,53,42,.14)}
+  .mb-row:last-child{border-bottom:none}
+  .mb-row .lbl{font-family:'Cairo',sans-serif;font-size:.92rem;font-weight:600;color:var(--muted)}
+  .mb-row .val{font-family:'Cairo',sans-serif;font-size:1.22rem;font-weight:800;color:var(--soil);font-variant-numeric:tabular-nums}
+  .mb-row .val i{font-size:.78rem;font-weight:600;color:var(--muted);font-style:normal;margin-right:1px}
+  .mb-feat{font-family:'Cairo',sans-serif;font-size:.86rem;font-weight:500;color:var(--ink);line-height:1.7;margin-top:auto;padding-top:12px}
+
+  /* نصوص داخل الساعة */
+  .t-fasl{font-family:'Reem Kufi',sans-serif;font-size:12px;font-weight:600;fill:var(--soil);text-anchor:middle;dominant-baseline:central}
+  .t-month{font-family:'Cairo',sans-serif;font-size:12.5px;font-weight:700;fill:var(--ink);text-anchor:middle;dominant-baseline:central}
+  .t-moosem{font-family:'Cairo',sans-serif;font-size:9px;font-weight:600;fill:#3D4A3A;text-anchor:middle;dominant-baseline:central}
+  .div{stroke:#FFFFFF;stroke-width:1;opacity:.5}
+
+  .sections{padding:30px 16px 10px}
+  .sec-head{display:flex;align-items:center;gap:12px;margin:0 6px 18px}
+  .sec-head span{font-family:'Reem Kufi',sans-serif;font-size:1.15rem;color:var(--soil);white-space:nowrap;font-weight:600}
+  .sec-head .ln{flex:1;height:1px;background:var(--line)}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .card{background:var(--paper-2);border:1px solid var(--line);border-radius:18px;
+    padding:20px 16px;min-height:128px;display:flex;flex-direction:column;justify-content:space-between;
+    position:relative;transition:transform .18s ease}
+  .card:active{transform:scale(.98)}
+  .card .ic{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;
+    background:rgba(78,122,58,.13);color:var(--leaf)}
+  .card h3{font-size:1.2rem;color:var(--soil);font-weight:700;margin-top:auto}
+  .card .soon{position:absolute;top:14px;left:14px;font-size:.72rem;color:var(--gold);
+    border:1px solid rgba(194,147,60,.4);padding:2px 9px;border-radius:20px;font-weight:600}
+
+  footer{text-align:center;padding:22px 20px 12px;color:var(--muted);font-size:.9rem;font-weight:500}
+  footer .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--line)}
+
+  /* مساحة إعلانية */
+  .ad-slot{display:block;margin:28px 16px 0;border-radius:18px;overflow:hidden;
+    background:var(--paper-2);border:1px dashed var(--line);
+    aspect-ratio:16/6;position:relative;text-decoration:none;color:inherit}
+  .ad-slot img{width:100%;height:100%;object-fit:cover;display:block}
+  .ad-ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;color:var(--muted)}
+  .ad-ph svg{width:34px;height:34px;opacity:.55}
+  .ad-ph span{font-family:'Cairo',sans-serif;font-size:.92rem;font-weight:700;letter-spacing:.02em}
+  .ad-slot:has(img) .ad-ph{display:none}
+
+  /* ===== ماذا نزرع ===== */
+  .plant-section{padding:30px 16px 0}
+  .plant-card{background:var(--paper-2);border:1px solid var(--line);border-radius:18px;padding:16px}
+  .plant-intro{font-family:'Cairo',sans-serif;font-size:.92rem;font-weight:600;color:var(--soil-2);margin-bottom:14px}
+  .plant-intro b{color:var(--leaf);font-weight:800}
+  .plant-grid{display:grid;gap:14px}
+  .plant{display:flex;flex-direction:column;align-items:center;gap:9px}
+  .plant-name{font-family:'Reem Kufi',sans-serif;font-size:1.16rem;font-weight:700;color:var(--soil)}
+  .plant-pic{width:100%;aspect-ratio:1/1;border-radius:14px;overflow:hidden;position:relative;
+    background:rgba(78,122,58,.10);display:grid;place-items:center}
+  .plant-fallback{color:var(--leaf);opacity:.55}
+  .plant-fallback svg{width:40px;height:40px}
+  .plant-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .plant-chips{display:flex;flex-wrap:wrap;gap:9px}
+  .chip{display:inline-flex;align-items:center;gap:7px;background:var(--paper);border:1px solid var(--line);
+    border-radius:22px;padding:8px 14px;font-family:'Cairo',sans-serif;font-weight:700;font-size:.95rem;color:var(--soil)}
+  .chip-dot{width:8px;height:8px;border-radius:50%;background:var(--leaf);flex:none}
+  .plant-empty{color:var(--muted);font-weight:600;line-height:1.9;text-align:center;padding:10px 4px}
+
+  /* ===== القمر ===== */
+  .moon-section{padding:30px 16px 0}
+  .moon-card{display:flex;align-items:center;gap:18px;border-radius:18px;padding:18px 20px;position:relative;overflow:hidden;
+    background:radial-gradient(130% 150% at 82% 8%, #283566 0%, #19224060 0%, #161E38 55%, #0D1230 100%);
+    box-shadow:0 12px 28px -16px rgba(13,18,48,.85)}
+  .moon-stars{position:absolute;inset:0;width:100%;height:100%;opacity:.7;pointer-events:none}
+  .moon-stars circle{fill:#EAE7FF}
+  .moon-art{flex:none;position:relative;z-index:1;filter:drop-shadow(0 0 14px rgba(205,222,255,.30))}
+  .moon-txt{flex:1;position:relative;z-index:1;color:#EFE8D6}
+  .moon-eye{font-family:'Cairo',sans-serif;font-size:.8rem;font-weight:700;color:#AEB7DA;letter-spacing:.03em}
+  .moon-name{font-family:'Reem Kufi',sans-serif;font-size:1.7rem;font-weight:700;color:#F7F0DD;margin-top:5px;line-height:1.2}
+  .moon-meta{font-family:'Cairo',sans-serif;font-size:.92rem;font-weight:600;color:#C8CEE8;margin-top:9px}
+
+  /* ===== الطقس ===== */
+  .wx-section{padding:30px 16px 0}
+  .wx-wrap{border-radius:18px;overflow:hidden;border:1px solid var(--line);box-shadow:0 8px 22px -16px rgba(32,53,42,.4)}
+  .wx-today{padding:16px 16px 18px;color:var(--soil)}
+  .wt-top{margin-bottom:8px}
+  .wt-label{font-family:'Cairo',sans-serif;font-size:.82rem;font-weight:700;color:var(--soil-2)}
+  .wt-main{display:flex;align-items:center;gap:14px}
+  .wt-ic .icn{width:56px;height:56px}
+  .wt-temp{font-family:'Cairo',sans-serif;font-size:2.7rem;font-weight:800;line-height:1}
+  .wt-info{margin-right:auto;text-align:left}
+  .wt-cond{font-family:'Reem Kufi',sans-serif;font-size:1.25rem;font-weight:700}
+  .wt-feel{font-size:.9rem;color:var(--soil-2);font-weight:600}
+  .wt-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px 12px;margin-top:15px}
+  .wt-stats div{display:flex;justify-content:space-between;align-items:baseline;
+    background:rgba(255,255,255,.5);border-radius:11px;padding:8px 12px}
+  .wt-stats span{font-size:.83rem;color:var(--soil-2);font-weight:600}
+  .wt-stats b{font-size:.96rem;font-weight:800}
+  .wx-days{display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:var(--line)}
+  .wx-day{padding:12px 3px;display:flex;flex-direction:column;align-items:center;gap:6px}
+  .wd-day{font-family:'Cairo',sans-serif;font-size:.74rem;font-weight:700;color:var(--soil-2)}
+  .wd-ic .icn{width:27px;height:27px}
+  .wd-temp{font-family:'Cairo',sans-serif;font-size:1rem;font-weight:800;color:var(--soil)}
+  .wd-hum{font-size:.7rem;font-weight:700;color:#3E7C9E;display:flex;align-items:center;gap:2px}
+  .wx-loading,.wx-msg{padding:28px 16px;text-align:center;color:var(--muted);font-weight:600;font-size:.95rem;line-height:2}
+  .wx-retry{margin-top:6px;font-family:'Cairo',sans-serif;font-weight:700;font-size:.9rem;color:#fff;
+    background:var(--leaf);border:none;border-radius:12px;padding:8px 20px;cursor:pointer}
+
+  /* ثيمات حالات الطقس */
+  .c-clear{background:linear-gradient(135deg,#FBF1D6,#F6E2AC)}   .c-clear .icn{color:#D99A1E}
+  .c-pcloudy{background:linear-gradient(135deg,#EFF3F1,#DAE5EC)} .c-pcloudy .icn{color:#7E9DB8}
+  .c-cloudy{background:linear-gradient(135deg,#ECECE5,#D7D8D2)}  .c-cloudy .icn{color:#79858C}
+  .c-fog{background:linear-gradient(135deg,#ECEAE1,#D6D6CD)}     .c-fog .icn{color:#8E948E}
+  .c-rain{background:linear-gradient(135deg,#E2EDF3,#C2DAE8)}    .c-rain .icn{color:#3E7C9E}
+  .c-thunder{background:linear-gradient(135deg,#E7E6F1,#CDCDE1)} .c-thunder .icn{color:#5B5E8E}
+  .c-dust{background:linear-gradient(135deg,#F4E8C9,#E7CF96)}    .c-dust .icn{color:#B5852E}
+
+  nav.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:50;
+    height:calc(var(--nav-h) + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom);
+    background:rgba(244,240,229,.93);backdrop-filter:saturate(140%) blur(12px);-webkit-backdrop-filter:saturate(140%) blur(12px);
+    border-top:1px solid var(--line);display:flex;align-items:stretch;max-width:560px;margin:0 auto}
+  nav.tabbar a{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
+    color:var(--muted);text-decoration:none;font-size:.78rem;font-weight:600;transition:color .15s ease}
+  nav.tabbar a svg{width:24px;height:24px}
+  nav.tabbar a.active{color:var(--leaf)}
+
+  /* ===== لوحة التحكم ===== */
+  .admin-ov{position:fixed;inset:0;z-index:200;background:rgba(20,30,25,.55);
+    display:flex;align-items:flex-start;justify-content:center;padding:30px 14px;overflow-y:auto}
+  .admin-ov[hidden]{display:none}
+  .admin-box{background:var(--paper);border-radius:22px;width:100%;max-width:520px;padding:24px 22px;position:relative;box-shadow:0 24px 60px -20px rgba(0,0,0,.55)}
+  .admin-x{position:absolute;top:14px;left:14px;width:34px;height:34px;border-radius:50%;border:none;background:var(--paper-2);font-size:1.3rem;line-height:1;color:var(--soil);cursor:pointer}
+  .admin-h{font-family:'Reem Kufi',sans-serif;font-size:1.6rem;color:var(--soil);text-align:center;font-weight:700}
+  .admin-sub{text-align:center;color:var(--muted);margin:6px 0 16px;font-weight:600}
+  .admin-input{width:100%;padding:13px 14px;border:1px solid var(--line);border-radius:12px;font-family:'Cairo',sans-serif;font-size:1rem;background:var(--paper-2);color:var(--ink)}
+  .admin-btn{width:100%;margin-top:12px;padding:13px;border:none;border-radius:12px;background:var(--leaf);color:#fff;font-family:'Cairo',sans-serif;font-weight:700;font-size:1rem;cursor:pointer}
+  .admin-btn.sm{width:auto;margin:0;padding:9px 16px}
+  .admin-err{color:#C0392B;text-align:center;margin-top:10px;font-weight:600;font-size:.9rem}
+  .admin-filters{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}
+  .admin-filters button{flex:1;min-width:70px;padding:9px;border:1px solid var(--line);background:var(--paper-2);border-radius:11px;font-family:'Cairo',sans-serif;font-weight:700;font-size:.9rem;color:var(--soil-2);cursor:pointer}
+  .admin-filters button.active{background:var(--leaf);color:#fff;border-color:var(--leaf)}
+  .admin-range{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap;justify-content:center}
+  .admin-range input{padding:9px;border:1px solid var(--line);border-radius:10px;font-family:'Cairo',sans-serif;background:var(--paper-2)}
+  .admin-total{text-align:center;margin:12px 0 4px}
+  .admin-total span{font-family:'Cairo',sans-serif;font-size:3rem;font-weight:800;color:var(--soil);display:block;line-height:1}
+  .admin-total small{color:var(--muted);font-weight:700}
+  .admin-chart{display:flex;align-items:flex-end;gap:3px;height:92px;margin:16px 0;overflow-x:auto}
+  .admin-chart .bar{flex:1;min-width:6px;background:var(--leaf);border-radius:3px 3px 0 0;opacity:.85}
+  .admin-h3{font-family:'Reem Kufi',sans-serif;font-size:1.15rem;color:var(--soil);margin:14px 0 10px;font-weight:700}
+  .admin-countries{display:flex;flex-direction:column;gap:10px}
+  .crow{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px}
+  .cname{font-family:'Cairo',sans-serif;font-weight:700;color:var(--soil);font-size:.95rem;white-space:nowrap}
+  .cbar{height:8px;border-radius:5px;background:var(--paper-2);overflow:hidden}
+  .cbar i{display:block;height:100%;background:var(--leaf);border-radius:5px}
+  .ccount{font-family:'Cairo',sans-serif;font-weight:800;color:var(--soil-2);font-size:.9rem}
+  .admin-note{color:var(--muted);font-size:.85rem;margin-top:14px;text-align:center;line-height:1.8}
+
+  @media (prefers-reduced-motion:reduce){*{animation:none!important}.rainline{width:130px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="brand">
+    <div class="stars" id="stars"></div>
+    <h1 class="mark" id="mark">وسم</h1>
+    <div class="rainline"></div>
+    <div class="subtitle">تقويم المواسم والزراعة في الخليج</div>
+  </header>
+
+  <div class="clock-card">
+    <svg id="clockSvg" viewBox="-40 -40 480 480" role="img" aria-label="ساعة الوسم"></svg>
+    <div class="clock-cap">العقرب يشير إلى الموسم الحالي</div>
+    <div class="clock-readout" id="readout"></div>
+    <div class="moosem-boxes" id="moosemBoxes"></div>
+  </div>
+
+  <section class="sections">
+    <div class="sec-head"><span>الأقسام</span><div class="ln"></div></div>
+    <div class="grid">
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg></div>
+        <span class="soon">قريباً</span><h3>التقويم الزراعي</h3>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3c4 5 6 8 6 11a6 6 0 1 1-12 0c0-3 2-6 6-11Z"/></svg></div>
+        <span class="soon">قريباً</span><h3>الري</h3>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21c5-3 7-7 7-11a7 7 0 0 0-14 0c0 4 2 8 7 11Z"/><path d="M12 12c0-3 2-5 2-5"/></svg></div>
+        <span class="soon">قريباً</span><h3>نصائح ومقالات</h3>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg></div>
+        <span class="soon">قريباً</span><h3>حالة الطقس</h3>
+      </div>
+    </div>
+  </section>
+
+  <!-- مساحة إعلانية: لإضافة إعلان ضع صورة داخل الرابط هكذا:
+       <a class="ad-slot" id="adSlot" href="رابط-الإعلان"><img src="رابط-الصورة" alt="إعلان"></a>
+       وستختفي كلمة "مساحة إعلانية" تلقائيًا -->
+  <a class="ad-slot" id="adSlot" href="#" aria-label="مساحة إعلانية">
+    <div class="ad-ph">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.7"/><path d="M21 16l-5-5L5 20"/></svg>
+      <span>مساحة إعلانية</span>
+    </div>
+  </a>
+
+  <section class="plant-section">
+    <div class="sec-head"><span>ماذا نزرع هذا الشهر</span><div class="ln"></div></div>
+    <div class="plant-card" id="plantBox"></div>
+  </section>
+
+  <section class="moon-section">
+    <div class="moon-card" id="moonBox"></div>
+  </section>
+
+  <section class="wx-section">
+    <div class="sec-head"><span>الطقس</span><div class="ln"></div></div>
+    <div class="wx-wrap">
+      <div class="wx-today" id="wxToday"><div class="wx-loading">يتم جلب حالة الطقس…</div></div>
+      <div class="wx-days" id="wxDays"></div>
+    </div>
+  </section>
+
+  <footer><span class="dot" id="adminDot"></span></footer>
+
+  <!-- لوحة التحكم (مخفية - ٥ ضغطات على وسم) -->
+  <div class="admin-ov" id="adminOv" hidden>
+    <div class="admin-box">
+      <button class="admin-x" id="adminX">×</button>
+      <div id="adminLogin">
+        <h2 class="admin-h">لوحة التحكم</h2>
+        <p class="admin-sub">أدخل كلمة المرور</p>
+        <input type="password" id="adminPass" class="admin-input" placeholder="كلمة المرور">
+        <button class="admin-btn" id="adminLoginBtn">دخول</button>
+        <div class="admin-err" id="adminErr"></div>
+      </div>
+      <div id="adminDash" hidden>
+        <h2 class="admin-h">حركة الزوار</h2>
+        <div class="admin-filters" id="admFilters">
+          <button data-r="today" class="active">اليوم</button>
+          <button data-r="month">هذا الشهر</button>
+          <button data-r="all">الكل</button>
+          <button data-r="custom">من - إلى</button>
+        </div>
+        <div class="admin-range" id="admRange" hidden>
+          <input type="date" id="admFrom"><span>إلى</span><input type="date" id="admTo">
+          <button class="admin-btn sm" id="admGo">عرض</button>
+        </div>
+        <div class="admin-total"><span id="admTotal">—</span><small>زائر</small></div>
+        <div class="admin-chart" id="admChart"></div>
+        <h3 class="admin-h3">حسب الدولة</h3>
+        <div class="admin-countries" id="admCountries"></div>
+        <div class="admin-note" id="admNote"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<nav class="tabbar">
+  <a href="#" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></svg>الرئيسية</a>
+  <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>التقويم</a>
+  <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3c4 5 6 8 6 11a6 6 0 1 1-12 0c0-3 2-6 6-11Z"/></svg>الري</a>
+  <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21c5-3 7-7 7-11a7 7 0 0 0-14 0c0 4 2 8 7 11Z"/><path d="M12 12c0-3 2-5 2-5"/></svg>نصائح</a>
+  <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16M4 12h16M4 18h16"/></svg>المزيد</a>
+</nav>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+  // ===== إعدادات Firebase لمشروع "وسم" =====
+  var WSM_FB={
+    apiKey:"AIzaSyBZSbasVM-dVYbNE-qUZb9eREZrtaTBRqo",
+    authDomain:"wasm-61734.firebaseapp.com",
+    projectId:"wasm-61734",
+    storageBucket:"wasm-61734.firebasestorage.app",
+    messagingSenderId:"694390969205",
+    appId:"1:694390969205:web:1af37463c0c0198ba8793c"
+  };
+</script>
+<script>
+  (function(){
+    var box=document.getElementById('stars'); if(!box) return;
+    var pts=[[18,32],[34,18],[50,34],[66,20],[82,32],[26,54],[74,52]];
+    var ns='http://www.w3.org/2000/svg';
+    var svg=document.createElementNS(ns,'svg');
+    svg.setAttribute('width','100%'); svg.setAttribute('height','100%');
+    svg.style.position='absolute'; svg.style.inset='0';
+    for(var i=0;i<pts.length;i++){
+      var c=document.createElementNS(ns,'circle');
+      c.setAttribute('cx',pts[i][0]+'%'); c.setAttribute('cy',pts[i][1]+'%');
+      c.setAttribute('r',(Math.random()*1.0+.8).toFixed(1));
+      c.setAttribute('class','star'); c.style.animationDelay=(Math.random()*4).toFixed(1)+'s';
+      svg.appendChild(c);
+    }
+    box.appendChild(svg);
+  })();
+
+  // ===== ساعة الوسم بشكل ساعة حائط =====
+  (function(){
+    var C=200;
+    var monthsAr=['يناير','فبراير','مارس','إبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+    var seasons=[
+      {name:'الشبط',     m:1, d:15, color:'#5B8DB8', wx:'برد وأمطار',   feat:'اعتدال نهاري وبرودة ليلية، وقد تهب رياح وتسقط أمطار. آخر شدّة البرد.'},
+      {name:'العقارب',   m:2, d:10, color:'#6E9DB0', wx:'برد متذبذب',   feat:'ثلاث فترات (عقرب)؛ برد متذبذب يضعف تدريجيًا وتبدأ علامات الربيع.'},
+      {name:'الحميمين',  m:3, d:21, color:'#88B06A', wx:'اعتدال ودفء',  feat:'اعتدال الجو ودفء النهار، ونشاط الزراعة وتفتّح النبات.'},
+      {name:'الذراعين',  m:4, d:16, color:'#A6C257', wx:'ربيع ودفء',    feat:'ربيع دافئ معتدل، ازدهار المراعي وأنسب وقت للنزهات البرية.'},
+      {name:'الثريا',    m:5, d:12, color:'#D8C24C', wx:'حرارة ترتفع',  feat:'ارتفاع تدريجي للحرارة وجفاف الجو، نهاية الربيع وبداية الحر.'},
+      {name:'التويبع',   m:6, d:20, color:'#E3A93F', wx:'بداية القيظ',  feat:'بداية القيظ واشتداد الحر، وقد تهب رياح حارّة محمّلة بالغبار.'},
+      {name:'الجوزاء',   m:7, d:3,  color:'#E08A33', wx:'حر شديد',      feat:'حر شديد ورطوبة على السواحل، ومن أطول أيام النهار في السنة.'},
+      {name:'المرزم',    m:7, d:29, color:'#D3622E', wx:'ذروة الحر',    feat:'ذروة حر الصيف، وأشد الأيام لهيبًا وجفافًا.'},
+      {name:'الكليبين',  m:8, d:11, color:'#C9583A', wx:'حر ورطوبة',    feat:'حر مع رطوبة عالية خصوصًا على الساحل، واقتراب انكسار القيظ.'},
+      {name:'سهيل',      m:8, d:24, color:'#C7924E', wx:'انكسار الحر',  feat:'طلوع نجم سهيل وبداية انكسار الحر تدريجيًا وبرودة الليل.'},
+      {name:'الوسم',     m:10,d:16, color:'#3F9E78', wx:'أمطار وزراعة', feat:'موسم أمطار الخير ووسم الأرض بالنبات، وأفضل أوقات الزراعة والفقع.'},
+      {name:'المربعانية',m:12,d:7,  color:'#3F6FA5', wx:'أبرد أيام السنة',feat:'أربعون يومًا هي أبرد أيام السنة، أمطار وبرد شديد.'}
+    ];
+    function dim(y,m){ return new Date(y,m,0).getDate(); }
+    function dateAngle(m,d,y){ var c=(m%12)*30; var f=(d-0.5)/dim(y,m); return c-15+f*30; }
+    function polar(r,a){ var t=a*Math.PI/180; return {x:C+r*Math.sin(t), y:C-r*Math.cos(t)}; }
+    function donut(ro,ri,a1,a2){
+      if(a2<a1) a2+=360;
+      var large=(a2-a1)>180?1:0;
+      var p1=polar(ro,a1),p2=polar(ro,a2),p3=polar(ri,a2),p4=polar(ri,a1);
+      return ['M',p1.x,p1.y,'A',ro,ro,0,large,1,p2.x,p2.y,'L',p3.x,p3.y,'A',ri,ri,0,large,0,p4.x,p4.y,'Z'].join(' ');
+    }
+    function key(m,d){ return m*100+d; }
+    function curIdx(m,d){ var k=key(m,d),b=-1,i; for(i=0;i<seasons.length;i++){ if(key(seasons[i].m,seasons[i].d)<=k) b=i; } if(b<0) b=seasons.length-1; return b; }
+    function midSeason(m){ return seasons[curIdx(m,15)]; }
+    function fasl(m){ if(m===12||m<=2)return 'الشتاء'; if(m<=5)return 'الربيع'; if(m<=8)return 'الصيف'; return 'الخريف'; }
+    function esc(t){ return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+    var DAY=86400000;
+    function atMid(d){ return new Date(d.getFullYear(),d.getMonth(),d.getDate()); }
+    function startDate(i,yr){ return new Date(yr, seasons[i].m-1, seasons[i].d); }
+    function findCN(today){
+      var t=atMid(today), arr=[], yy=t.getFullYear(), i, y2;
+      for(y2=yy-1;y2<=yy+1;y2++){ for(i=0;i<seasons.length;i++){ arr.push({idx:i,date:startDate(i,y2)}); } }
+      arr.sort(function(a,b){ return a.date-b.date; });
+      var cur=null,next=null;
+      for(i=0;i<arr.length;i++){ if(arr[i].date<=t){ cur=arr[i]; next=arr[i+1]||null; } }
+      return {cur:cur,next:next};
+    }
+
+    function build(){
+      var now=new Date(), y=now.getFullYear(), cm=now.getMonth()+1, cd=now.getDate();
+      var s='', i, a1, a2, mid, p, po, col, aa1, aa2;
+
+      // ---- تعريفات (تدرجات وظلال) ----
+      s+='<defs>'
+       +'<radialGradient id="faceG" cx="42%" cy="36%" r="78%">'
+         +'<stop offset="0%" stop-color="#FBF7EE"/><stop offset="68%" stop-color="#F1EBDB"/><stop offset="100%" stop-color="#E5DEC9"/>'
+       +'</radialGradient>'
+       +'<linearGradient id="bezelG" x1="0" y1="0" x2="0" y2="1">'
+         +'<stop offset="0%" stop-color="#EFD392"/><stop offset="34%" stop-color="#CBA44E"/>'
+         +'<stop offset="66%" stop-color="#9F7C32"/><stop offset="100%" stop-color="#79591F"/>'
+       +'</linearGradient>'
+       +'<radialGradient id="capG" cx="38%" cy="33%" r="72%">'
+         +'<stop offset="0%" stop-color="#F2DA94"/><stop offset="100%" stop-color="#94731F"/>'
+       +'</radialGradient>'
+       +'<filter id="sh" x="-25%" y="-25%" width="150%" height="150%">'
+         +'<feDropShadow dx="0" dy="7" stdDeviation="9" flood-color="#1a1208" flood-opacity="0.30"/>'
+       +'</filter>'
+       +'<filter id="hsh" x="-60%" y="-60%" width="220%" height="220%">'
+         +'<feDropShadow dx="0" dy="2.5" stdDeviation="2.5" flood-color="#000000" flood-opacity="0.35"/>'
+       +'</filter>'
+       +'</defs>';
+
+      // ---- الإطار + الوجه ----
+      s+='<circle cx="200" cy="200" r="228" fill="url(#bezelG)" filter="url(#sh)"/>';
+      s+='<circle cx="200" cy="200" r="227" fill="none" stroke="#6B5320" stroke-width="2"/>';
+      s+='<circle cx="200" cy="200" r="206" fill="none" stroke="#F6E9BC" stroke-width="2" opacity="0.75"/>';
+      s+='<circle cx="200" cy="200" r="204" fill="url(#faceG)" stroke="#D9CFAE" stroke-width="1"/>';
+
+      // ---- علامات الدقائق/الساعات ----
+      for(i=0;i<60;i++){
+        var ta=i*6, hour=(i%5===0), r1=hour?185:194, q=polar(r1,ta), w=polar(203,ta);
+        s+='<line x1="'+q.x+'" y1="'+q.y+'" x2="'+w.x+'" y2="'+w.y+'" stroke="'+(hour?'#20352A':'#AAA189')+'" stroke-width="'+(hour?2.6:1)+'" stroke-linecap="round"/>';
+      }
+
+      // ---- حلقة الفصول ----
+      var fasls=[
+        {n:'الشتاء',a1:dateAngle(12,1,y),a2:dateAngle(3,1,y),c:'#5B8DB8'},
+        {n:'الربيع',a1:dateAngle(3,1,y), a2:dateAngle(6,1,y), c:'#88B06A'},
+        {n:'الصيف', a1:dateAngle(6,1,y), a2:dateAngle(9,1,y), c:'#E08A33'},
+        {n:'الخريف',a1:dateAngle(9,1,y), a2:dateAngle(12,1,y),c:'#3F9E78'}
+      ];
+      for(i=0;i<4;i++){
+        s+='<path d="'+donut(90,68,fasls[i].a1,fasls[i].a2)+'" fill="'+fasls[i].c+'" fill-opacity="0.3"/>';
+        aa1=fasls[i].a1; aa2=fasls[i].a2; if(aa2<aa1) aa2+=360; mid=(aa1+aa2)/2; p=polar(79,mid);
+        s+='<text x="'+p.x+'" y="'+p.y+'" class="t-fasl">'+fasls[i].n+'</text>';
+      }
+
+      // ---- حلقة الأشهر ----
+      for(i=1;i<=12;i++){
+        a1=(i%12)*30-15; a2=(i%12)*30+15; col=midSeason(i).color;
+        s+='<path d="'+donut(148,94,a1,a2)+'" fill="'+col+'" fill-opacity="0.2"/>';
+        p=polar(94,a1); po=polar(148,a1);
+        s+='<line x1="'+po.x+'" y1="'+po.y+'" x2="'+p.x+'" y2="'+p.y+'" class="div"/>';
+        p=polar(123,(i%12)*30);
+        s+='<text x="'+p.x+'" y="'+p.y+'" class="t-month">'+monthsAr[i-1]+'</text>';
+      }
+
+      // ---- حلقة المواسم/النجوم ----
+      for(i=0;i<seasons.length;i++){
+        a1=dateAngle(seasons[i].m,seasons[i].d,y);
+        var nx=seasons[(i+1)%seasons.length];
+        a2=dateAngle(nx.m,nx.d,y);
+        s+='<path d="'+donut(170,152,a1,a2)+'" fill="'+seasons[i].color+'" fill-opacity="0.9"/>';
+        aa1=a1; aa2=a2; if(aa2<aa1) aa2+=360; mid=(aa1+aa2)/2; p=polar(182,mid);
+        s+='<text x="'+p.x+'" y="'+p.y+'" class="t-moosem">'+esc(seasons[i].name)+'</text>';
+      }
+
+      // ---- زخرفة وسط الساعة ----
+      s+='<circle cx="200" cy="200" r="50" fill="none" stroke="#C2933C" stroke-width="1" opacity="0.30"/>';
+
+      // ---- العقرب ----
+      var cs=seasons[curIdx(cm,cd)];
+      var ha=dateAngle(cm,cd,y);
+      s+='<g transform="rotate('+ha.toFixed(2)+' 200 200)" filter="url(#hsh)">';
+      s+='<polygon points="200,232 204.5,206 195.5,206" fill="#1B2A20"/>';        // الذيل
+      s+='<polygon points="200,44 206,120 201,206 199,206 194,120" fill="#1B2A20"/>'; // العقرب
+      s+='<circle cx="200" cy="51" r="5" fill="'+cs.color+'" stroke="#1B2A20" stroke-width="1"/>';
+      s+='</g>';
+      // مسمار الوسط
+      s+='<circle cx="200" cy="200" r="11" fill="url(#capG)" stroke="#6B5320" stroke-width="1"/>';
+      s+='<circle cx="200" cy="200" r="3.5" fill="#1B2A20"/>';
+
+      document.getElementById('clockSvg').innerHTML=s;
+
+      // ---- شريط اليوم ----
+      var ro=document.getElementById('readout');
+      ro.innerHTML='<span class="r-date">'+cd+' '+monthsAr[cm-1]+'</span>'
+        +'<span class="r-sep">·</span><span class="r-fasl">'+fasl(cm)+'</span>';
+
+      // ---- مربعا الموسم الحالي والقادم ----
+      var cn=findCN(now), curS=seasons[cn.cur.idx], nextS=seasons[cn.next.idx];
+      var tm=atMid(now);
+      var elapsed=Math.round((tm-cn.cur.date)/DAY);
+      var total=Math.round((cn.next.date-cn.cur.date)/DAY);
+      var remain=Math.round((cn.next.date-tm)/DAY);
+      var pct=total>0?Math.max(2,Math.min(100,Math.round(elapsed/total*100))):0;
+
+      var html=''
+        +'<div class="mbox" style="--ac:'+curS.color+'">'
+          +'<div class="mb-head"><span class="mb-dot"></span><span class="mb-label">الموسم الحالي</span></div>'
+          +'<div class="mb-name">'+esc(curS.name)+'</div>'
+          +'<div class="mb-bar"><i style="width:'+pct+'%"></i></div>'
+          +'<div class="mb-stats">'
+            +'<div class="mb-row"><span class="lbl">مضى</span><span class="val">'+elapsed+' <i>يوم</i></span></div>'
+            +'<div class="mb-row"><span class="lbl">باقي</span><span class="val">'+remain+' <i>يوم</i></span></div>'
+          +'</div>'
+          +'<div class="mb-feat">'+esc(curS.feat)+'</div>'
+        +'</div>'
+        +'<div class="mbox" style="--ac:'+nextS.color+'">'
+          +'<div class="mb-head"><span class="mb-dot"></span><span class="mb-label">الموسم القادم</span></div>'
+          +'<div class="mb-name">'+esc(nextS.name)+'</div>'
+          +'<div class="mb-stats">'
+            +'<div class="mb-row"><span class="lbl">يبدأ بعد</span><span class="val">'+remain+' <i>يوم</i></span></div>'
+          +'</div>'
+          +'<div class="mb-feat">'+esc(nextS.feat)+'</div>'
+        +'</div>';
+      document.getElementById('moosemBoxes').innerHTML=html;
+    }
+    build();
+  })();
+
+  // ===== ماذا نزرع هذا الشهر =====
+  (function(){
+    var box=document.getElementById('plantBox'); if(!box) return;
+    var monthsAr=['يناير','فبراير','مارس','إبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+    // التقويم الزراعي للكويت (أشهر الزراعة لكل محصول)
+    // لإضافة صورتك الخاصة لأي نبتة، ضع رابطها هكذا: {ar:'البامية',en:'Okra',img:'رابط-الصورة',m:[...]}
+    var CROPS=[
+      {ar:'الطماطم',en:'Tomato',m:[8,9]},
+      {ar:'الباذنجان',en:'Eggplant',m:[7,8]},
+      {ar:'الفلفل',en:'Bell pepper',m:[8,9]},
+      {ar:'الخيار',en:'Cucumber',m:[2,3,8,9]},
+      {ar:'الكوسا',en:'Zucchini',m:[2,3,8,9]},
+      {ar:'الفقوس',en:'Armenian cucumber',m:[8,9]},
+      {ar:'القرع',en:'Pumpkin',m:[8]},
+      {ar:'البامية',en:'Okra',m:[3,4,5,6,7,8,9]},
+      {ar:'الملوخية',en:'Corchorus olitorius',m:[3,4,5,6,7,8]},
+      {ar:'اللوبيا',en:'Cowpea',m:[3,4,5,6,7,8]},
+      {ar:'الرجلة',en:'Portulaca oleracea',m:[4,5,6,7,8]},
+      {ar:'الذرة الصفراء',en:'Maize',m:[2,5]},
+      {ar:'الذرة البيضاء',en:'Sorghum',m:[2,3,9,10]},
+      {ar:'البطاطس',en:'Potato',m:[2,3,10,11]},
+      {ar:'الجزر',en:'Carrot',m:[10,11]},
+      {ar:'الفجل',en:'Radish',m:[1,2,3,9,10,11]},
+      {ar:'الشمندر',en:'Beetroot',m:[9,10]},
+      {ar:'اللفت',en:'Turnip',m:[10,11]},
+      {ar:'البصل',en:'Onion',m:[9,10,11]},
+      {ar:'الثوم',en:'Garlic',m:[10,11]},
+      {ar:'الكراث',en:'Leek',m:[9,10]},
+      {ar:'الجرجير',en:'Arugula',m:[9,10,11]},
+      {ar:'السبانخ',en:'Spinach',m:[10,11]},
+      {ar:'الخس',en:'Lettuce',m:[2,3,10,11]},
+      {ar:'السلق',en:'Chard',m:[9,10,11]},
+      {ar:'الخبيزة',en:'Malva',m:[10,11,12]},
+      {ar:'الكزبرة',en:'Coriander',m:[2,3,10,11,12]},
+      {ar:'البقدونس',en:'Parsley',m:[1,10,11,12]},
+      {ar:'الشبت',en:'Dill',m:[10,11]},
+      {ar:'الكرفس',en:'Celery',m:[2,3,10,11]},
+      {ar:'النعناع',en:'Mint',m:[1,2,3,9,10]},
+      {ar:'الزعتر',en:'Thyme',m:[11,12]},
+      {ar:'الحلبة',en:'Fenugreek',m:[11,12]},
+      {ar:'القرنبيط',en:'Cauliflower',m:[9,10]},
+      {ar:'الملفوف',en:'Cabbage',m:[9,10]},
+      {ar:'الكرنب',en:'Brussels sprout',m:[9,10]},
+      {ar:'الفاصوليا',en:'Green bean',m:[9,10]},
+      {ar:'الفول',en:'Vicia faba',m:[10,11]},
+      {ar:'البازلاء',en:'Pea',m:[10,11]},
+      {ar:'أبو ركبة',en:'Kohlrabi',m:[9,10,11]}
+    ];
+    var leaf='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M11 20C6 19 4 14 5 8c6 0 10 2 11 8"/><path d="M16 4c4 0 4 6 1 9-2 2-5 2-7 0 0-5 2-9 6-9Z"/></svg>';
+    var m=new Date().getMonth()+1;
+    var list=CROPS.filter(function(c){ return c.m.indexOf(m)>=0; });
+
+    var intro='<div class="plant-intro">الأنسب للزراعة في <b>'+monthsAr[m-1]+'</b> بالكويت</div>';
+
+    if(list.length===0){
+      box.innerHTML=intro+'<div class="plant-empty">حرارة هذا الشهر مرتفعة جدًا في الكويت، ويُفضّل تأجيل الزراعة المكشوفة إلى الخريف، أو الاكتفاء بالمحاصيل داخل البيوت المحمية.</div>';
+      return;
+    }
+
+    if(list.length<=6){
+      var cols=list.length<=2?list.length:(list.length<=4?2:3);
+      var h=intro+'<div class="plant-grid" style="grid-template-columns:repeat('+cols+',1fr)">';
+      list.forEach(function(c,i){
+        h+='<div class="plant"><div class="plant-name">'+c.ar+'</div>'
+          +'<div class="plant-pic"><span class="plant-fallback">'+leaf+'</span>'
+          +'<img class="plant-img" id="pi'+i+'" alt="'+c.ar+'" onerror="this.style.display=\'none\'"></div></div>';
+      });
+      h+='</div>';
+      box.innerHTML=h;
+      list.forEach(function(c,i){
+        var el=document.getElementById('pi'+i);
+        if(c.img){ el.src=c.img; }      // صورة يدوية إن وُجدت
+        else { loadImg(c.en, el); }      // وإلا تلقائيًا من ويكيبيديا
+      });
+    } else {
+      var hc=intro+'<div class="plant-chips">';
+      list.forEach(function(c){ hc+='<span class="chip"><span class="chip-dot"></span>'+c.ar+'</span>'; });
+      hc+='</div>';
+      box.innerHTML=hc;
+    }
+
+    function loadImg(title,el){
+      if(!el) return;
+      var u='https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageimages&piprop=thumbnail&pithumbsize=320&redirects=1&titles='+encodeURIComponent(title)+'&origin=*';
+      fetch(u).then(function(r){ return r.json(); }).then(function(d){
+        var pg=d.query&&d.query.pages, k, src=null;
+        for(k in pg){ if(pg[k].thumbnail&&pg[k].thumbnail.source) src=pg[k].thumbnail.source; }
+        if(src){ el.src=src; }
+      }).catch(function(){});
+    }
+  })();
+
+  // ===== القمر الليلة =====
+  (function(){
+    var box=document.getElementById('moonBox'); if(!box) return;
+    var SYN=29.530588853;
+    function phase(date){ var JD=date.getTime()/86400000+2440587.5; var p=((JD-2451550.1)/SYN)%1; if(p<0)p+=1; return p; }
+    function pname(p){
+      if(p<0.0625||p>=0.9375) return 'المحاق';
+      if(p<0.1875) return 'هلال متزايد';
+      if(p<0.3125) return 'التربيع الأول';
+      if(p<0.4375) return 'أحدب متزايد';
+      if(p<0.5625) return 'بدر';
+      if(p<0.6875) return 'أحدب متناقص';
+      if(p<0.8125) return 'التربيع الأخير';
+      return 'هلال متناقص';
+    }
+    function litPath(R,p){
+      var rx=Math.abs(R*Math.cos(2*Math.PI*p)).toFixed(2), d;
+      if(p<=0.25)      d='M0,'+(-R)+' A'+R+','+R+' 0 0 1 0,'+R+' A'+rx+','+R+' 0 0 0 0,'+(-R)+' Z';
+      else if(p<=0.5)  d='M0,'+(-R)+' A'+R+','+R+' 0 0 1 0,'+R+' A'+rx+','+R+' 0 0 1 0,'+(-R)+' Z';
+      else if(p<=0.75) d='M0,'+(-R)+' A'+R+','+R+' 0 0 0 0,'+R+' A'+rx+','+R+' 0 0 0 0,'+(-R)+' Z';
+      else             d='M0,'+(-R)+' A'+R+','+R+' 0 0 0 0,'+R+' A'+rx+','+R+' 0 0 1 0,'+(-R)+' Z';
+      return d;
+    }
+    function build(){
+      var now=new Date(), p=phase(now), R=46;
+      var illum=Math.round((1-Math.cos(2*Math.PI*p))/2*100), age=Math.round(p*SYN);
+      var lit = illum>1
+        ? '<path d="'+litPath(R,p)+'" fill="url(#moonG)" clip-path="url(#moonClip)"/>'
+          +'<g clip-path="url(#litClip)" opacity="0.5">'
+            +'<ellipse cx="-14" cy="-12" rx="8" ry="7" fill="#C7B68C"/>'
+            +'<ellipse cx="10" cy="6" rx="6" ry="5.5" fill="#C7B68C"/>'
+            +'<ellipse cx="-4" cy="18" rx="5" ry="4.5" fill="#C7B68C"/>'
+            +'<ellipse cx="18" cy="-16" rx="3.5" ry="3.5" fill="#C7B68C"/>'
+          +'</g>'
+        : '';
+      var moon='<svg viewBox="-60 -60 120 120" width="104" height="104" aria-hidden="true">'
+        +'<defs>'
+          +'<radialGradient id="moonG" cx="38%" cy="34%" r="72%"><stop offset="0%" stop-color="#FCF7EA"/><stop offset="70%" stop-color="#EBDDBF"/><stop offset="100%" stop-color="#CFBE94"/></radialGradient>'
+          +'<radialGradient id="glowG" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#D9E2FF" stop-opacity="0.5"/><stop offset="100%" stop-color="#D9E2FF" stop-opacity="0"/></radialGradient>'
+          +'<clipPath id="moonClip"><circle cx="0" cy="0" r="'+R+'"/></clipPath>'
+          +'<clipPath id="litClip"><path d="'+litPath(R,p)+'"/></clipPath>'
+        +'</defs>'
+        +'<circle cx="0" cy="0" r="58" fill="url(#glowG)"/>'
+        +'<circle cx="0" cy="0" r="'+R+'" fill="#222C4A"/>'
+        +lit
+        +'<circle cx="0" cy="0" r="'+R+'" fill="none" stroke="rgba(255,255,255,0.16)" stroke-width="1"/>'
+        +'</svg>';
+
+      var stars='<svg class="moon-stars" viewBox="0 0 100 44" preserveAspectRatio="none">'
+        +'<circle cx="12" cy="9" r="0.7"/><circle cx="28" cy="20" r="0.5"/><circle cx="44" cy="7" r="0.8"/>'
+        +'<circle cx="60" cy="16" r="0.5"/><circle cx="73" cy="6" r="0.7"/><circle cx="20" cy="34" r="0.5"/>'
+        +'<circle cx="52" cy="32" r="0.6"/><circle cx="86" cy="26" r="0.6"/></svg>';
+
+      box.innerHTML=stars
+        +'<div class="moon-art">'+moon+'</div>'
+        +'<div class="moon-txt">'
+          +'<div class="moon-eye">القمر الليلة</div>'
+          +'<div class="moon-name">'+pname(p)+'</div>'
+          +'<div class="moon-meta">مضيء '+illum+'٪ · عمره '+age+' يوم</div>'
+        +'</div>';
+    }
+    build();
+  })();
+
+  // ===== الطقس (Open-Meteo) =====
+  (function(){
+    var elT=document.getElementById('wxToday'), elD=document.getElementById('wxDays');
+    if(!elT||!elD) return;
+    var LAT=29.38, LON=47.99; // الكويت
+    var wd=['أحد','اثنين','ثلاثاء','أربعاء','خميس','جمعة','سبت'];
+    var COND={
+      clear:{name:'صحو',cls:'c-clear'}, pcloudy:{name:'غائم جزئي',cls:'c-pcloudy'},
+      cloudy:{name:'غائم',cls:'c-cloudy'}, fog:{name:'ضباب',cls:'c-fog'},
+      rain:{name:'ممطر',cls:'c-rain'}, thunder:{name:'رعد',cls:'c-thunder'}, dust:{name:'عجاج',cls:'c-dust'}
+    };
+    function cond(code,wind,pp){
+      if(code>=95) return 'thunder';
+      if((code>=51&&code<=67)||(code>=80&&code<=86)) return 'rain';
+      if(code===45||code===48) return 'fog';
+      if(wind!=null && wind>=35) return 'dust';   // تقدير العجاج بالرياح القوية
+      if(code===3) return 'cloudy';
+      if(code===2) return 'pcloudy';
+      return 'clear';
+    }
+    function icon(t){
+      var p={
+        clear:'<circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.4M12 19.6V22M2 12h2.4M19.6 12H22M4.9 4.9l1.7 1.7M17.4 17.4l1.7 1.7M19.1 4.9l-1.7 1.7M6.6 17.4l-1.7 1.7"/>',
+        pcloudy:'<circle cx="8" cy="7.5" r="3"/><path d="M8 2.5V4M2.5 7.5H4M4.3 3.8l1 1"/><path d="M7 19h9a3.4 3.4 0 0 0 .3-6.8A5 5 0 0 0 7 13.5 3 3 0 0 0 7 19Z"/>',
+        cloudy:'<path d="M7 18h10a4 4 0 0 0 .4-8 6 6 0 0 0-11.6 1.5A3.4 3.4 0 0 0 7 18Z"/>',
+        fog:'<path d="M6 13h10a3.4 3.4 0 0 0 .3-6.8A5.4 5.4 0 0 0 6 8.5 3 3 0 0 0 6 13Z"/><path d="M4 16.5h12M7 20h10"/>',
+        rain:'<path d="M7 14h10a3.4 3.4 0 0 0 .3-6.8A5.4 5.4 0 0 0 7 9.5 3 3 0 0 0 7 14Z"/><path d="M8 17l-1 3M12 17l-1 3M16 17l-1 3"/>',
+        thunder:'<path d="M7 13h10a3.4 3.4 0 0 0 .3-6.8A5.4 5.4 0 0 0 7 8.5 3 3 0 0 0 7 13Z"/><path d="M12.5 14l-2.5 3.8h3L11 22"/>',
+        dust:'<path d="M3 8h11a2.5 2.5 0 1 0-2.4-3.2"/><path d="M3 12h15a2.5 2.5 0 1 1-2.4 3.2"/><path d="M3 16h9a2 2 0 1 1-1.9 2.6"/>'
+      };
+      return '<svg class="icn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+p[t]+'</svg>';
+    }
+    function dailyHum(h,ds){
+      if(!h||!h.time) return null; var s=0,n=0,j;
+      for(j=0;j<h.time.length;j++){ if(h.time[j].indexOf(ds)===0){ s+=h.relative_humidity_2m[j]; n++; } }
+      return n?Math.round(s/n):null;
+    }
+    function num(v){ return (v==null)?'—':Math.round(v); }
+
+    function render(data){
+      var cur=data.current||{}, d=data.daily||{}, h=data.hourly, i;
+      var wMax=d.wind_speed_10m_max||[], pProb=d.precipitation_probability_max||[];
+      var c=cond(cur.weather_code, wMax[0], pProb[0]||0), info=COND[c];
+      elT.className='wx-today '+info.cls;
+      elT.innerHTML=
+        '<div class="wt-top"><span class="wt-label">طقس اليوم · الكويت</span></div>'
+        +'<div class="wt-main">'
+          +'<div class="wt-ic">'+icon(c)+'</div>'
+          +'<div class="wt-temp">'+num(cur.temperature_2m)+'°</div>'
+          +'<div class="wt-info"><div class="wt-cond">'+info.name+'</div>'
+            +'<div class="wt-feel">إحساس '+num(cur.apparent_temperature)+'°</div></div>'
+        +'</div>'
+        +'<div class="wt-stats">'
+          +'<div><span>الرطوبة</span><b>'+num(cur.relative_humidity_2m)+'%</b></div>'
+          +'<div><span>الرياح</span><b>'+num(cur.wind_speed_10m)+' كم/س</b></div>'
+          +'<div><span>احتمال المطر</span><b>'+(pProb[0]!=null?pProb[0]:0)+'%</b></div>'
+          +'<div><span>العظمى / الصغرى</span><b>'+num(d.temperature_2m_max&&d.temperature_2m_max[0])+'° / '+num(d.temperature_2m_min&&d.temperature_2m_min[0])+'°</b></div>'
+        +'</div>';
+
+      var html='';
+      for(i=1;i<=6;i++){
+        if(!d.time||d.time[i]==null) break;
+        var cc=cond(d.weather_code[i], wMax[i], pProb[i]||0), ci=COND[cc];
+        var dt=new Date(d.time[i]+'T00:00'), hum=dailyHum(h,d.time[i]);
+        html+='<div class="wx-day '+ci.cls+'">'
+          +'<div class="wd-day">'+wd[dt.getDay()]+'</div>'
+          +'<div class="wd-ic">'+icon(cc)+'</div>'
+          +'<div class="wd-temp">'+num(d.temperature_2m_max[i])+'°</div>'
+          +'<div class="wd-hum"><svg viewBox="0 0 24 24" width="9" height="11" fill="currentColor"><path d="M12 3c4 6 6 9 6 12a6 6 0 0 1-12 0c0-3 2-6 6-12Z"/></svg>'+(hum!=null?hum+'%':'—')+'</div>'
+        +'</div>';
+      }
+      elD.innerHTML=html;
+    }
+    function fail(){
+      elT.className='wx-today';
+      elT.innerHTML='<div class="wx-msg">تعذّر جلب الطقس الآن<br><button class="wx-retry" id="wxRetry">إعادة المحاولة</button></div>';
+      elD.innerHTML='';
+      var b=document.getElementById('wxRetry'); if(b) b.onclick=load;
+    }
+
+    var url='https://api.open-meteo.com/v1/forecast?latitude='+LAT+'&longitude='+LON
+      +'&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m,precipitation'
+      +'&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max'
+      +'&hourly=relative_humidity_2m&timezone=auto&forecast_days=7&wind_speed_unit=kmh';
+
+    function load(){
+      elT.className='wx-today'; elT.innerHTML='<div class="wx-loading">يتم جلب حالة الطقس…</div>'; elD.innerHTML='';
+      try{
+        fetch(url,{cache:'no-store'}).then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(render).catch(fail);
+      }catch(e){ fail(); }
+    }
+    load();
+  })();
+
+  // إخفاء نص "مساحة إعلانية" إذا أُضيفت صورة
+  (function(){
+    var slot=document.getElementById('adSlot'); if(!slot) return;
+    var img=slot.querySelector('img'), ph=slot.querySelector('.ad-ph');
+    if(img && img.getAttribute('src') && ph){ ph.style.display='none'; }
+  })();
+
+  // ===== الزوار + لوحة التحكم =====
+  (function(){
+    var mark=document.getElementById('mark'); if(!mark) return;
+    var ov=document.getElementById('adminOv');
+    var PASS='admin123'; // كلمة مرور لوحة التحكم — غيّرها
+    var db=null;
+
+    function getDB(){
+      if(db) return db;
+      try{
+        if(typeof firebase==='undefined') return null;
+        if(typeof WSM_FB==='undefined'||!WSM_FB.projectId||WSM_FB.projectId==='PASTE') return null;
+        if(!firebase.apps.length) firebase.initializeApp(WSM_FB);
+        db=firebase.firestore(); return db;
+      }catch(e){ return null; }
+    }
+    function ymd(d){ return d.toISOString().slice(0,10); }
+    function $(id){ return document.getElementById(id); }
+
+    // ---- تسجيل زيارة (مرة واحدة باليوم لكل جهاز) ----
+    (function logVisit(){
+      var d=getDB(); if(!d) return;
+      var ds=ymd(new Date()), flag='wsm_v_'+ds, done=false;
+      try{ done=localStorage.getItem(flag)==='1'; }catch(e){}
+      if(done) return;
+      function write(cc){
+        try{
+          var inc=firebase.firestore.FieldValue.increment(1);
+          var obj={date:ds,total:inc,c:{}}; obj.c[cc]=inc;
+          d.collection('wsm_stats').doc(ds).set(obj,{merge:true}).then(function(){ try{localStorage.setItem(flag,'1');}catch(e){} });
+        }catch(e){}
+      }
+      fetch('https://ipwho.is/?fields=success,country_code').then(function(r){return r.json();})
+        .then(function(g){ write((g&&g.country_code)?g.country_code:'غير معروف'); })
+        .catch(function(){ write('غير معروف'); });
+    })();
+
+    if(!ov) return;
+    var CN={KW:'الكويت',SA:'السعودية',AE:'الإمارات',QA:'قطر',BH:'البحرين',OM:'عُمان',IQ:'العراق',EG:'مصر',JO:'الأردن',SY:'سوريا',LB:'لبنان',PS:'فلسطين',YE:'اليمن',SD:'السودان',LY:'ليبيا',TN:'تونس',DZ:'الجزائر',MA:'المغرب',US:'أمريكا',GB:'بريطانيا',IN:'الهند',PK:'باكستان',BD:'بنغلاديش',PH:'الفلبين',ID:'إندونيسيا',TR:'تركيا',IR:'إيران',DE:'ألمانيا',FR:'فرنسا',CA:'كندا',AU:'أستراليا'};
+    function cname(c){ return CN[c]||c; }
+
+    var taps=0,t=null;
+    mark.addEventListener('click',function(){
+      taps++; clearTimeout(t); t=setTimeout(function(){taps=0;},1500);
+      if(taps>=5){ taps=0; openLogin(); }
+    });
+    function openLogin(){ ov.hidden=false; $('adminDash').hidden=true; $('adminLogin').hidden=false; $('adminErr').textContent=''; $('adminPass').value=''; }
+    $('adminX').onclick=function(){ ov.hidden=true; };
+    $('adminLoginBtn').onclick=function(){
+      if($('adminPass').value===PASS){ $('adminLogin').hidden=true; $('adminDash').hidden=false; setActive('today'); setRange('today'); }
+      else $('adminErr').textContent='كلمة المرور غير صحيحة';
+    };
+    var filters=$('admFilters');
+    filters.addEventListener('click',function(e){
+      var b=e.target; while(b&&b.tagName!=='BUTTON') b=b.parentNode; if(!b) return;
+      var r=b.getAttribute('data-r'); setActive(r);
+      if(r==='custom'){ $('admRange').hidden=false; } else { $('admRange').hidden=true; setRange(r); }
+    });
+    function setActive(r){ var bs=filters.children,i; for(i=0;i<bs.length;i++){ bs[i].classList.toggle('active', bs[i].getAttribute('data-r')===r); } }
+    $('admGo').onclick=function(){ var f=$('admFrom').value, to=$('admTo').value; if(f&&to) query(f,to); };
+    function setRange(r){
+      var now=new Date(), to=ymd(now), from;
+      if(r==='today') from=to;
+      else if(r==='month') from=to.slice(0,8)+'01';
+      else from='2020-01-01';
+      query(from,to);
+    }
+    function query(from,to){
+      var d=getDB(), note=$('admNote');
+      if(!d){ note.textContent='لم يتم ربط قاعدة البيانات بعد — أضف إعدادات Firebase أعلى الكود.'; $('admTotal').textContent='—'; $('admCountries').innerHTML=''; $('admChart').innerHTML=''; return; }
+      note.textContent='جارٍ التحميل…';
+      d.collection('wsm_stats').where('date','>=',from).where('date','<=',to).get().then(function(snap){
+        var total=0, bc={}, daily=[];
+        snap.forEach(function(doc){ var x=doc.data(); total+=x.total||0; daily.push({date:x.date,total:x.total||0}); if(x.c){ for(var k in x.c) bc[k]=(bc[k]||0)+x.c[k]; } });
+        daily.sort(function(a,b){ return a.date<b.date?-1:1; });
+        render(total,bc,daily); note.textContent='';
+      }).catch(function(){ note.textContent='تعذّر قراءة الإحصائيات. تأكد من قواعد Firestore.'; });
+    }
+    function render(total,bc,daily){
+      $('admTotal').textContent=total;
+      var dd=daily.slice(-30), max=1, i, ch='';
+      for(i=0;i<dd.length;i++){ if(dd[i].total>max) max=dd[i].total; }
+      for(i=0;i<dd.length;i++){ var hgt=Math.round(dd[i].total/max*100); ch+='<div class="bar" style="height:'+Math.max(3,hgt)+'%" title="'+dd[i].date+': '+dd[i].total+'"></div>'; }
+      $('admChart').innerHTML=ch || '<div style="color:var(--muted);font-size:.85rem">لا توجد بيانات</div>';
+      var arr=[],k; for(k in bc){ arr.push([k,bc[k]]); }
+      arr.sort(function(a,b){ return b[1]-a[1]; });
+      var html='';
+      for(i=0;i<arr.length;i++){
+        var pct=total>0?Math.round(arr[i][1]/total*100):0;
+        html+='<div class="crow"><span class="cname">'+cname(arr[i][0])+'</span><span class="cbar"><i style="width:'+pct+'%"></i></span><span class="ccount">'+arr[i][1]+'</span></div>';
+      }
+      $('admCountries').innerHTML=html || '<div style="color:var(--muted);font-size:.85rem">—</div>';
+    }
+  })();
+</script>
+</body>
+</html>
