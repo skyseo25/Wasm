@@ -220,26 +220,42 @@
     background:var(--paper-2);color:var(--soil);font-size:1.4rem;line-height:1;cursor:pointer;display:grid;place-items:center}
   .cal-htext .t{font-family:'Reem Kufi',sans-serif;font-size:1.5rem;font-weight:700;color:var(--soil);line-height:1.1}
   .cal-htext .s{font-family:'Cairo',sans-serif;font-size:.8rem;color:var(--muted);font-weight:600;margin-top:2px}
-  .cal-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px;padding:16px;max-width:1120px;margin:0 auto;align-items:start}
-  .cal-month{background:var(--paper-2);border:1px solid var(--line);border-radius:18px;overflow:hidden;
-    display:flex;flex-direction:column;box-shadow:0 6px 16px -14px rgba(32,53,42,.5)}
-  .cal-m-head{padding:11px 13px;color:#fff;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:7px}
-  .cal-m-name{font-family:'Reem Kufi',sans-serif;font-size:1.2rem;font-weight:700;text-shadow:0 1px 2px rgba(0,0,0,.2)}
-  .cal-m-count{font-family:'Cairo',sans-serif;font-size:.72rem;font-weight:700;background:rgba(255,255,255,.26);
-    padding:3px 9px;border-radius:20px;white-space:nowrap}
-  .cal-chips{display:flex;flex-wrap:wrap;gap:6px;padding:11px 11px 13px}
-  .cal-chip{font-family:'Cairo',sans-serif;font-size:.79rem;font-weight:600;color:var(--soil);
-    background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:5px 10px;line-height:1.25}
-  .cal-empty{font-family:'Cairo',sans-serif;font-size:.82rem;color:var(--muted);font-weight:600;padding:13px 12px;line-height:1.7}
-  .cal-month.now{border-color:var(--gold);box-shadow:0 0 0 2px var(--gold),0 12px 24px -12px rgba(194,147,60,.6)}
-  .cal-badge{display:inline-flex;align-items:center;gap:5px;font-family:'Cairo',sans-serif;font-size:.72rem;font-weight:800;
-    color:#5A3D0E;background:linear-gradient(135deg,#F6DC92,#C2933C);padding:4px 11px;border-radius:20px;white-space:nowrap;
-    box-shadow:0 2px 7px -2px rgba(90,61,14,.5)}
+  .cal-grid{display:grid;grid-template-columns:1fr;gap:14px;padding:16px;max-width:1120px;margin:0 auto;align-items:start}
+  .cal-month{background:var(--paper-2);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+  .cal-m-head{display:flex;align-items:center;gap:9px;padding:11px 14px;border-top:3px solid var(--leaf);border-bottom:1px solid var(--line)}
+  .cal-m-dot{width:11px;height:11px;border-radius:50%;flex:none}
+  .cal-m-name{font-family:'Reem Kufi',sans-serif;font-size:1.22rem;font-weight:700;color:var(--soil)}
+  .cal-m-count{margin-right:auto;font-family:'Cairo',sans-serif;font-size:.74rem;font-weight:700;color:var(--muted);
+    background:var(--paper);border:1px solid var(--line);padding:3px 11px;border-radius:20px;white-space:nowrap}
+  .cal-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(94px,1fr));gap:8px;padding:13px 13px 15px}
+  .cal-item{display:flex;align-items:center;justify-content:center;text-align:center;min-height:40px;
+    background:var(--paper);border:1px solid var(--line);border-radius:11px;padding:7px 8px;line-height:1.3;
+    font-family:'Cairo',sans-serif;font-size:.81rem;font-weight:600;color:var(--soil)}
+  .cal-empty{font-family:'Cairo',sans-serif;font-size:.82rem;color:var(--muted);font-weight:600;padding:14px 13px;line-height:1.7}
+  .cal-month.now{border-color:var(--gold);box-shadow:0 0 0 2px var(--gold)}
+  .cal-badge{margin-right:auto;display:inline-flex;align-items:center;gap:6px;font-family:'Cairo',sans-serif;font-size:.74rem;font-weight:800;
+    color:#5A3D0E;background:linear-gradient(135deg,#F6DC92,#C2933C);padding:4px 12px;border-radius:20px;white-space:nowrap}
   .cal-now-dot{width:7px;height:7px;border-radius:50%;background:#5A3D0E;animation:pulse 1.6s ease-in-out infinite}
-  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(.7)}}
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.65)}}
   .card.cal-open{cursor:pointer}
-  @media (min-width:680px){.cal-grid{grid-template-columns:repeat(3,1fr)}}
-  @media (min-width:1000px){.cal-grid{grid-template-columns:repeat(4,1fr)}}
+  @media (min-width:680px){.cal-grid{grid-template-columns:1fr 1fr}}
+  /* مساحة إعلانية داخل التقويم (تمتد بعرض كامل) */
+  .cal-ad{grid-column:1/-1;display:block;border-radius:16px;overflow:hidden;text-decoration:none;color:inherit;
+    background:var(--paper-2);border:1px dashed var(--line);aspect-ratio:16/5;position:relative}
+  .cal-ad img{width:100%;height:100%;object-fit:cover;display:block}
+  .cal-ad .ad-ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--muted)}
+  .cal-ad .ad-ph svg{width:32px;height:32px;opacity:.55}
+  .cal-ad .ad-ph span{font-family:'Cairo',sans-serif;font-size:.9rem;font-weight:700;letter-spacing:.02em}
+  /* عمليات النخلة */
+  .pc-list{padding:5px 13px 12px}
+  .pc-item{display:flex;gap:11px;padding:11px 2px;border-bottom:1px dashed rgba(32,53,42,.13)}
+  .pc-item:last-child{border-bottom:none}
+  .pc-ic{flex:none;width:32px;height:32px;border-radius:10px;background:rgba(78,122,58,.13);color:var(--leaf);
+    display:grid;place-items:center;margin-top:1px}
+  .pc-ic svg{width:18px;height:18px}
+  .pc-txt{min-width:0}
+  .pc-txt .t{font-family:'Cairo',sans-serif;font-weight:700;font-size:.93rem;color:var(--soil);line-height:1.45}
+  .pc-txt .d{font-family:'Cairo',sans-serif;font-weight:500;font-size:.82rem;color:var(--muted);line-height:1.65;margin-top:2px}
 
   /* ===== تصميم اللابتوب / الشاشات الكبيرة ===== */
   @media (min-width:920px){
@@ -297,9 +313,9 @@
         <div class="ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg></div>
         <h3>التقويم الزراعي</h3>
       </div>
-      <div class="card">
-        <div class="ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3c4 5 6 8 6 11a6 6 0 1 1-12 0c0-3 2-6 6-11Z"/></svg></div>
-        <span class="soon">قريباً</span><h3>الري</h3>
+      <div class="card cal-open" id="cardPalm" role="button" tabindex="0">
+        <div class="ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V11"/><path d="M12 11c-1-3-4-5-8-4 3-2 6-1.5 8 1"/><path d="M12 11c1-3 4-5 8-4-3-2-6-1.5-8 1"/><path d="M12 11c-2-2.5-2-6 0-8 2 2 2 5.5 0 8"/><path d="M9 22h6"/></svg></div>
+        <h3>تقويم النخلة</h3>
       </div>
       <div class="card">
         <div class="ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21c5-3 7-7 7-11a7 7 0 0 0-14 0c0 4 2 8 7 11Z"/><path d="M12 12c0-3 2-5 2-5"/></svg></div>
@@ -393,6 +409,18 @@
     </div>
   </div>
   <div class="cal-grid" id="calGrid"></div>
+</div>
+
+<!-- ===== شاشة تقويم النخلة ===== -->
+<div class="cal-screen" id="palmScreen" hidden>
+  <div class="cal-top">
+    <button class="cal-back" id="palmBack" aria-label="رجوع">→</button>
+    <div class="cal-htext">
+      <div class="t">تقويم النخلة</div>
+      <div class="s">عمليات خدمة نخيل التمر في الكويت — شهرًا بشهر</div>
+    </div>
+  </div>
+  <div class="cal-grid" id="palmGrid"></div>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
@@ -1028,25 +1056,38 @@
       {ar:'فراولة', m:[9,10,11,12]}
     ];
 
+    /* مساحتان إعلانيتان داخل التقويم — لتفعيل إعلان: ضع رابط الصورة في img ورابط الإعلان في href */
+    var ADS=[ {img:'', href:'#'}, {img:'', href:'#'} ];
+    function adHTML(a){
+      var inner = a.img
+        ? '<img src="'+a.img+'" alt="إعلان">'
+        : '<div class="ad-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.7"/><path d="M21 16l-5-5L5 20"/></svg><span>مساحة إعلانية</span></div>';
+      return '<a class="cal-ad" href="'+(a.href||'#')+'"'+(a.img?' target="_blank" rel="noopener"':'')+'>'+inner+'</a>';
+    }
+
+    function hexRgba(h,a){ var n=parseInt(h.slice(1),16); return 'rgba('+((n>>16)&255)+','+((n>>8)&255)+','+(n&255)+','+a+')'; }
     function build(){
       var nowM=new Date().getMonth()+1, html='';
       for(var mo=1;mo<=12;mo++){
         var list=CROPS.filter(function(c){ return c.m.indexOf(mo)>=0; });
-        var isNow=(mo===nowM);
+        var isNow=(mo===nowM), col=COL[mo-1];
         html+='<div class="cal-month'+(isNow?' now':'')+'">';
-        html+='<div class="cal-m-head" style="background:'+COL[mo-1]+'">';
+        html+='<div class="cal-m-head" style="background:'+hexRgba(col,0.14)+';border-top-color:'+col+'">';
+        html+='<span class="cal-m-dot" style="background:'+col+'"></span>';
         html+='<span class="cal-m-name">'+MON[mo-1]+'</span>';
         if(isNow){ html+='<span class="cal-badge"><span class="cal-now-dot"></span>نحن هنا</span>'; }
         else { html+='<span class="cal-m-count">'+list.length+' صنف</span>'; }
         html+='</div>';
         if(list.length){
-          html+='<div class="cal-chips">';
-          for(var k=0;k<list.length;k++){ html+='<span class="cal-chip">'+list[k].ar+'</span>'; }
+          html+='<div class="cal-list">';
+          for(var k=0;k<list.length;k++){ html+='<div class="cal-item">'+list[k].ar+'</div>'; }
           html+='</div>';
         } else {
           html+='<div class="cal-empty">حرارة الشهر مرتفعة جدًا — يُفضّل الزراعة داخل البيوت المحمية فقط.</div>';
         }
         html+='</div>';
+        if(mo===4) html+=adHTML(ADS[0]);
+        if(mo===8) html+=adHTML(ADS[1]);
       }
       grid.innerHTML=html;
     }
@@ -1059,6 +1100,148 @@
     function bind(el,fn){ if(el){ el.addEventListener('click',function(e){ e.preventDefault(); fn(); }); } }
     bind(navCal,open); bind(document.getElementById('cardCal'),open);
     bind(document.getElementById('calBack'),close); bind(navHome,close);
+  })();
+</script>
+<script>
+  /* ===== تقويم النخلة — عمليات خدمة نخيل التمر شهريًا (الكويت/الخليج) ===== */
+  /* المصدر: الدليل السنوي لخدمة النخيل (د. عبدالباسط عودة - أكساد) + مراجع خليجية موثوقة */
+  (function(){
+    var screen=document.getElementById('palmScreen'); if(!screen) return;
+    var grid=document.getElementById('palmGrid');
+    var MON=['يناير','فبراير','مارس','إبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+    var COL=['#4F86C4','#5E91B8','#6FA85A','#8CA646','#C99A33','#DD8A33','#D7702F','#CC5A2C','#C58A3C','#3F9E78','#4FA38C','#4E83A8'];
+    function hexRgba(h,a){ var n=parseInt(h.slice(1),16); return 'rgba('+((n>>16)&255)+','+((n>>8)&255)+','+(n&255)+','+a+')'; }
+
+    var IC={
+      water:'<path d="M12 3c4 5 6 8 6 11a6 6 0 1 1-12 0c0-3 2-6 6-11Z"/>',
+      fert:'<path d="M12 22V11"/><path d="M12 11C9 11 7 9 7 6c3 0 5 2 5 5Z"/><path d="M12 9c0-3 2-5 5-5 0 3-2 5-5 5Z"/>',
+      flower:'<circle cx="12" cy="12" r="2.3"/><path d="M12 9.7V5M12 14.3V19M9.7 12H5M14.3 12H19M9.8 9.8 6.6 6.6M17.4 17.4l-3.2-3.2M14.2 9.8l3.2-3.2M6.6 17.4l3.2-3.2"/>',
+      cut:'<circle cx="6" cy="6" r="2.3"/><circle cx="6" cy="18" r="2.3"/><path d="M8 7.5 20 16M8 16.5 20 8"/>',
+      harvest:'<path d="M4 9h16l-1.4 9.2a2 2 0 0 1-2 1.8H7.4a2 2 0 0 1-2-1.8L4 9Z"/><path d="M9 9 11 4M15 9 13 4"/>',
+      shield:'<path d="M12 3l7 3v5c0 4.2-2.9 7.6-7 9-4.1-1.4-7-4.8-7-9V6l7-3Z"/><path d="m9.4 12 1.9 1.9L15 10.2"/>',
+      bag:'<path d="M6.5 8h11l-1 12h-9l-1-12Z"/><path d="M9 8a3 3 0 0 1 6 0"/>',
+      soil:'<path d="M12 3 2 8l10 5 10-5-10-5Z"/><path d="M2 13l10 5 10-5"/>',
+      sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.4 1.4M17.6 17.6 19 19M19 5l-1.4 1.4M6.4 17.6 5 19"/>'
+    };
+    function icon(k){ return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+(IC[k]||IC.fert)+'</svg>'; }
+
+    /* 12 شهر — كل شهر قائمة عمليات {ic, t:عنوان, d:شرح علمي مختصر} */
+    var PALM=[
+      [ /* يناير */
+        {ic:'cut',t:'التقليم والتكريب',d:'أفضل وقت لإزالة السعف الجاف والكَرَب والليف؛ الجو البارد يقلّل خطر سوسة النخيل عند التجريح.'},
+        {ic:'fert',t:'التسميد العضوي',d:'إضافة السماد البلدي المتحلل حول النخلة وخلطه بالتربة استعدادًا للموسم.'},
+        {ic:'soil',t:'خدمة التربة',d:'عزق سطح التربة حول الجذع لتهوية الجذور وتحسين امتصاص الماء.'},
+        {ic:'water',t:'ري معتدل',d:'الاحتياج المائي منخفض شتاءً؛ ريّة كل 10–15 يومًا تكفي عند عدم هطول الأمطار.'},
+        {ic:'shield',t:'فحص سوسة النخيل الحمراء',d:'فحص دوري للجذع والقمة وتغطية أي جروح ناتجة عن التقليم.'}
+      ],
+      [ /* فبراير */
+        {ic:'flower',t:'ظهور الطلع (الإغريض)',d:'متابعة تشقّق الطلع وتجهيز حبوب اللقاح من الفحول وفحص حيويتها.'},
+        {ic:'fert',t:'التسميد الكيماوي',d:'إضافة سماد متوازن (NPK) قبل العقد لدعم التزهير وتكوين الثمار.'},
+        {ic:'flower',t:'بدء التلقيح المبكر',d:'تلقيح الأصناف المبكرة عند تفتّح أول طلعة بوضع شماريخ الذكر في الأغاريض.'},
+        {ic:'fert',t:'فصل وزراعة الفسائل',d:'موسم مناسب لفصل الفسائل وزراعتها لاعتدال الحرارة وسرعة التجذير.'}
+      ],
+      [ /* مارس */
+        {ic:'flower',t:'التلقيح (ذروة الموسم)',d:'وضع شماريخ الذكر داخل الأغاريض الأنثوية، ويُعاد كل 7 أيام حتى انتهاء تشقّق الطلع.'},
+        {ic:'fert',t:'دفعة التسميد الربيعية',d:'سماد متوازن NPK مع سماد عضوي لدعم نمو الثمار حديثة العقد.'},
+        {ic:'shield',t:'مكافحة الدوباس (الجيل الربيعي)',d:'متابعة ظهور حشرة الدوباس على السعف والرش عند تجاوز الحد الاقتصادي.'},
+        {ic:'water',t:'زيادة الري تدريجيًا',d:'رفع معدّل الري مع ارتفاع الحرارة وبدء نشاط النمو.'}
+      ],
+      [ /* إبريل */
+        {ic:'flower',t:'استكمال التلقيح',d:'تلقيح الأصناف المتأخرة التي لم يكتمل تفتّح طلعها.'},
+        {ic:'cut',t:'خفّ الثمار',d:'إزالة بعض الشماريخ أو تقصيرها لتقليل التزاحم وتحسين حجم وجودة الثمار.'},
+        {ic:'cut',t:'التقويس والتحدير',d:'إنزال العذوق وتوزيعها بين السعف لتسهيل الخدمة والجداد لاحقًا.'},
+        {ic:'water',t:'زيادة الري',d:'ريّ منتظم لدعم نمو الثمار في طور الحبابوك.'}
+      ],
+      [ /* مايو */
+        {ic:'bag',t:'التحدير والتكييس',d:'تنزيل العذوق وتغطيتها بأكياس مثقّبة للحماية وتحسين النضج.'},
+        {ic:'cut',t:'استكمال خفّ الثمار',d:'إزالة الثمار الزائدة لمنع التزاحم وتوحيد النضج.'},
+        {ic:'shield',t:'مكافحة الآفات',d:'متابعة الدوباس والعنكبوت (الحميرة) وحفّار العذوق والرش عند الحاجة.'},
+        {ic:'water',t:'ري غزير منتظم',d:'زيادة عدد الريّات مع اشتداد الحرارة وحاجة الثمار النامية.'}
+      ],
+      [ /* يونيو */
+        {ic:'bag',t:'تكييس العذوق',d:'حماية الثمار في طور الخلال من الغبار والطيور وضربات الشمس.'},
+        {ic:'water',t:'ري غزير',d:'الاحتياج المائي في ذروته؛ تنظيم الري لتجنّب إجهاد النخلة وتشقّق الثمار.'},
+        {ic:'shield',t:'متابعة الآفات والطيور',d:'مراقبة حفّار/دودة الثمار وحماية العذوق من الطيور.'},
+        {ic:'sun',t:'إزالة السعف المتضرّر فقط',d:'تجنّب التقليم الجارح في موسم نشاط السوسة؛ يُكتفى بإزالة الجاف.'}
+      ],
+      [ /* يوليو */
+        {ic:'harvest',t:'بداية الجداد المبكر (الرطب)',d:'جني الأصناف المبكرة عند وصولها مرحلة الرطب وفرزها أولًا بأول.'},
+        {ic:'water',t:'ري غزير شبه يومي',d:'حاجة مائية عالية في أشد الحر؛ انتظام الري يحافظ على جودة الثمار.'},
+        {ic:'bag',t:'حماية العذوق',d:'استمرار التكييس لحماية الرطب من الطيور والدبابير.'},
+        {ic:'shield',t:'فحص سوسة النخيل',d:'الاستمرار بالفحص الدوري دون إحداث جروح.'}
+      ],
+      [ /* أغسطس */
+        {ic:'harvest',t:'ذروة الجداد (الحصاد)',d:'جني معظم الأصناف (رطب/تمر) وقصّ العذوق الناضجة وفرزها وتعبئتها.'},
+        {ic:'water',t:'ري منتظم',d:'الحفاظ على ريّ منتظم حتى انتهاء الحصاد لتجنّب جفاف الثمار.'},
+        {ic:'soil',t:'تنظيف أسفل النخلة',d:'جمع التمر المتساقط وتنظيف المحيط لتقليل جذب الآفات.'}
+      ],
+      [ /* سبتمبر */
+        {ic:'harvest',t:'استكمال جداد الأصناف المتأخرة',d:'جني ما تبقّى من العذوق الناضجة.'},
+        {ic:'fert',t:'التسميد الخريفي',d:'دفعة NPK مع سماد عضوي بعد الحصاد لتعويض النخلة وتقوية الجذور.'},
+        {ic:'fert',t:'فصل وزراعة الفسائل',d:'موسم خريفي مناسب لفصل الفسائل المجذّرة وزراعتها.'},
+        {ic:'shield',t:'مكافحة الدوباس (الجيل الخريفي)',d:'مراقبة الجيل الثاني من الدوباس والرش عند الحاجة.'},
+        {ic:'water',t:'تقليل الري تدريجيًا',d:'خفض معدّل الري مع بدء انخفاض الحرارة.'}
+      ],
+      [ /* أكتوبر */
+        {ic:'fert',t:'فصل وزراعة الفسائل (الموسم المثالي)',d:'اعتدال الحرارة يرفع نسبة نجاح زراعة الفسائل وتجذيرها.'},
+        {ic:'cut',t:'التكريب والتقليم',d:'إزالة السعف الجاف والعذوق الفارغة وتنظيف رأس النخلة.'},
+        {ic:'soil',t:'خدمة التربة والتسميد العضوي',d:'عزق التربة وإضافة السماد البلدي المتحلل حول النخلة.'},
+        {ic:'water',t:'تقليل الري',d:'خفض الريّات مع انخفاض الحرارة والاحتياج المائي.'}
+      ],
+      [ /* نوفمبر */
+        {ic:'fert',t:'استمرار زراعة الفسائل',d:'إكمال زراعة الفسائل والعناية بالمزروعة حديثًا.'},
+        {ic:'fert',t:'التسميد العضوي',d:'إضافة السماد العضوي حول النخلة وتغطيته بالتربة.'},
+        {ic:'water',t:'تقليل الري',d:'ريّة كل 10–14 يومًا تكفي مع برودة الجو.'},
+        {ic:'shield',t:'فحص وقائي للسوسة',d:'فحص دوري للجذع والفسائل للكشف المبكر عن الإصابة.'}
+      ],
+      [ /* ديسمبر */
+        {ic:'cut',t:'التقليم والتكريب الشتوي',d:'أفضل وقت لإزالة السعف الجاف والكَرَب لالتئام الجروح قبل نشاط السوسة.'},
+        {ic:'soil',t:'خدمة التربة',d:'عزق التربة وإضافة سماد عضوي حول منطقة الجذور.'},
+        {ic:'water',t:'ري قليل',d:'الاحتياج المائي منخفض؛ ريّ متباعد عند عدم هطول الأمطار.'},
+        {ic:'shield',t:'مكافحة وقائية للسوسة',d:'تغطية الجروح ومتابعة الفحص الدوري للنخيل والفسائل.'}
+      ]
+    ];
+
+    /* مساحتان إعلانيتان داخل التقويم — لتفعيل إعلان: ضع رابط الصورة في img ورابط الإعلان في href */
+    var ADS=[ {img:'', href:'#'}, {img:'', href:'#'} ];
+    function adHTML(a){
+      var inner = a.img
+        ? '<img src="'+a.img+'" alt="إعلان">'
+        : '<div class="ad-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.7"/><path d="M21 16l-5-5L5 20"/></svg><span>مساحة إعلانية</span></div>';
+      return '<a class="cal-ad" href="'+(a.href||'#')+'"'+(a.img?' target="_blank" rel="noopener"':'')+'>'+inner+'</a>';
+    }
+
+    function build(){
+      var nowM=new Date().getMonth()+1, html='';
+      for(var mo=1;mo<=12;mo++){
+        var ops=PALM[mo-1], isNow=(mo===nowM), col=COL[mo-1];
+        html+='<div class="cal-month'+(isNow?' now':'')+'">';
+        html+='<div class="cal-m-head" style="background:'+hexRgba(col,0.14)+';border-top-color:'+col+'">';
+        html+='<span class="cal-m-dot" style="background:'+col+'"></span>';
+        html+='<span class="cal-m-name">'+MON[mo-1]+'</span>';
+        if(isNow){ html+='<span class="cal-badge"><span class="cal-now-dot"></span>نحن هنا</span>'; }
+        else { html+='<span class="cal-m-count">'+ops.length+' عمليات</span>'; }
+        html+='</div><div class="pc-list">';
+        for(var k=0;k<ops.length;k++){
+          html+='<div class="pc-item"><span class="pc-ic">'+icon(ops[k].ic)+'</span>'
+              +'<span class="pc-txt"><span class="t">'+ops[k].t+'</span><span class="d">'+ops[k].d+'</span></span></div>';
+        }
+        html+='</div></div>';
+        if(mo===4) html+=adHTML(ADS[0]);
+        if(mo===8) html+=adHTML(ADS[1]);
+      }
+      grid.innerHTML=html;
+    }
+
+    var navHome=document.getElementById('navHome'), navCal=document.getElementById('navCal');
+    function open(){ build(); screen.hidden=false; screen.scrollTop=0; document.body.style.overflow='hidden';
+      if(navHome) navHome.classList.remove('active'); if(navCal) navCal.classList.remove('active'); }
+    function close(){ screen.hidden=true; document.body.style.overflow='';
+      if(navHome) navHome.classList.add('active'); }
+    function bind(el,fn){ if(el){ el.addEventListener('click',function(e){ e.preventDefault(); fn(); }); } }
+    bind(document.getElementById('cardPalm'),open);
+    bind(document.getElementById('palmBack'),close);
+    bind(navHome,close);
   })();
 </script>
 </body>
