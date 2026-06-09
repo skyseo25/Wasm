@@ -68,8 +68,8 @@
 
   /* نصوص داخل الساعة */
   .t-fasl{font-family:'Reem Kufi',sans-serif;font-size:12px;font-weight:600;fill:var(--soil);text-anchor:middle;dominant-baseline:central}
-  .t-month{font-family:'Cairo',sans-serif;font-size:12.5px;font-weight:700;fill:var(--ink);text-anchor:middle;dominant-baseline:central}
-  .t-moosem{font-family:'Cairo',sans-serif;font-size:9px;font-weight:600;fill:#3D4A3A;text-anchor:middle;dominant-baseline:central}
+  .t-month{font-family:'Cairo',sans-serif;font-size:10.5px;font-weight:500;fill:#8A8F80;text-anchor:middle;dominant-baseline:central}
+  .t-moosem{font-family:'Cairo',sans-serif;font-size:11.5px;font-weight:700;fill:#1F2E24;text-anchor:middle;dominant-baseline:central}
   .div{stroke:#FFFFFF;stroke-width:1;opacity:.5}
 
   .sections{padding:30px 16px 10px}
@@ -207,6 +207,35 @@
   .cbar i{display:block;height:100%;background:var(--leaf);border-radius:5px}
   .ccount{font-family:'Cairo',sans-serif;font-weight:800;color:var(--soil-2);font-size:.9rem}
   .admin-note{color:var(--muted);font-size:.85rem;margin-top:14px;text-align:center;line-height:1.8}
+
+  /* ===== تصميم اللابتوب / الشاشات الكبيرة ===== */
+  @media (min-width:920px){
+    body{font-size:18px}
+    .wrap{
+      max-width:1100px;padding:0 26px;
+      display:grid;grid-template-columns:1fr 1fr;
+      column-gap:32px;align-items:start;
+      grid-template-areas:
+        "brand    brand"
+        "clock    moon"
+        "clock    wx"
+        "sections sections"
+        "plant    plant"
+        "ad       ad"
+        "foot     foot";
+    }
+    header.brand{grid-area:brand;padding-top:48px}
+    .clock-card{grid-area:clock;align-self:start;margin-top:14px}
+    .moon-section{grid-area:moon;padding:14px 0 0}
+    .wx-section{grid-area:wx;padding:26px 0 0}
+    .sections{grid-area:sections;padding:38px 0 6px}
+    .plant-section{grid-area:plant;padding:38px 0 0}
+    #adSlot{grid-area:ad;margin:34px 0 0}
+    footer{grid-area:foot}
+    .clock-card svg{max-width:440px}
+    .grid{grid-template-columns:repeat(4,1fr)}
+    nav.tabbar{max-width:680px;border-left:1px solid var(--line);border-right:1px solid var(--line)}
+  }
 
   @media (prefers-reduced-motion:reduce){*{animation:none!important}.rainline{width:130px}}
 </style>
