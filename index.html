@@ -245,6 +245,39 @@
   .link-btn{display:inline-flex;align-items:center;gap:8px;background:var(--paper-2);border:1px solid var(--line);border-radius:12px;
     padding:11px 16px;text-decoration:none;color:var(--soil);font-family:'Cairo',sans-serif;font-weight:700;font-size:.95rem;box-shadow:0 2px 8px rgba(0,0,0,.04)}
   .link-btn svg{width:17px;height:17px;color:var(--leaf);flex:none}
+  /* ===== صفحة الإدارة (ملء الشاشة) ===== */
+  .dash-screen{position:fixed;inset:0;z-index:300;background:var(--paper);overflow-y:auto;-webkit-overflow-scrolling:touch}
+  .dash-screen[hidden]{display:none}
+  .dash-top{position:sticky;top:0;z-index:5;background:var(--soil);color:#fff;display:flex;align-items:center;gap:12px;padding:14px 16px;box-shadow:0 2px 14px rgba(0,0,0,.22)}
+  .dash-top h1{font-family:'Reem Kufi',sans-serif;font-size:1.28rem;font-weight:700;flex:1;margin:0}
+  .dash-x{flex:none;width:36px;height:36px;border-radius:10px;border:none;background:rgba(255,255,255,.16);color:#fff;font-size:1.3rem;line-height:1;cursor:pointer}
+  .dash-tabs{display:flex;gap:7px;overflow-x:auto;padding:12px 16px;background:var(--paper-2);border-bottom:1px solid var(--line);position:sticky;top:64px;z-index:4;-webkit-overflow-scrolling:touch}
+  .dash-tabs button{flex:none;padding:9px 15px;border:1px solid var(--line);background:var(--paper);border-radius:999px;font-family:'Cairo',sans-serif;font-weight:700;font-size:.85rem;color:var(--soil-2);cursor:pointer;white-space:nowrap}
+  .dash-tabs button.active{background:var(--leaf);color:#fff;border-color:var(--leaf)}
+  .dash-body{max-width:940px;margin:0 auto;padding:18px 16px 70px}
+  .dash-panel[hidden]{display:none}
+  .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:8px}
+  .kpi{background:var(--paper-2);border:1px solid var(--line);border-radius:16px;padding:16px 16px 15px;position:relative;overflow:hidden}
+  .kpi::before{content:"";position:absolute;top:0;right:0;width:5px;height:100%;background:var(--leaf)}
+  .kpi.g2::before{background:var(--gold)} .kpi.g3::before{background:var(--soil-2)} .kpi.g4::before{background:#4FA38C}
+  .kpi .v{font-family:'Cairo',sans-serif;font-weight:800;font-size:2.1rem;color:var(--soil);line-height:1}
+  .kpi .l{font-family:'Cairo',sans-serif;font-weight:700;color:var(--muted);font-size:.84rem;margin-top:7px}
+  .dash-sec-title{font-family:'Reem Kufi',sans-serif;font-size:1.18rem;color:var(--soil);font-weight:700;margin:24px 0 12px}
+  .dash-chart{display:flex;align-items:flex-end;gap:3px;height:120px;margin:6px 0 4px;overflow-x:auto;padding-bottom:4px}
+  .dash-chart .bar{flex:1;min-width:7px;background:var(--leaf);border-radius:4px 4px 0 0;opacity:.9;position:relative}
+  .dash-chart .bar.gold{background:var(--gold)}
+  .dash-card2{background:var(--paper-2);border:1px solid var(--line);border-radius:16px;padding:16px}
+  .toggle-row{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--paper-2);border:1px solid var(--line);border-radius:13px;padding:13px 15px;margin-bottom:10px}
+  .toggle-row .nm{font-family:'Reem Kufi',sans-serif;font-weight:700;color:var(--soil);font-size:1.02rem}
+  .toggle-row .ds{font-family:'Cairo',sans-serif;font-size:.78rem;color:var(--muted);margin-top:2px}
+  .art-row{display:flex;align-items:center;gap:8px;background:var(--paper-2);border:1px solid var(--line);border-radius:13px;padding:11px 13px;margin-bottom:10px;flex-wrap:wrap}
+  .art-row .t{flex:1;min-width:120px;font-family:'Reem Kufi',sans-serif;font-weight:700;color:var(--soil);font-size:1rem}
+  .art-row.off{opacity:.5}
+  .art-btn{flex:none;border:none;border-radius:9px;padding:7px 11px;font-family:'Cairo',sans-serif;font-weight:700;font-size:.78rem;cursor:pointer}
+  .art-edit{background:rgba(78,122,58,.14);color:var(--leaf)} .art-sus{background:#FBEAB9;color:#5A3D0E} .art-del{background:#F2DAD5;color:#C0392B}
+  .art-editor{background:var(--paper-2);border:1px solid var(--line);border-radius:16px;padding:16px;margin-top:6px}
+  .art-editor textarea{min-height:300px;font-size:.9rem;line-height:1.9}
+  .dash-note{color:var(--muted);font-size:.85rem;line-height:1.8;text-align:center;margin-top:14px}
 
   /* ===== التقويم الزراعي ===== */
   .cal-screen{position:fixed;inset:0;z-index:40;background:var(--paper);overflow-y:auto;-webkit-overflow-scrolling:touch;
@@ -402,16 +435,16 @@
     </div>
   </a>
 
-  <section class="plant-section">
+  <section class="plant-section" id="sec-plant">
     <div class="sec-head"><span>ماذا نزرع هذا الشهر</span><div class="ln"></div></div>
     <div class="plant-card" id="plantBox"></div>
   </section>
 
-  <section class="moon-section">
+  <section class="moon-section" id="sec-moon">
     <div class="moon-card" id="moonBox"></div>
   </section>
 
-  <section class="wx-section">
+  <section class="wx-section" id="sec-weather">
     <div class="sec-head"><span>الطقس</span><div class="ln"></div></div>
     <div class="wx-wrap">
       <div class="wx-today" id="wxToday"><div class="wx-loading">يتم جلب حالة الطقس…</div></div>
@@ -426,9 +459,9 @@
 
   <footer><span class="dot" id="adminDot"></span></footer>
 
-  <!-- لوحة التحكم (مخفية - ٥ ضغطات على وسم) -->
+  <!-- نافذة الدخول (٥ ضغطات على وسم) -->
   <div class="admin-ov" id="adminOv" hidden>
-    <div class="admin-box dash">
+    <div class="admin-box">
       <button class="admin-x" id="adminX">×</button>
       <div id="adminLogin">
         <h2 class="admin-h">لوحة التحكم</h2>
@@ -437,75 +470,124 @@
         <button class="admin-btn" id="adminLoginBtn">دخول</button>
         <div class="admin-err" id="adminErr"></div>
       </div>
-      <div id="adminDash" hidden>
-        <h2 class="admin-h">لوحة الإدارة</h2>
-        <div class="adm-tabs" id="admTabs">
-          <button data-t="visitors" class="active">الزوّار</button>
-          <button data-t="ads">الإعلانات</button>
-          <button data-t="links">الروابط</button>
-          <button data-t="settings">إعدادات</button>
-        </div>
+    </div>
+  </div>
 
-        <div class="adm-panel" id="panel-visitors">
-          <div class="admin-filters" id="admFilters">
-            <button data-r="today" class="active">اليوم</button>
-            <button data-r="month">هذا الشهر</button>
-            <button data-r="all">الكل</button>
-            <button data-r="custom">من - إلى</button>
-          </div>
-          <div class="admin-range" id="admRange" hidden>
-            <input type="date" id="admFrom"><span>إلى</span><input type="date" id="admTo">
-            <button class="admin-btn sm" id="admGo">عرض</button>
-          </div>
-          <div class="admin-total"><span id="admTotal">—</span><small>زائر</small></div>
-          <div class="admin-chart" id="admChart"></div>
-          <h3 class="admin-h3">حسب الدولة</h3>
-          <div class="admin-countries" id="admCountries"></div>
-          <div class="admin-note" id="admNote"></div>
-        </div>
+  <!-- صفحة الإدارة الكاملة -->
+  <div class="dash-screen" id="dashScreen" hidden>
+    <div class="dash-top">
+      <h1>لوحة إدارة وسم</h1>
+      <button class="dash-x" id="dashClose">×</button>
+    </div>
+    <div class="dash-tabs" id="dashTabs">
+      <button data-t="overview" class="active">نظرة عامة</button>
+      <button data-t="visitors">الزوّار</button>
+      <button data-t="articles">المقالات</button>
+      <button data-t="pages">الصفحات</button>
+      <button data-t="ads">الإعلانات</button>
+      <button data-t="links">الروابط</button>
+      <button data-t="settings">إعدادات</button>
+    </div>
+    <div class="dash-body">
 
-        <div class="adm-panel" id="panel-ads" hidden>
-          <p class="adm-hint">الصق رابط صورة الإعلان ورابط الوجهة. ارفع الصورة على أي موقع استضافة صور ثم الصق رابطها هنا.</p>
-          <div class="adm-card">
-            <h4>إعلان الرئيسية <label class="adm-switch"><input type="checkbox" id="ad0on"><span class="tg"></span>ظاهر</label></h4>
-            <div class="adm-field"><label>رابط الصورة</label><input type="url" id="ad0img" placeholder="https://...jpg"></div>
-            <div class="adm-field"><label>رابط الوجهة</label><input type="url" id="ad0href" placeholder="https://..."></div>
-            <img class="adm-prev" id="ad0prev" alt="">
-          </div>
-          <div class="adm-card">
-            <h4>إعلان التقويم (١) <label class="adm-switch"><input type="checkbox" id="ad1on"><span class="tg"></span>ظاهر</label></h4>
-            <div class="adm-field"><label>رابط الصورة</label><input type="url" id="ad1img" placeholder="https://...jpg"></div>
-            <div class="adm-field"><label>رابط الوجهة</label><input type="url" id="ad1href" placeholder="https://..."></div>
-            <img class="adm-prev" id="ad1prev" alt="">
-          </div>
-          <div class="adm-card">
-            <h4>إعلان التقويم (٢) <label class="adm-switch"><input type="checkbox" id="ad2on"><span class="tg"></span>ظاهر</label></h4>
-            <div class="adm-field"><label>رابط الصورة</label><input type="url" id="ad2img" placeholder="https://...jpg"></div>
-            <div class="adm-field"><label>رابط الوجهة</label><input type="url" id="ad2href" placeholder="https://..."></div>
-            <img class="adm-prev" id="ad2prev" alt="">
-          </div>
-          <button class="admin-btn" id="saveAds">حفظ الإعلانات</button>
-          <div class="adm-ok" id="adsOk"></div>
+      <div class="dash-panel" id="panel-overview">
+        <div class="kpi-grid">
+          <div class="kpi"><div class="v" id="kpiToday">—</div><div class="l">زوّار اليوم</div></div>
+          <div class="kpi g2"><div class="v" id="kpiWeek">—</div><div class="l">آخر ٧ أيام</div></div>
+          <div class="kpi g3"><div class="v" id="kpiMonth">—</div><div class="l">هذا الشهر</div></div>
+          <div class="kpi g4"><div class="v" id="kpiAll">—</div><div class="l">الإجمالي</div></div>
         </div>
+        <div class="dash-sec-title">حركة الزيارات (آخر ٣٠ يوم)</div>
+        <div class="dash-chart" id="ovChart"></div>
+        <div class="dash-note" id="ovNote"></div>
+      </div>
 
-        <div class="adm-panel" id="panel-links" hidden>
-          <p class="adm-hint">روابط تظهر في قسم «روابط مهمة» بالصفحة الرئيسية (إنستغرام، واتساب، الموقع…).</p>
-          <div id="linksEditor"></div>
-          <button class="adm-add" id="addLink">+ إضافة رابط</button>
-          <button class="admin-btn" id="saveLinks">حفظ الروابط</button>
-          <div class="adm-ok" id="linksOk"></div>
+      <div class="dash-panel" id="panel-visitors" hidden>
+        <div class="admin-filters" id="admFilters">
+          <button data-r="today" class="active">اليوم</button>
+          <button data-r="week">٧ أيام</button>
+          <button data-r="month">الشهر</button>
+          <button data-r="all">الكل</button>
+          <button data-r="custom">من - إلى</button>
         </div>
+        <div class="admin-range" id="admRange" hidden>
+          <input type="date" id="admFrom"><span>إلى</span><input type="date" id="admTo">
+          <button class="admin-btn sm" id="admGo">عرض</button>
+        </div>
+        <div class="admin-total"><span id="admTotal">—</span><small>زائر</small></div>
+        <div class="admin-chart" id="admChart"></div>
+        <div class="dash-sec-title">حسب الدولة</div>
+        <div class="admin-countries" id="admCountries"></div>
+        <div class="dash-sec-title">أوقات الزيارة (الساعة)</div>
+        <div class="dash-chart" id="admHours"></div>
+        <div class="dash-sec-title">مصدر الزيارة (من أين وصلوا)</div>
+        <div class="admin-countries" id="admRefs"></div>
+        <div class="admin-note" id="admNote"></div>
+      </div>
 
-        <div class="adm-panel" id="panel-settings" hidden>
-          <div class="adm-field"><label>العنوان الفرعي بالصفحة الرئيسية</label><input type="text" id="setSubtitle" placeholder="تقويم المواسم والزراعة في الخليج"></div>
-          <div class="adm-card">
-            <h4>شريط إعلان عاجل <label class="adm-switch"><input type="checkbox" id="setAnncOn"><span class="tg"></span>ظاهر</label></h4>
-            <div class="adm-field"><label>نص الإعلان</label><textarea id="setAnncText" placeholder="مثال: خصم خاص على أنظمة الري هذا الأسبوع"></textarea></div>
-          </div>
-          <div class="adm-field"><label>كلمة مرور اللوحة (اتركها فارغة لعدم التغيير)</label><input type="password" id="setPass" placeholder="كلمة مرور جديدة"></div>
-          <button class="admin-btn" id="saveSettings">حفظ الإعدادات</button>
-          <div class="adm-ok" id="setOk"></div>
+      <div class="dash-panel" id="panel-articles" hidden>
+        <p class="adm-hint">تحكّم كامل بالمقالات: تعديل، إضافة، تعليق (إخفاء مؤقّت)، أو حذف. أول مرة اضغط «استيراد المقالات الحالية» لنقل المقالات إلى قاعدة البيانات حتى تصبح قابلة للتعديل.</p>
+        <div id="artList"></div>
+        <button class="adm-add" id="artAdd">+ مقال جديد</button>
+        <button class="admin-btn" id="artSeed">استيراد المقالات الحالية (مرة واحدة)</button>
+        <div class="adm-ok" id="artOk"></div>
+        <div class="art-editor" id="artEditor" hidden>
+          <div class="adm-field"><label>عنوان المقال</label><input type="text" id="artTitle"></div>
+          <div class="adm-field"><label>المحتوى (يدعم وسوم HTML بسيطة مثل p و h2 و ul)</label><textarea id="artBody"></textarea></div>
+          <label class="adm-switch"><input type="checkbox" id="artOn" checked><span class="tg"></span>منشور</label>
+          <button class="admin-btn" id="artSave">حفظ المقال</button>
+          <button class="adm-add" id="artCancel">إلغاء</button>
         </div>
+      </div>
+
+      <div class="dash-panel" id="panel-pages" hidden>
+        <p class="adm-hint">شغّل أو علّق (أخفِ) أي قسم أو صفحة من الموقع. التعليق يخفيها عن الزوّار فورًا بعد الحفظ.</p>
+        <div id="pagesList"></div>
+        <button class="admin-btn" id="savePages">حفظ الصفحات</button>
+        <div class="adm-ok" id="pagesOk"></div>
+      </div>
+
+      <div class="dash-panel" id="panel-ads" hidden>
+        <p class="adm-hint">الصق رابط صورة الإعلان ورابط الوجهة. ارفع الصورة على أي موقع استضافة صور ثم الصق رابطها هنا.</p>
+        <div class="adm-card">
+          <h4>إعلان الرئيسية <label class="adm-switch"><input type="checkbox" id="ad0on"><span class="tg"></span>ظاهر</label></h4>
+          <div class="adm-field"><label>رابط الصورة</label><input type="url" id="ad0img" placeholder="https://...jpg"></div>
+          <div class="adm-field"><label>رابط الوجهة</label><input type="url" id="ad0href" placeholder="https://..."></div>
+          <img class="adm-prev" id="ad0prev" alt="">
+        </div>
+        <div class="adm-card">
+          <h4>إعلان التقويم (١) <label class="adm-switch"><input type="checkbox" id="ad1on"><span class="tg"></span>ظاهر</label></h4>
+          <div class="adm-field"><label>رابط الصورة</label><input type="url" id="ad1img" placeholder="https://...jpg"></div>
+          <div class="adm-field"><label>رابط الوجهة</label><input type="url" id="ad1href" placeholder="https://..."></div>
+          <img class="adm-prev" id="ad1prev" alt="">
+        </div>
+        <div class="adm-card">
+          <h4>إعلان التقويم (٢) <label class="adm-switch"><input type="checkbox" id="ad2on"><span class="tg"></span>ظاهر</label></h4>
+          <div class="adm-field"><label>رابط الصورة</label><input type="url" id="ad2img" placeholder="https://...jpg"></div>
+          <div class="adm-field"><label>رابط الوجهة</label><input type="url" id="ad2href" placeholder="https://..."></div>
+          <img class="adm-prev" id="ad2prev" alt="">
+        </div>
+        <button class="admin-btn" id="saveAds">حفظ الإعلانات</button>
+        <div class="adm-ok" id="adsOk"></div>
+      </div>
+
+      <div class="dash-panel" id="panel-links" hidden>
+        <p class="adm-hint">روابط تظهر في قسم «روابط مهمة» بالصفحة الرئيسية (إنستغرام، واتساب، الموقع…).</p>
+        <div id="linksEditor"></div>
+        <button class="adm-add" id="addLink">+ إضافة رابط</button>
+        <button class="admin-btn" id="saveLinks">حفظ الروابط</button>
+        <div class="adm-ok" id="linksOk"></div>
+      </div>
+
+      <div class="dash-panel" id="panel-settings" hidden>
+        <div class="adm-field"><label>العنوان الفرعي بالصفحة الرئيسية</label><input type="text" id="setSubtitle" placeholder="تقويم المواسم والزراعة في الخليج"></div>
+        <div class="adm-card">
+          <h4>شريط إعلان عاجل <label class="adm-switch"><input type="checkbox" id="setAnncOn"><span class="tg"></span>ظاهر</label></h4>
+          <div class="adm-field"><label>نص الإعلان</label><textarea id="setAnncText" placeholder="مثال: خصم خاص على أنظمة الري هذا الأسبوع"></textarea></div>
+        </div>
+        <div class="adm-field"><label>كلمة مرور اللوحة (اتركها فارغة لعدم التغيير)</label><input type="password" id="setPass" placeholder="كلمة مرور جديدة"></div>
+        <button class="admin-btn" id="saveSettings">حفظ الإعدادات</button>
+        <div class="adm-ok" id="setOk"></div>
       </div>
     </div>
   </div>
@@ -1028,25 +1110,29 @@
   (function(){
     var mark=document.getElementById('mark'); if(!mark) return;
     var ov=document.getElementById('adminOv');
-    var PASS='admin123'; // كلمة المرور الافتراضية
+    var dash=document.getElementById('dashScreen');
+    var PASS='admin123';
     var db=null;
 
-    window.WSM_CFG=window.WSM_CFG||{ads:[{},{},{}],links:[],subtitle:'',annOn:false,annText:'',pass:''};
-    var CFG=window.WSM_CFG;
+    window.WSM_CFG=window.WSM_CFG||{ads:[{},{},{}],links:[],subtitle:'',annOn:false,annText:'',pass:'',pages:{}};
+    var CFG=window.WSM_CFG; if(!CFG.pages) CFG.pages={}; if(!CFG.ads) CFG.ads=[{},{},{}];
 
-    function getDB(){
-      if(db) return db;
-      try{
+    function getDB(){ if(db) return db; try{
         if(typeof firebase==='undefined') return null;
         if(typeof WSM_FB==='undefined'||!WSM_FB.projectId||WSM_FB.projectId==='PASTE') return null;
         if(!firebase.apps.length) firebase.initializeApp(WSM_FB);
         db=firebase.firestore(); return db;
-      }catch(e){ return null; }
-    }
+      }catch(e){ return null; } }
     function ymd(d){ return d.toISOString().slice(0,10); }
     function $(id){ return document.getElementById(id); }
 
-    // ---- تسجيل زيارة (مرة واحدة باليوم لكل جهاز) ----
+    function referrerKey(){
+      try{ var r=document.referrer; if(!r) return 'مباشر';
+        var h=new URL(r).hostname.replace(/^www\./,''); if(!h) return 'مباشر';
+        if(location.hostname && h===location.hostname) return 'زيارة داخلية';
+        return h.replace(/\./g,'_');
+      }catch(e){ return 'مباشر'; }
+    }
     (function logVisit(){
       var d=getDB(); if(!d) return;
       var ds=ymd(new Date()), flag='wsm_v_'+ds, done=false;
@@ -1055,7 +1141,8 @@
       function write(cc){
         try{
           var inc=firebase.firestore.FieldValue.increment(1);
-          var obj={date:ds,total:inc,c:{}}; obj.c[cc]=inc;
+          var hr=''+(new Date().getHours()), rf=referrerKey();
+          var obj={date:ds,total:inc,c:{},h:{},r:{}}; obj.c[cc]=inc; obj.h[hr]=inc; obj.r[rf]=inc;
           d.collection('wsm_stats').doc(ds).set(obj,{merge:true}).then(function(){ try{localStorage.setItem(flag,'1');}catch(e){} });
         }catch(e){}
       }
@@ -1064,142 +1151,224 @@
         .catch(function(){ write('غير معروف'); });
     })();
 
-    // ---- إعلانات التقويم تقرأ من الإعدادات ----
     window.wsmCalAd=function(i){ var a=(CFG.ads&&CFG.ads[i+1])||{}; return {img:a.img||'', href:a.href||'#', on:a.on}; };
 
-    // ---- تطبيق الإعدادات على الصفحة العامة ----
-    function linkIcon(u){
-      u=(u||'').toLowerCase();
+    var CN={KW:'الكويت',SA:'السعودية',AE:'الإمارات',QA:'قطر',BH:'البحرين',OM:'عُمان',IQ:'العراق',EG:'مصر',JO:'الأردن',SY:'سوريا',LB:'لبنان',PS:'فلسطين',YE:'اليمن',SD:'السودان',LY:'ليبيا',TN:'تونس',DZ:'الجزائر',MA:'المغرب',US:'أمريكا',GB:'بريطانيا',IN:'الهند',PK:'باكستان',BD:'بنغلاديش',PH:'الفلبين',ID:'إندونيسيا',TR:'تركيا',IR:'إيران',DE:'ألمانيا',FR:'فرنسا',CA:'كندا',AU:'أستراليا'};
+    function cname(c){ return CN[c]||c; }
+
+    function show(el,on){ if(el) el.style.display = on?'':'none'; }
+    function linkIcon(u){ u=(u||'').toLowerCase();
       if(u.indexOf('wa.me')>=0||u.indexOf('whatsapp')>=0) return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.5 8.5 0 0 1-12.7 7.4L3 21l2.2-5.2A8.5 8.5 0 1 1 21 11.5Z"/></svg>';
       if(u.indexOf('instagram')>=0) return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>';
-      return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7 0l2-2a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-2 2a5 5 0 0 0 7 7l1-1"/></svg>';
-    }
+      return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7 0l2-2a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-2 2a5 5 0 0 0 7 7l1-1"/></svg>'; }
+    var PAGEMAP={ agri:['cardCal','navAgri'], palm:['cardPalm','navPalm'], sidr:['cardSidr','navSidr'], tips:['cardTips','navTips'], plant:['sec-plant'], moon:['sec-moon'], weather:['sec-weather'] };
     function applyPublic(){
-      // العنوان الفرعي
       var sub=$('subtitle'); if(sub&&CFG.subtitle) sub.textContent=CFG.subtitle;
-      // شريط الإعلان العاجل
       var an=$('annc'); if(an){ if(CFG.annOn&&CFG.annText){ an.textContent=CFG.annText; an.hidden=false; } else an.hidden=true; }
-      // إعلان الرئيسية
       var slot=$('adSlot');
-      if(slot){
-        if(!slot.getAttribute('data-ph')) slot.setAttribute('data-ph', slot.innerHTML);
-        var a0=CFG.ads&&CFG.ads[0]?CFG.ads[0]:{};
-        if(a0.on&&a0.img){ slot.href=a0.href||'#'; slot.setAttribute('target','_blank'); slot.setAttribute('rel','noopener');
-          slot.innerHTML='<img src="'+a0.img+'" alt="إعلان">'; }
-        else { slot.href='#'; slot.removeAttribute('target'); slot.innerHTML=slot.getAttribute('data-ph'); }
-      }
-      // الروابط المهمة
+      if(slot){ if(!slot.getAttribute('data-ph')) slot.setAttribute('data-ph',slot.innerHTML);
+        var a0=(CFG.ads&&CFG.ads[0])||{};
+        if(a0.on&&a0.img){ slot.href=a0.href||'#'; slot.setAttribute('target','_blank'); slot.setAttribute('rel','noopener'); slot.innerHTML='<img src="'+a0.img+'" alt="إعلان">'; }
+        else { slot.href='#'; slot.removeAttribute('target'); slot.innerHTML=slot.getAttribute('data-ph'); } }
       var lg=$('linksGrid'), ls=$('linksSec');
-      if(lg&&ls){
-        var L=CFG.links||[], h='', i;
-        for(i=0;i<L.length;i++){ if(!L[i]||!L[i].url||!L[i].label) continue;
-          h+='<a class="link-btn" href="'+L[i].url+'" target="_blank" rel="noopener">'+linkIcon(L[i].url)+'<span>'+L[i].label+'</span></a>'; }
-        lg.innerHTML=h; ls.hidden=!h;
-      }
+      if(lg&&ls){ var L=CFG.links||[], h='', i; for(i=0;i<L.length;i++){ if(!L[i]||!L[i].url||!L[i].label) continue; h+='<a class="link-btn" href="'+L[i].url+'" target="_blank" rel="noopener">'+linkIcon(L[i].url)+'<span>'+L[i].label+'</span></a>'; } lg.innerHTML=h; ls.hidden=!h; }
+      var P=CFG.pages||{}, k; for(k in PAGEMAP){ var on=(P[k]!==false); var ids=PAGEMAP[k],j; for(j=0;j<ids.length;j++){ show($(ids[j]), on); } }
     }
-    // ---- تحميل الإعدادات ----
-    (function loadCfg(){
-      var d=getDB();
-      if(!d){ applyPublic(); return; }
+
+    (function loadAll(){
+      var d=getDB(); if(!d){ applyPublic(); return; }
       d.collection('wsm_config').doc('site').get().then(function(doc){
         if(doc&&doc.exists){ var x=doc.data()||{};
           if(x.ads) CFG.ads=x.ads; if(x.links) CFG.links=x.links;
           if(typeof x.subtitle==='string') CFG.subtitle=x.subtitle;
           CFG.annOn=!!x.annOn; if(typeof x.annText==='string') CFG.annText=x.annText;
-          if(typeof x.pass==='string') CFG.pass=x.pass;
+          if(typeof x.pass==='string') CFG.pass=x.pass; if(x.pages) CFG.pages=x.pages;
         }
         applyPublic();
       }).catch(function(){ applyPublic(); });
+      loadArticlesPublic();
     })();
+    function loadArticlesPublic(){
+      var d=getDB(); if(!d) return;
+      d.collection('wsm_articles').orderBy('order').get().then(function(snap){
+        if(snap.empty){ window.WSM_ARTICLES=null; return; } var arr=[];
+        snap.forEach(function(doc){ var x=doc.data(); if(x.on!==false) arr.push({t:x.title,body:x.body}); });
+        window.WSM_ARTICLES=arr.length?arr:null;
+        if(window.wsmTipsRefresh) window.wsmTipsRefresh();
+      }).catch(function(){});
+    }
 
-    if(!ov) return;
-    var CN={KW:'الكويت',SA:'السعودية',AE:'الإمارات',QA:'قطر',BH:'البحرين',OM:'عُمان',IQ:'العراق',EG:'مصر',JO:'الأردن',SY:'سوريا',LB:'لبنان',PS:'فلسطين',YE:'اليمن',SD:'السودان',LY:'ليبيا',TN:'تونس',DZ:'الجزائر',MA:'المغرب',US:'أمريكا',GB:'بريطانيا',IN:'الهند',PK:'باكستان',BD:'بنغلاديش',PH:'الفلبين',ID:'إندونيسيا',TR:'تركيا',IR:'إيران',DE:'ألمانيا',FR:'فرنسا',CA:'كندا',AU:'أستراليا'};
-    function cname(c){ return CN[c]||c; }
+    if(!ov||!dash) return;
 
     var taps=0,t=null;
-    mark.addEventListener('click',function(){
-      taps++; clearTimeout(t); t=setTimeout(function(){taps=0;},1500);
-      if(taps>=5){ taps=0; openLogin(); }
-    });
-    function openLogin(){ ov.hidden=false; $('adminDash').hidden=true; $('adminLogin').hidden=false; $('adminErr').textContent=''; $('adminPass').value=''; }
+    mark.addEventListener('click',function(){ taps++; clearTimeout(t); t=setTimeout(function(){taps=0;},1500); if(taps>=5){ taps=0; openLogin(); } });
+    function openLogin(){ ov.hidden=false; $('adminErr').textContent=''; $('adminPass').value=''; }
     $('adminX').onclick=function(){ ov.hidden=true; };
+    $('dashClose').onclick=function(){ dash.hidden=true; document.body.style.overflow=''; };
     $('adminLoginBtn').onclick=function(){
-      if($('adminPass').value===(CFG.pass||PASS)){ $('adminLogin').hidden=true; $('adminDash').hidden=false; fillForms(); showTab('visitors'); setActive('today'); setRange('today'); }
+      if($('adminPass').value===(CFG.pass||PASS)){ ov.hidden=true; dash.hidden=false; document.body.style.overflow='hidden'; initDash(); }
       else $('adminErr').textContent='كلمة المرور غير صحيحة';
     };
+    $('adminPass').addEventListener('keydown',function(e){ if(e.key==='Enter') $('adminLoginBtn').click(); });
 
-    // ---- التبويبات ----
-    var tabs=$('admTabs');
-    if(tabs) tabs.addEventListener('click',function(e){ var b=e.target; while(b&&b.tagName!=='BUTTON') b=b.parentNode; if(!b) return; showTab(b.getAttribute('data-t')); });
+    var tabs=$('dashTabs');
+    tabs.addEventListener('click',function(e){ var b=e.target; while(b&&b.tagName!=='BUTTON') b=b.parentNode; if(!b) return; showTab(b.getAttribute('data-t')); });
+    var PANELS=['overview','visitors','articles','pages','ads','links','settings'];
     function showTab(name){
       var bs=tabs.children,i; for(i=0;i<bs.length;i++) bs[i].classList.toggle('active', bs[i].getAttribute('data-t')===name);
-      var names=['visitors','ads','links','settings'];
-      for(i=0;i<names.length;i++){ var p=$('panel-'+names[i]); if(p) p.hidden=(names[i]!==name); }
+      for(i=0;i<PANELS.length;i++){ var p=$('panel-'+PANELS[i]); if(p) p.hidden=(PANELS[i]!==name); }
+      dash.scrollTop=0;
+      if(name==='overview') renderOverview();
+      else if(name==='visitors'){ setRangeActive('today'); loadRange('today'); }
+      else if(name==='articles') refreshArticles();
+      else if(name==='pages') renderPages();
+    }
+    function initDash(){ fillForms(); showTab('overview'); }
+
+    var STATS=null;
+    function fetchStats(cb){
+      var d=getDB(); if(!d){ cb(false); return; }
+      if(STATS){ cb(true); return; }
+      d.collection('wsm_stats').get().then(function(snap){ STATS=[]; snap.forEach(function(doc){ STATS.push(doc.data()); }); STATS.sort(function(a,b){ return (a.date<b.date)?-1:1; }); cb(true); }).catch(function(){ cb(false); });
+    }
+    function aggregate(from,to){
+      var o={total:0,daily:[],c:{},h:{},r:{}},i,k; if(!STATS) return o;
+      for(i=0;i<STATS.length;i++){ var x=STATS[i]; if(!x.date||x.date<from||x.date>to) continue;
+        o.total+=x.total||0; o.daily.push({date:x.date,total:x.total||0});
+        if(x.c) for(k in x.c) o.c[k]=(o.c[k]||0)+x.c[k];
+        if(x.h) for(k in x.h) o.h[k]=(o.h[k]||0)+x.h[k];
+        if(x.r) for(k in x.r) o.r[k]=(o.r[k]||0)+x.r[k];
+      }
+      o.daily.sort(function(a,b){ return a.date<b.date?-1:1; }); return o;
+    }
+    function sumRange(from,to){ return aggregate(from,to).total; }
+
+    function renderOverview(){
+      var note=$('ovNote');
+      fetchStats(function(ok){
+        if(!ok){ note.textContent='لم يتم ربط قاعدة البيانات بعد.'; return; } note.textContent='';
+        var today=ymd(new Date());
+        var w=new Date(); w.setDate(w.getDate()-6); var wf=ymd(w);
+        var mf=today.slice(0,8)+'01';
+        $('kpiToday').textContent=sumRange(today,today);
+        $('kpiWeek').textContent=sumRange(wf,today);
+        $('kpiMonth').textContent=sumRange(mf,today);
+        $('kpiAll').textContent=sumRange('2020-01-01',today);
+        var a=aggregate('2020-01-01',today), dd=a.daily.slice(-30), max=1,i,ch='';
+        for(i=0;i<dd.length;i++) if(dd[i].total>max) max=dd[i].total;
+        for(i=0;i<dd.length;i++){ var hh=Math.max(3,Math.round(dd[i].total/max*100)); ch+='<div class="bar" style="height:'+hh+'%" title="'+dd[i].date+': '+dd[i].total+'"></div>'; }
+        $('ovChart').innerHTML=ch||'<div style="color:var(--muted)">لا توجد بيانات</div>';
+      });
     }
 
-    // ===== الزوّار =====
     var filters=$('admFilters');
-    filters.addEventListener('click',function(e){
-      var b=e.target; while(b&&b.tagName!=='BUTTON') b=b.parentNode; if(!b) return;
-      var r=b.getAttribute('data-r'); setActive(r);
-      if(r==='custom'){ $('admRange').hidden=false; } else { $('admRange').hidden=true; setRange(r); }
-    });
-    function setActive(r){ var bs=filters.children,i; for(i=0;i<bs.length;i++){ bs[i].classList.toggle('active', bs[i].getAttribute('data-r')===r); } }
-    $('admGo').onclick=function(){ var f=$('admFrom').value, to=$('admTo').value; if(f&&to) query(f,to); };
-    function setRange(r){
+    filters.addEventListener('click',function(e){ var b=e.target; while(b&&b.tagName!=='BUTTON') b=b.parentNode; if(!b) return; var r=b.getAttribute('data-r'); setRangeActive(r); if(r==='custom'){ $('admRange').hidden=false; } else { $('admRange').hidden=true; loadRange(r); } });
+    function setRangeActive(r){ var bs=filters.children,i; for(i=0;i<bs.length;i++) bs[i].classList.toggle('active', bs[i].getAttribute('data-r')===r); }
+    $('admGo').onclick=function(){ var f=$('admFrom').value, to=$('admTo').value; if(f&&to) showRange(f,to); };
+    function loadRange(r){
       var now=new Date(), to=ymd(now), from;
       if(r==='today') from=to;
+      else if(r==='week'){ var w=new Date(); w.setDate(w.getDate()-6); from=ymd(w); }
       else if(r==='month') from=to.slice(0,8)+'01';
       else from='2020-01-01';
-      query(from,to);
+      showRange(from,to);
     }
-    function query(from,to){
-      var d=getDB(), note=$('admNote');
-      if(!d){ note.textContent='لم يتم ربط قاعدة البيانات بعد.'; $('admTotal').textContent='—'; $('admCountries').innerHTML=''; $('admChart').innerHTML=''; return; }
-      note.textContent='جارٍ التحميل…';
-      d.collection('wsm_stats').where('date','>=',from).where('date','<=',to).get().then(function(snap){
-        var total=0, bc={}, daily=[];
-        snap.forEach(function(doc){ var x=doc.data(); total+=x.total||0; daily.push({date:x.date,total:x.total||0}); if(x.c){ for(var k in x.c) bc[k]=(bc[k]||0)+x.c[k]; } });
-        daily.sort(function(a,b){ return a.date<b.date?-1:1; });
-        render(total,bc,daily); note.textContent='';
-      }).catch(function(){ note.textContent='تعذّر قراءة الإحصائيات. تأكد من قواعد Firestore.'; });
+    function showRange(from,to){
+      var note=$('admNote');
+      fetchStats(function(ok){
+        if(!ok){ note.textContent='لم يتم ربط قاعدة البيانات بعد.'; $('admTotal').textContent='—'; return; } note.textContent='';
+        var a=aggregate(from,to);
+        $('admTotal').textContent=a.total;
+        var dd=a.daily.slice(-30), max=1,i,ch='';
+        for(i=0;i<dd.length;i++) if(dd[i].total>max) max=dd[i].total;
+        for(i=0;i<dd.length;i++){ var hh=Math.max(3,Math.round(dd[i].total/max*100)); ch+='<div class="bar" style="height:'+hh+'%" title="'+dd[i].date+': '+dd[i].total+'"></div>'; }
+        $('admChart').innerHTML=ch||'<div style="color:var(--muted)">لا توجد بيانات</div>';
+        $('admCountries').innerHTML=rows(a.c,a.total,cname)||'<div style="color:var(--muted)">—</div>';
+        var hmax=1,j; for(j=0;j<24;j++){ if((a.h[j]||0)>hmax) hmax=a.h[j]||0; }
+        var hc=''; for(j=0;j<24;j++){ var v=a.h[j]||0, hh2=Math.max(3,Math.round(v/hmax*100)); hc+='<div class="bar gold" style="height:'+hh2+'%" title="'+j+':00 — '+v+' زيارة"></div>'; }
+        $('admHours').innerHTML=hc;
+        $('admRefs').innerHTML=rows(a.r,a.total,refName)||'<div style="color:var(--muted)">—</div>';
+      });
     }
-    function render(total,bc,daily){
-      $('admTotal').textContent=total;
-      var dd=daily.slice(-30), max=1, i, ch='';
-      for(i=0;i<dd.length;i++){ if(dd[i].total>max) max=dd[i].total; }
-      for(i=0;i<dd.length;i++){ var hgt=Math.round(dd[i].total/max*100); ch+='<div class="bar" style="height:'+Math.max(3,hgt)+'%" title="'+dd[i].date+': '+dd[i].total+'"></div>'; }
-      $('admChart').innerHTML=ch || '<div style="color:var(--muted);font-size:.85rem">لا توجد بيانات</div>';
-      var arr=[],k; for(k in bc){ arr.push([k,bc[k]]); }
-      arr.sort(function(a,b){ return b[1]-a[1]; });
-      var html='';
-      for(i=0;i<arr.length;i++){
-        var pct=total>0?Math.round(arr[i][1]/total*100):0;
-        html+='<div class="crow"><span class="cname">'+cname(arr[i][0])+'</span><span class="cbar"><i style="width:'+pct+'%"></i></span><span class="ccount">'+arr[i][1]+'</span></div>';
-      }
-      $('admCountries').innerHTML=html || '<div style="color:var(--muted);font-size:.85rem">—</div>';
+    function refName(k){ return k==='مباشر'?'دخول مباشر':(k==='زيارة داخلية'?k:k.replace(/_/g,'.')); }
+    function rows(map,total,namefn){
+      var arr=[],k; for(k in map) arr.push([k,map[k]]); arr.sort(function(a,b){ return b[1]-a[1]; });
+      var html='',i; for(i=0;i<arr.length;i++){ var pct=total>0?Math.round(arr[i][1]/total*100):0; html+='<div class="crow"><span class="cname">'+namefn(arr[i][0])+'</span><span class="cbar"><i style="width:'+pct+'%"></i></span><span class="ccount">'+arr[i][1]+'</span></div>'; }
+      return html;
     }
 
-    // ===== تعبئة النماذج من الإعدادات =====
+    var SECTIONS=[{k:'agri',nm:'التقويم الزراعي'},{k:'palm',nm:'تقويم النخلة'},{k:'sidr',nm:'تقويم السدرة'},{k:'tips',nm:'نصائح ومقالات'},{k:'plant',nm:'قسم «ماذا نزرع»'},{k:'moon',nm:'قسم القمر'},{k:'weather',nm:'قسم الطقس'}];
+    function renderPages(){
+      var P=CFG.pages||{}, h='', i; for(i=0;i<SECTIONS.length;i++){ var s=SECTIONS[i], on=(P[s.k]!==false);
+        h+='<div class="toggle-row"><div><div class="nm">'+s.nm+'</div><div class="ds">'+(on?'ظاهرة للزوّار':'معلّقة (مخفية)')+'</div></div><label class="adm-switch"><input type="checkbox" data-k="'+s.k+'"'+(on?' checked':'')+'><span class="tg"></span></label></div>'; }
+      $('pagesList').innerHTML=h;
+    }
+    $('savePages').onclick=function(){
+      var ins=$('pagesList').querySelectorAll('input[data-k]'), P={},i;
+      for(i=0;i<ins.length;i++) P[ins[i].getAttribute('data-k')]=ins[i].checked;
+      saveCfg({pages:P},'pagesOk'); renderPages();
+    };
+
+    var ARTS=[], editId=null;
+    function refreshArticles(){
+      var d=getDB(), box=$('artList'); if(!d){ box.innerHTML='<div class="dash-note">قاعدة البيانات غير مربوطة.</div>'; return; }
+      box.innerHTML='<div class="dash-note">جارٍ التحميل…</div>';
+      d.collection('wsm_articles').orderBy('order').get().then(function(snap){
+        ARTS=[]; snap.forEach(function(doc){ var x=doc.data(); x.id=doc.id; ARTS.push(x); });
+        renderArtList();
+      }).catch(function(){ box.innerHTML='<div class="dash-note">تعذّر التحميل — تحقّق من قواعد Firestore.</div>'; });
+    }
+    function renderArtList(){
+      var box=$('artList');
+      if(!ARTS.length){ box.innerHTML='<div class="dash-note">لا توجد مقالات في قاعدة البيانات بعد. اضغط «استيراد المقالات الحالية» لإضافة المقالات الـ١٢، أو «+ مقال جديد».</div>'; return; }
+      var h='',i; for(i=0;i<ARTS.length;i++){ var a=ARTS[i], on=(a.on!==false);
+        h+='<div class="art-row'+(on?'':' off')+'"><span class="t">'+(a.title||'(بدون عنوان)')+'</span>'
+          +'<button class="art-btn art-edit" data-act="edit" data-i="'+i+'">تعديل</button>'
+          +'<button class="art-btn art-sus" data-act="sus" data-i="'+i+'">'+(on?'تعليق':'نشر')+'</button>'
+          +'<button class="art-btn art-del" data-act="del" data-i="'+i+'">حذف</button></div>';
+      }
+      box.innerHTML=h;
+    }
+    $('artList').addEventListener('click',function(e){ var b=e.target; if(b.tagName!=='BUTTON') return; var act=b.getAttribute('data-act'), i=+b.getAttribute('data-i'), a=ARTS[i]; if(!a) return; var d=getDB(); if(!d) return;
+      if(act==='edit'){ openEditor(a); }
+      else if(act==='sus'){ d.collection('wsm_articles').doc(a.id).set({on:(a.on===false)},{merge:true}).then(function(){ refreshArticles(); loadArticlesPublic(); }); }
+      else if(act==='del'){ if(!confirm('حذف هذا المقال نهائيًا؟')) return; d.collection('wsm_articles').doc(a.id).delete().then(function(){ refreshArticles(); loadArticlesPublic(); }); }
+    });
+    $('artAdd').onclick=function(){ openEditor(null); };
+    function openEditor(a){ editId=a?a.id:null; $('artTitle').value=a?(a.title||''):''; $('artBody').value=a?(a.body||''):''; $('artOn').checked=a?(a.on!==false):true; $('artEditor').hidden=false; $('artEditor').scrollIntoView({behavior:'smooth'}); }
+    $('artCancel').onclick=function(){ $('artEditor').hidden=true; };
+    $('artSave').onclick=function(){
+      var d=getDB(), ok=$('artOk'); if(!d){ ok.style.color='#C0392B'; ok.textContent='قاعدة البيانات غير مربوطة'; return; }
+      var title=$('artTitle').value.trim(), body=$('artBody').value, on=$('artOn').checked;
+      if(!title){ ok.style.color='#C0392B'; ok.textContent='أدخل عنوانًا'; return; }
+      ok.style.color='var(--leaf)'; ok.textContent='جارٍ الحفظ…';
+      var done=function(){ ok.textContent='تم الحفظ ✓'; $('artEditor').hidden=true; setTimeout(function(){ok.textContent='';},2000); refreshArticles(); loadArticlesPublic(); };
+      var err=function(){ ok.style.color='#C0392B'; ok.textContent='تعذّر الحفظ — تحقّق من قواعد Firestore'; };
+      if(editId){ d.collection('wsm_articles').doc(editId).set({title:title,body:body,on:on},{merge:true}).then(done).catch(err); }
+      else { d.collection('wsm_articles').add({title:title,body:body,on:on,order:ARTS.length}).then(done).catch(err); }
+    };
+    $('artSeed').onclick=function(){
+      var d=getDB(), ok=$('artOk'); if(!d){ ok.style.color='#C0392B'; ok.textContent='قاعدة البيانات غير مربوطة'; return; }
+      var DEF=window.WSM_DEFAULT_ARTICLES||[]; if(!DEF.length){ ok.style.color='#C0392B'; ok.textContent='لا توجد مقالات افتراضية'; return; }
+      if(ARTS.length && !confirm('سيتم إضافة المقالات الحالية إلى قاعدة البيانات. متابعة؟')) return;
+      ok.style.color='var(--leaf)'; ok.textContent='جارٍ الاستيراد…';
+      var batch=d.batch(), col=d.collection('wsm_articles'),i;
+      for(i=0;i<DEF.length;i++){ batch.set(col.doc(), {title:DEF[i].t, body:DEF[i].body, on:true, order:i}); }
+      batch.commit().then(function(){ ok.textContent='تم الاستيراد ✓'; setTimeout(function(){ok.textContent='';},2200); refreshArticles(); loadArticlesPublic(); }).catch(function(){ ok.style.color='#C0392B'; ok.textContent='تعذّر الاستيراد — تحقّق من القواعد'; });
+    };
+
     function fillForms(){
       var a=CFG.ads||[{},{},{}],i;
-      for(i=0;i<3;i++){ var x=a[i]||{};
-        $('ad'+i+'img').value=x.img||''; $('ad'+i+'href').value=x.href||''; $('ad'+i+'on').checked=!!x.on;
-        prev(i);
-      }
+      for(i=0;i<3;i++){ var x=a[i]||{}; $('ad'+i+'img').value=x.img||''; $('ad'+i+'href').value=x.href||''; $('ad'+i+'on').checked=!!x.on; prev(i); }
       $('setSubtitle').value=CFG.subtitle||'';
-      $('setAnncOn').checked=!!CFG.annOn; $('setAnncText').value=CFG.annText||'';
-      $('setPass').value='';
+      $('setAnncOn').checked=!!CFG.annOn; $('setAnncText').value=CFG.annText||''; $('setPass').value='';
       renderLinks();
     }
     function prev(i){ var im=$('ad'+i+'img').value.trim(), p=$('ad'+i+'prev'); if(im){ p.src=im; p.classList.add('on'); } else { p.classList.remove('on'); p.removeAttribute('src'); } }
     [0,1,2].forEach(function(i){ $('ad'+i+'img').addEventListener('input',function(){ prev(i); }); });
 
-    // ===== حفظ عام =====
     function saveCfg(partial, okId){
-      var ok=$(okId), d=getDB();
-      var k; for(k in partial) CFG[k]=partial[k];
-      applyPublic();
+      var ok=$(okId), d=getDB(); var k; for(k in partial) CFG[k]=partial[k]; applyPublic();
       if(!d){ ok.style.color='#C0392B'; ok.textContent='تعذّر الحفظ — قاعدة البيانات غير مربوطة'; return; }
       ok.style.color='var(--leaf)'; ok.textContent='جارٍ الحفظ…';
       d.collection('wsm_config').doc('site').set(partial,{merge:true})
@@ -1207,36 +1376,26 @@
         .catch(function(){ ok.style.color='#C0392B'; ok.textContent='تعذّر الحفظ — تحقّق من قواعد Firestore'; });
     }
 
-    // ===== الإعلانات =====
     $('saveAds').onclick=function(){
       var ads=[],i; for(i=0;i<3;i++){ ads.push({img:$('ad'+i+'img').value.trim(), href:$('ad'+i+'href').value.trim()||'#', on:$('ad'+i+'on').checked}); }
       saveCfg({ads:ads},'adsOk');
     };
 
-    // ===== الروابط =====
-    function renderLinks(){
-      var L=CFG.links||[], box=$('linksEditor'), h='', i;
-      for(i=0;i<L.length;i++){ h+=linkRow(L[i].label||'', L[i].url||''); }
-      box.innerHTML=h;
-    }
-    function linkRow(label,url){
-      return '<div class="lnk-row"><input class="lk-label" placeholder="الاسم (مثال: إنستغرام)" value="'+esc(label)+'"><input class="lk-url" placeholder="الرابط https://..." value="'+esc(url)+'"><button class="lnk-del" type="button">×</button></div>';
-    }
+    function renderLinks(){ var L=CFG.links||[], box=$('linksEditor'), h='', i; for(i=0;i<L.length;i++){ h+=linkRow(L[i].label||'', L[i].url||''); } box.innerHTML=h; }
+    function linkRow(label,url){ return '<div class="lnk-row"><input class="lk-label" placeholder="الاسم (مثال: إنستغرام)" value="'+esc(label)+'"><input class="lk-url" placeholder="الرابط https://..." value="'+esc(url)+'"><button class="lnk-del" type="button">×</button></div>'; }
     function esc(s){ return (s||'').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
     $('addLink').onclick=function(){ $('linksEditor').insertAdjacentHTML('beforeend', linkRow('','')); };
     $('linksEditor').addEventListener('click',function(e){ if(e.target.classList.contains('lnk-del')){ var row=e.target.closest('.lnk-row'); if(row) row.parentNode.removeChild(row); } });
     $('saveLinks').onclick=function(){
-      var rows=$('linksEditor').querySelectorAll('.lnk-row'), L=[],i;
-      for(i=0;i<rows.length;i++){ var lb=rows[i].querySelector('.lk-label').value.trim(), u=rows[i].querySelector('.lk-url').value.trim(); if(lb&&u) L.push({label:lb,url:u}); }
+      var rs=$('linksEditor').querySelectorAll('.lnk-row'), L=[],i;
+      for(i=0;i<rs.length;i++){ var lb=rs[i].querySelector('.lk-label').value.trim(), u=rs[i].querySelector('.lk-url').value.trim(); if(lb&&u) L.push({label:lb,url:u}); }
       saveCfg({links:L},'linksOk');
     };
 
-    // ===== الإعدادات =====
     $('saveSettings').onclick=function(){
       var partial={subtitle:$('setSubtitle').value.trim(), annOn:$('setAnncOn').checked, annText:$('setAnncText').value.trim()};
       var np=$('setPass').value; if(np) partial.pass=np;
-      saveCfg(partial,'setOk');
-      if(np) $('setPass').value='';
+      saveCfg(partial,'setOk'); if(np) $('setPass').value='';
     };
   })();
 </script>
@@ -1885,18 +2044,19 @@
 <div class="a-note">الخلاصة: الـpH يقرّر هل يستطيع نباتك امتصاص غذائه. والمدى 6–7 هو الأفضل لمعظم الخضار. تربتنا قلوية فتقفل الحديد وتصفرّ الأوراق، وعلاجها بالكبريت الزراعي والمادة العضوية وتعديل ماء الري تدريجيًا. قِس أولًا، ثم عدّل بصبر.</div>`}
     ];
 
+    function arts(){ return (window.WSM_ARTICLES&&window.WSM_ARTICLES.length)?window.WSM_ARTICLES:ART; }
     function showList(){
       artEl.hidden=true; artEl.innerHTML=''; listEl.hidden=false;
       if(titleEl) titleEl.textContent='نصائح ومقالات';
       if(subEl){ subEl.textContent='مقالات زراعية مبسّطة للمزارع'; subEl.style.display=''; }
-      var h='';
-      for(var i=0;i<ART.length;i++){
-        h+='<div class="tip-card" data-i="'+i+'"><span class="n">'+(i+1)+'</span><span class="ttl">'+ART[i].t+'</span><span class="arr">'+chev+'</span></div>';
+      var A=arts(), h='';
+      for(var i=0;i<A.length;i++){
+        h+='<div class="tip-card" data-i="'+i+'"><span class="n">'+(i+1)+'</span><span class="ttl">'+A[i].t+'</span><span class="arr">'+chev+'</span></div>';
       }
       listEl.innerHTML=h; screen.scrollTop=0;
     }
     function openArticle(i){
-      var a=ART[i]; if(!a) return;
+      var a=arts()[i]; if(!a) return;
       artEl.innerHTML='<div class="article"><h1>'+a.t+'</h1><div class="a-rule"></div>'+a.body+'</div>';
       if(titleEl) titleEl.textContent='المقالات';
       if(subEl) subEl.style.display='none';
@@ -1910,6 +2070,8 @@
     if(tb){ tb.addEventListener('click',function(e){ e.preventDefault();
       if(!artEl.hidden){ showList(); } else if(window.__wsmHome){ window.__wsmHome(); } }); }
 
+    window.WSM_DEFAULT_ARTICLES=ART;
+    window.wsmTipsRefresh=function(){ if(!screen.hidden && artEl.hidden) showList(); };
     (window.__wsmCal=window.__wsmCal||{}).tips={el:screen, render:showList};
   })();
 </script>
