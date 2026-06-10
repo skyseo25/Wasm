@@ -54,9 +54,12 @@ function matchesKeywords(text) {
   return KEYWORDS.some((k) => t.indexOf(k) >= 0);
 }
 function buildQuery() {
-  const kw = KEYWORDS.slice(0, 14).join(" OR ");
-  const sites = SITES.map((s) => "site:" + s).join(" OR ");
-  return "(" + kw + ") (" + sites + ") when:7d";
+  // كلمات الزراعة/الثروة الحيوانية + الكويت، آخر أسبوع — استعلام مركّز وموثوق
+  var kw = [
+    '"الثروة الحيوانية"', "الزراعة", "المزارعين", "المحاصيل",
+    "النخيل", "المواشي", "الدواجن", '"الأمن الغذائي"', "الزراعي",
+  ].join(" OR ");
+  return "(" + kw + ") الكويت when:7d";
 }
 function feedUrl() {
   return "https://news.google.com/rss/search?q=" + encodeURIComponent(buildQuery()) + "&hl=ar&gl=KW&ceid=KW:ar";
@@ -137,6 +140,16 @@ module.exports = async (req, res) => {
 
     // سحب
     const items = await fetchFeed();
+
+    // وضع التشخيص: ?debug=1 يرجّع عيّنة من الأخبار الواصلة بدون فلترة
+    const debug = req.query && (req.query.debug === "1" || req.query.debug === "true");
+    if (debug) {
+      res.status(200).json({
+        ok: true, debug: true, received: items.length,
+        sample: items.slice(0, 12).map((x) => ({ title: x.title, source: x.source })),
+      });
+      return;
+    }
 
     // فلترة + إزالة المكرر
     const fresh = [];
