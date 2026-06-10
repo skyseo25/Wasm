@@ -168,6 +168,23 @@
   .c-thunder{background:linear-gradient(135deg,#E7E6F1,#CDCDE1)} .c-thunder .icn{color:#5B5E8E}
   .c-dust{background:linear-gradient(135deg,#F4E8C9,#E7CF96)}    .c-dust .icn{color:#B5852E}
 
+  /* ===== جودة الهواء ===== */
+  .aq-section{padding:26px 16px 0}
+  .aq-wrap{border-radius:18px;overflow:hidden;border:1px solid var(--line);box-shadow:0 8px 22px -16px rgba(32,53,42,.4);background:var(--paper-2)}
+  .aq-loading,.aq-msg{padding:26px 16px;text-align:center;color:var(--muted);font-weight:600;font-size:.95rem;line-height:2}
+  .aq-hero{display:flex;align-items:center;gap:14px;padding:16px}
+  .aq-dot{flex:none;width:62px;height:62px;border-radius:50%;display:grid;place-items:center;color:#fff;font-family:'Cairo',sans-serif;font-size:1.5rem;font-weight:800;box-shadow:0 6px 16px -8px rgba(0,0,0,.45)}
+  .aq-status{font-family:'Cairo',sans-serif;font-size:1.3rem;font-weight:800;line-height:1.2}
+  .aq-sub{font-size:.82rem;color:var(--soil-2);font-weight:600;margin-top:3px}
+  .aq-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line)}
+  .aq-cell{background:var(--paper);padding:11px 13px;display:flex;flex-direction:column;gap:3px}
+  .aq-cell span{font-size:.8rem;color:var(--soil-2);font-weight:600}
+  .aq-cell b{font-family:'Cairo',sans-serif;font-size:1.05rem;font-weight:800;color:var(--soil)}
+  .aq-cell b i{font-style:normal;font-size:.72rem;font-weight:600;color:var(--muted)}
+  .aq-retry{margin-top:6px;font-family:'Cairo',sans-serif;font-weight:700;font-size:.9rem;color:#fff;
+    background:var(--leaf);border:none;border-radius:10px;padding:8px 16px;cursor:pointer}
+  @media (min-width:680px){.aq-grid{grid-template-columns:repeat(4,1fr)}}
+
   nav.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:50;
     height:calc(var(--nav-h) + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom);
     background:rgba(244,240,229,.93);backdrop-filter:saturate(140%) blur(12px);-webkit-backdrop-filter:saturate(140%) blur(12px);
@@ -392,6 +409,7 @@
         "brand    brand"
         "clock    moon"
         "clock    wx"
+        "air      air"
         "sections sections"
         "plant    plant"
         "ad       ad"
@@ -401,6 +419,7 @@
     .clock-card{grid-area:clock;align-self:start;margin-top:14px}
     .moon-section{grid-area:moon;padding:14px 0 0}
     .wx-section{grid-area:wx;padding:26px 0 0}
+    .aq-section{grid-area:air;padding:26px 0 0}
     .sections{grid-area:sections;padding:38px 0 6px}
     .plant-section{grid-area:plant;padding:38px 0 0}
     #adSlot{grid-area:ad;margin:34px 0 0}
@@ -482,6 +501,13 @@
     <div class="wx-wrap">
       <div class="wx-today" id="wxToday"><div class="wx-loading">يتم جلب حالة الطقس…</div></div>
       <div class="wx-days" id="wxDays"></div>
+    </div>
+  </section>
+
+  <section class="aq-section" id="sec-air">
+    <div class="sec-head"><span>جودة الهواء</span><div class="ln"></div></div>
+    <div class="aq-wrap">
+      <div class="aq-box" id="aqBox"><div class="aq-loading">يتم جلب جودة الهواء…</div></div>
     </div>
   </section>
 
@@ -1127,6 +1153,56 @@
     load();
   })();
 
+  // ===== جودة الهواء (Open-Meteo Air Quality) =====
+  (function(){
+    var box=document.getElementById('aqBox'); if(!box) return;
+    var LAT=29.38, LON=47.99; // الكويت
+    function aqiInfo(v){
+      if(v==null) return {name:'غير متوفر',col:'#9AA09A'};
+      if(v<=50)  return {name:'جيدة',col:'#2E9E5B'};
+      if(v<=100) return {name:'متوسطة',col:'#C9971B'};
+      if(v<=150) return {name:'غير صحية للحسّاسين',col:'#E67E22'};
+      if(v<=200) return {name:'غير صحية',col:'#C0392B'};
+      if(v<=300) return {name:'غير صحية جداً',col:'#7E3FF2'};
+      return {name:'خطيرة',col:'#7E2230'};
+    }
+    function n0(v){ return (v==null)?'—':Math.round(v); }
+    function n1(v){ return (v==null)?'—':(Math.round(v*10)/10); }
+    function cell(label,val,unit){ return '<div class="aq-cell"><span>'+label+'</span><b>'+val+(unit?' <i>'+unit+'</i>':'')+'</b></div>'; }
+    function render(data){
+      var cur=data.current||{}, aqi=cur.us_aqi, info=aqiInfo(aqi);
+      box.innerHTML=
+        '<div class="aq-hero">'
+          +'<div class="aq-dot" style="background:'+info.col+'">'+n0(aqi)+'</div>'
+          +'<div class="aq-hero-t"><div class="aq-status" style="color:'+info.col+'">'+info.name+'</div>'
+            +'<div class="aq-sub">مؤشر جودة الهواء (US AQI) · الكويت</div></div>'
+        +'</div>'
+        +'<div class="aq-grid">'
+          +cell('الجسيمات PM2.5', n1(cur.pm2_5),'µg/m³')
+          +cell('الجسيمات PM10', n1(cur.pm10),'µg/m³')
+          +cell('الأوزون O₃', n0(cur.ozone),'µg/m³')
+          +cell('ثاني أكسيد النيتروجين NO₂', n1(cur.nitrogen_dioxide),'µg/m³')
+          +cell('ثاني أكسيد الكبريت SO₂', n1(cur.sulphur_dioxide),'µg/m³')
+          +cell('أول أكسيد الكربون CO', n0(cur.carbon_monoxide),'µg/m³')
+          +cell('الغبار', n0(cur.dust),'µg/m³')
+          +cell('الأشعة فوق البنفسجية', n1(cur.uv_index),'')
+        +'</div>';
+    }
+    function fail(){
+      box.innerHTML='<div class="aq-msg">تعذّر جلب جودة الهواء الآن<br><button class="aq-retry" id="aqRetry">إعادة المحاولة</button></div>';
+      var b=document.getElementById('aqRetry'); if(b) b.onclick=load;
+    }
+    var url='https://air-quality-api.open-meteo.com/v1/air-quality?latitude='+LAT+'&longitude='+LON
+      +'&current=us_aqi,pm2_5,pm10,ozone,nitrogen_dioxide,sulphur_dioxide,carbon_monoxide,dust,uv_index'
+      +'&timezone=auto';
+    function load(){
+      box.innerHTML='<div class="aq-loading">يتم جلب جودة الهواء…</div>';
+      try{ fetch(url,{cache:'no-store'}).then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(render).catch(fail); }
+      catch(e){ fail(); }
+    }
+    load();
+  })();
+
   // إخفاء نص "مساحة إعلانية" إذا أُضيفت صورة
   (function(){
     var slot=document.getElementById('adSlot'); if(!slot) return;
@@ -1211,7 +1287,7 @@
       if(u.indexOf('wa.me')>=0||u.indexOf('whatsapp')>=0) return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.5 8.5 0 0 1-12.7 7.4L3 21l2.2-5.2A8.5 8.5 0 1 1 21 11.5Z"/></svg>';
       if(u.indexOf('instagram')>=0) return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>';
       return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7 0l2-2a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-2 2a5 5 0 0 0 7 7l1-1"/></svg>'; }
-    var PAGEMAP={ agri:['cardCal','navAgri'], palm:['cardPalm','navPalm'], sidr:['cardSidr','navSidr'], tips:['cardTips','navTips'], indoor:['cardIndoor'], plant:['sec-plant'], moon:['sec-moon'], weather:['sec-weather'] };
+    var PAGEMAP={ agri:['cardCal','navAgri'], palm:['cardPalm','navPalm'], sidr:['cardSidr','navSidr'], tips:['cardTips','navTips'], indoor:['cardIndoor'], plant:['sec-plant'], moon:['sec-moon'], weather:['sec-weather'], air:['sec-air'] };
     function applyPublic(){
       var sub=$('subtitle'); if(sub&&CFG.subtitle) sub.textContent=CFG.subtitle;
       var an=$('annc'); if(an){ if(CFG.annOn&&CFG.annText){ an.textContent=CFG.annText; an.hidden=false; } else an.hidden=true; }
