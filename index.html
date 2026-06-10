@@ -371,6 +371,15 @@
   .cal-ad .ad-ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--muted)}
   .cal-ad .ad-ph svg{width:32px;height:32px;opacity:.55}
   .cal-ad .ad-ph span{font-family:'Cairo',sans-serif;font-size:.9rem;font-weight:700;letter-spacing:.02em}
+  .ad-host{display:block}
+  .ad-up{display:inline-flex;align-items:center;gap:6px;background:var(--leaf);color:#fff;font-family:'Cairo',sans-serif;font-weight:700;font-size:.85rem;padding:8px 14px;border-radius:10px;cursor:pointer}
+  .ad-up input{display:none}
+  .ad-rm{background:none;border:1px solid var(--line);color:var(--muted);font-family:'Cairo',sans-serif;font-size:.8rem;padding:7px 12px;border-radius:10px;cursor:pointer;margin-right:8px}
+  .ad-ccs{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+  .ad-cc{font-family:'Cairo',sans-serif;font-size:.78rem;font-weight:700;padding:5px 11px;border-radius:20px;border:1px solid var(--line);background:var(--paper-2);color:var(--muted);cursor:pointer}
+  .ad-cc.on{background:var(--leaf);color:#fff;border-color:var(--leaf)}
+  .ad-clicks{margin-top:9px;font-family:'Cairo',sans-serif;font-size:.85rem;color:var(--soil);font-weight:700}
+  .ad-clicks b{color:var(--leaf);font-size:1.05rem}
   /* عمليات النخلة */
   .pc-list{padding:5px 13px 12px}
   .pc-item{display:flex;gap:11px;padding:11px 2px;border-bottom:1px dashed rgba(32,53,42,.13)}
@@ -544,15 +553,7 @@
     </div>
   </section>
 
-  <!-- مساحة إعلانية: لإضافة إعلان ضع صورة داخل الرابط هكذا:
-       <a class="ad-slot" id="adSlot" href="رابط-الإعلان"><img src="رابط-الصورة" alt="إعلان"></a>
-       وستختفي كلمة "مساحة إعلانية" تلقائيًا -->
-  <a class="ad-slot" id="adSlot" href="#" aria-label="مساحة إعلانية">
-    <div class="ad-ph">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.7"/><path d="M21 16l-5-5L5 20"/></svg>
-      <span>مساحة إعلانية</span>
-    </div>
-  </a>
+  <div class="ad-host" id="adSlot" data-ad="home_0"></div>
 
   <section class="plant-section" id="sec-plant">
     <div class="sec-head"><span>ماذا نزرع هذا الشهر</span><div class="ln"></div></div>
@@ -659,6 +660,8 @@
     })();
   </script>
 
+  <div class="ad-host" data-ad="home_1"></div>
+
   <section class="links-sec" id="linksSec" hidden>
     <h2>روابط مهمة</h2>
     <div class="links-grid" id="linksGrid"></div>
@@ -755,9 +758,18 @@
       </div>
 
       <div class="dash-panel" id="panel-ads" hidden>
-        <p class="adm-hint">لكل صفحة مساحاتها الإعلانية المستقلة. الصق رابط صورة الإعلان ورابط الوجهة، وفعّل «ظاهر». تظهر مساحة محجوزة في الصفحة حتى لو ما عبّيت إعلان.</p>
+        <p class="adm-hint">لكل مساحة: ارفع الصورة مباشرة، أضف رابطاً عند الضغط (اختياري)، حدّد الدول التي يظهر لها الإعلان (بدون تحديد = كل الدول)، وفعّل/علّق الظهور. عند التعليق تختفي المساحة كلياً من الموقع. عدّاد النقرات يتبع الفلتر الزمني التالي.</p>
+        <div class="admin-filters" id="adFilters">
+          <button data-r="today" class="active">اليوم</button>
+          <button data-r="all">الكل</button>
+          <button data-r="custom">من - إلى</button>
+        </div>
+        <div class="admin-range" id="adRange" hidden>
+          <input type="date" id="adFrom"><span>إلى</span><input type="date" id="adTo">
+          <button class="admin-btn sm" id="adGo">عرض</button>
+        </div>
         <div id="adCards"></div>
-        <button class="admin-btn" id="saveAds">حفظ الإعلانات</button>
+        <button class="admin-btn" id="saveAds">حفظ كل الإعلانات</button>
         <div class="adm-ok" id="adsOk"></div>
       </div>
 
@@ -849,6 +861,7 @@
       <div class="s" id="tipsSub">مقالات زراعية مبسّطة للمزارع</div>
     </div>
   </div>
+  <div class="ad-host" data-ad="tips_0" style="max-width:900px;margin:14px auto 0;padding:0 16px"></div>
   <div id="tipsList" class="tips-list"></div>
   <div id="tipsArticle" hidden></div>
 </div>
@@ -883,6 +896,7 @@
   </div>
   <div class="hydro-intro">القيم مأخوذة من جدول جامعة ولاية أوكلاهوما (OSU Extension — نشرة HLA‑6722). الـ EC ودرجة الحموضة pH من المرجع مباشرة، والـ PPM محسوبة منها على مقياس 500 (‎1.0 mS/cm ≈ 500 ppm‎). تبقى القيم نطاقات إرشادية تختلف حسب الصنف ومرحلة النمو والنظام — والقياس الفعلي عندك هو الأدق.</div>
   <div class="hydro-search"><input id="hydroQ" type="search" placeholder="ابحث عن صنف… (مثال: طماطم، خس، ريحان)"></div>
+  <div class="ad-host" data-ad="hydro_0" style="max-width:1120px;margin:14px auto 0;padding:0 16px"></div>
   <div class="hydro-wrap"><div class="hydro-scroll"><div id="hydroBody"></div></div><div class="hydro-src">المصدر: Oklahoma State University — Cooperative Extension، نشرة HLA‑6722 «Electrical Conductivity and pH Guide for Hydroponics» (Singh &amp; Dunn، 2016). <a href="https://extension.okstate.edu/fact-sheets/electrical-conductivity-and-ph-guide-for-hydroponics" target="_blank" rel="noopener">رابط المصدر ↗</a></div></div>
 </div>
 <script>
@@ -957,6 +971,7 @@
       <div class="s">أخبار الزراعة والمزارعين والثروة الحيوانية في الكويت</div>
     </div>
   </div>
+  <div class="ad-host" data-ad="news_0" style="max-width:900px;margin:14px auto 0;padding:0 16px"></div>
   <div id="newsList" class="news-list"></div>
 </div>
 
@@ -1537,27 +1552,34 @@
     window.WSM_CFG=window.WSM_CFG||{ads:[{},{},{}],links:[],subtitle:'',annOn:false,annText:'',pass:'',pages:{}};
     var CFG=window.WSM_CFG; if(!CFG.pages) CFG.pages={}; if(!CFG.ads) CFG.ads=[{},{},{}];
 
-    /* ===== إعلانات مستقلة لكل صفحة ===== */
-    var AD_NEED={home:1, agri:2, palm:2, sidr:2, indoor:2};
-    function adsPInit(){
-      if(!CFG.adsP || typeof CFG.adsP!=='object') CFG.adsP={};
-      var p; for(p in AD_NEED){ if(!Object.prototype.hasOwnProperty.call(AD_NEED,p)) continue;
-        if(!(CFG.adsP[p] instanceof Array)) CFG.adsP[p]=[];
-        while(CFG.adsP[p].length<AD_NEED[p]) CFG.adsP[p].push({});
-      }
+    /* ===== نظام الإعلانات: رفع صورة مباشر + استهداف دول + عدّاد نقرات ===== */
+    function adsPInit(){} function migrateAds(){}
+    var WSM_ADS=null, WSM_CC=null;
+    function ccResolve(cb){
+      if(WSM_CC){ cb&&cb(WSM_CC); return; }
+      try{ var c=localStorage.getItem('wsm_cc'); if(c){ WSM_CC=c; cb&&cb(c); return; } }catch(e){}
+      fetch('https://ipwho.is/?fields=success,country_code').then(function(r){return r.json();})
+        .then(function(g){ WSM_CC=(g&&g.country_code)?g.country_code:'??'; try{localStorage.setItem('wsm_cc',WSM_CC);}catch(e){} cb&&cb(WSM_CC); })
+        .catch(function(){ WSM_CC='??'; cb&&cb('??'); });
     }
-    function migrateAds(old){ old=old||[];
-      CFG.adsP={ home:[old[0]||{}], agri:[old[1]||{}, old[2]||{}], palm:[old[1]||{}, old[2]||{}], sidr:[old[1]||{}, old[2]||{}], indoor:[{},{}] };
-    }
-    adsPInit();
-    window.wsmAdSlot=function(page,idx){ var arr=(CFG.adsP&&CFG.adsP[page])||[]; var a=arr[idx]||{}; return {img:a.img||'', href:a.href||'#', on:a.on}; };
-    window.wsmAdHTML=function(page,idx){
-      var a=window.wsmAdSlot(page,idx);
-      if(a && a.img && a.on!==false){
-        return '<a class="cal-ad" href="'+(a.href||'#')+'" target="_blank" rel="noopener"><img src="'+a.img+'" alt="إعلان"></a>';
-      }
-      return '<div class="cal-ad"><div class="ad-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.7"/><path d="M21 16l-5-5L5 20"/></svg><span>مساحة إعلانية</span></div></div>';
-    };
+    function adCountryOK(a){ var cs=a&&a.countries; if(!cs||!cs.length) return true; if(!WSM_CC||WSM_CC==='??') return false; for(var i=0;i<cs.length;i++) if(cs[i]===WSM_CC) return true; return false; }
+    window.wsmAdHTML=function(page,idx){ return '<div class="ad-host" data-ad="'+page+'_'+idx+'"></div>'; };
+    function adAnchor(key,a){ var img='<img src="'+a.img+'" alt="إعلان">';
+      if(a.href){ return '<a class="cal-ad" href="'+a.href+'" target="_blank" rel="noopener" data-adkey="'+key+'">'+img+'</a>'; }
+      return '<div class="cal-ad">'+img+'</div>'; }
+    window.wsmPaintAds=function(){ if(!WSM_ADS) return; var hosts=document.querySelectorAll('.ad-host[data-ad]'),i;
+      for(i=0;i<hosts.length;i++){ var host=hosts[i], key=host.getAttribute('data-ad'), a=WSM_ADS[key]||{};
+        var vis=(a.on!==false)&&!!a.img&&adCountryOK(a);
+        if(!vis){ host.style.display='none'; if(host.getAttribute('data-sig')!=='off'){ host.innerHTML=''; host.setAttribute('data-sig','off'); } continue; }
+        host.style.display=''; var sig=key+'|'+(a.img?a.img.length:0)+'|'+(a.href||'');
+        if(host.getAttribute('data-sig')===sig) continue;
+        host.innerHTML=adAnchor(key,a); host.setAttribute('data-sig',sig); } };
+    function logAdClick(key){ var d=getDB(); if(!d||!key) return; try{ var o={clicks:{}}; o.clicks[ymd(new Date())]=firebase.firestore.FieldValue.increment(1); d.collection('wsm_ads').doc(key).set(o,{merge:true}); }catch(e){} }
+    document.addEventListener('click',function(e){ var t=e.target, a=(t&&t.closest)?t.closest('a.cal-ad[data-adkey]'):null; if(a) logAdClick(a.getAttribute('data-adkey')); },true);
+    function loadAds(cb){ var d=getDB(); if(!d){ WSM_ADS={}; cb&&cb(); return; }
+      d.collection('wsm_ads').get().then(function(s){ WSM_ADS={}; s.forEach(function(doc){ WSM_ADS[doc.id]=doc.data()||{}; }); cb&&cb(); }).catch(function(){ WSM_ADS={}; cb&&cb(); }); }
+    (function initAds(){ ccResolve(function(){ window.wsmPaintAds(); }); loadAds(function(){ window.wsmPaintAds(); });
+      try{ var mo=new MutationObserver(function(){ if(window.__adRAF) return; window.__adRAF=requestAnimationFrame(function(){ window.__adRAF=0; window.wsmPaintAds(); }); }); mo.observe(document.body,{childList:true,subtree:true}); }catch(e){} })();
 
     function getDB(){ if(db) return db; try{
         if(typeof firebase==='undefined') return null;
@@ -1580,20 +1602,16 @@
       var ds=ymd(new Date()), flag='wsm_v_'+ds, done=false;
       try{ done=localStorage.getItem(flag)==='1'; }catch(e){}
       if(done) return;
-      function write(cc){
+      ccResolve(function(cc){
         try{
           var inc=firebase.firestore.FieldValue.increment(1);
           var hr=''+(new Date().getHours()), rf=referrerKey();
-          var obj={date:ds,total:inc,c:{},h:{},r:{}}; obj.c[cc]=inc; obj.h[hr]=inc; obj.r[rf]=inc;
+          var cn=(cc&&cc!=='??')?cc:'غير معروف';
+          var obj={date:ds,total:inc,c:{},h:{},r:{}}; obj.c[cn]=inc; obj.h[hr]=inc; obj.r[rf]=inc;
           d.collection('wsm_stats').doc(ds).set(obj,{merge:true}).then(function(){ try{localStorage.setItem(flag,'1');}catch(e){} });
         }catch(e){}
-      }
-      fetch('https://ipwho.is/?fields=success,country_code').then(function(r){return r.json();})
-        .then(function(g){ write((g&&g.country_code)?g.country_code:'غير معروف'); })
-        .catch(function(){ write('غير معروف'); });
+      });
     })();
-
-    window.wsmCalAd=function(i){ var a=(CFG.ads&&CFG.ads[i+1])||{}; return {img:a.img||'', href:a.href||'#', on:a.on}; };
 
     var CN={KW:'الكويت',SA:'السعودية',AE:'الإمارات',QA:'قطر',BH:'البحرين',OM:'عُمان',IQ:'العراق',EG:'مصر',JO:'الأردن',SY:'سوريا',LB:'لبنان',PS:'فلسطين',YE:'اليمن',SD:'السودان',LY:'ليبيا',TN:'تونس',DZ:'الجزائر',MA:'المغرب',US:'أمريكا',GB:'بريطانيا',IN:'الهند',PK:'باكستان',BD:'بنغلاديش',PH:'الفلبين',ID:'إندونيسيا',TR:'تركيا',IR:'إيران',DE:'ألمانيا',FR:'فرنسا',CA:'كندا',AU:'أستراليا'};
     function cname(c){ return CN[c]||c; }
@@ -1607,11 +1625,7 @@
     function applyPublic(){
       var sub=$('subtitle'); if(sub&&CFG.subtitle) sub.textContent=CFG.subtitle;
       var an=$('annc'); if(an){ if(CFG.annOn&&CFG.annText){ an.textContent=CFG.annText; an.hidden=false; } else an.hidden=true; }
-      var slot=$('adSlot');
-      if(slot){ if(!slot.getAttribute('data-ph')) slot.setAttribute('data-ph',slot.innerHTML);
-        var a0=window.wsmAdSlot('home',0);
-        if(a0.on&&a0.img){ slot.href=a0.href||'#'; slot.setAttribute('target','_blank'); slot.setAttribute('rel','noopener'); slot.innerHTML='<img src="'+a0.img+'" alt="إعلان">'; }
-        else { slot.href='#'; slot.removeAttribute('target'); slot.innerHTML=slot.getAttribute('data-ph'); } }
+      if(window.wsmPaintAds) window.wsmPaintAds();
       var lg=$('linksGrid'), ls=$('linksSec');
       if(lg&&ls){ var L=CFG.links||[], h='', i; for(i=0;i<L.length;i++){ if(!L[i]||!L[i].url||!L[i].label) continue; h+='<a class="link-btn" href="'+L[i].url+'" target="_blank" rel="noopener">'+linkIcon(L[i].url)+'<span>'+L[i].label+'</span></a>'; } lg.innerHTML=h; ls.hidden=!h; }
       var P=CFG.pages||{}, k; for(k in PAGEMAP){ var on=(P[k]!==false); var ids=PAGEMAP[k],j; for(j=0;j<ids.length;j++){ show($(ids[j]), on); } }
@@ -1664,6 +1678,7 @@
       else if(name==='visitors'){ setRangeActive('today'); loadRange('today'); }
       else if(name==='articles') refreshArticles();
       else if(name==='pages') renderPages();
+      else if(name==='ads') refreshAdCards();
     }
     function initDash(){ fillForms(); showTab('overview'); }
 
@@ -1800,29 +1815,55 @@
     };
 
     function fillForms(){
-      var ai; for(ai=0;ai<AD_SLOTS.length;ai++){ var s=AD_SLOTS[ai]; var arr=(CFG.adsP&&CFG.adsP[s[0]])||[]; var x=arr[s[1]]||{};
-        $(adId(s[0],s[1],'img')).value=x.img||''; $(adId(s[0],s[1],'href')).value=x.href||''; $(adId(s[0],s[1],'on')).checked=!!x.on; adPrev(s[0],s[1]); }
       $('setSubtitle').value=CFG.subtitle||'';
       $('setAnncOn').checked=!!CFG.annOn; $('setAnncText').value=CFG.annText||''; $('setPass').value='';
       renderLinks();
     }
-    var AD_SLOTS=[ ['home',0,'الواجهة — إعلان'],
-      ['agri',0,'التقويم الزراعي — إعلان 1'], ['agri',1,'التقويم الزراعي — إعلان 2'],
-      ['palm',0,'تقويم النخلة — إعلان 1'], ['palm',1,'تقويم النخلة — إعلان 2'],
-      ['sidr',0,'تقويم السدرة — إعلان 1'], ['sidr',1,'تقويم السدرة — إعلان 2'],
-      ['indoor',0,'النباتات الداخلية — إعلان 1'], ['indoor',1,'النباتات الداخلية — إعلان 2'] ];
-    function adId(p,i,suf){ return 'ad_'+p+'_'+i+suf; }
-    function adPrev(p,i){ var im=$(adId(p,i,'img')).value.trim(), pv=$(adId(p,i,'prev')); if(im){ pv.src=im; pv.classList.add('on'); } else { pv.classList.remove('on'); pv.removeAttribute('src'); } }
-    function buildAdCards(){ var box=$('adCards'); if(!box || box.getAttribute('data-built')) return; var h='',k;
-      for(k=0;k<AD_SLOTS.length;k++){ var s=AD_SLOTS[k], pid=adId(s[0],s[1],'');
-        h+='<div class="adm-card"><h4>'+s[2]+' <label class="adm-switch"><input type="checkbox" id="'+pid+'on"><span class="tg"></span>ظاهر</label></h4>'
-         +'<div class="adm-field"><label>رابط الصورة</label><input type="url" id="'+pid+'img" placeholder="https://...jpg"></div>'
-         +'<div class="adm-field"><label>رابط الوجهة</label><input type="url" id="'+pid+'href" placeholder="https://..."></div>'
-         +'<img class="adm-prev" id="'+pid+'prev" alt=""></div>'; }
+    var AD_SLOTS=[ ['home',0,'الصفحة الرئيسية — إعلان ١'], ['home',1,'الصفحة الرئيسية — إعلان ٢'],
+      ['agri',0,'التقويم الزراعي — إعلان ١'], ['agri',1,'التقويم الزراعي — إعلان ٢'],
+      ['palm',0,'تقويم النخلة — إعلان ١'], ['palm',1,'تقويم النخلة — إعلان ٢'],
+      ['sidr',0,'تقويم السدرة — إعلان ١'], ['sidr',1,'تقويم السدرة — إعلان ٢'],
+      ['indoor',0,'النباتات المنزلية — إعلان ١'], ['indoor',1,'النباتات المنزلية — إعلان ٢'],
+      ['news',0,'الأخبار — إعلان ١'], ['tips',0,'النصائح والمقالات — إعلان ١'], ['hydro',0,'الزراعة المائية — إعلان ١'] ];
+    var CCLIST=['KW','SA','AE','QA','BH','OM','IQ','EG','JO','SY','LB','PS','YE','SD','LY','TN','DZ','MA','US','GB'];
+    var AD_IMG={}, AD_CC={}, AD_RANGE={from:'',to:''};
+    function pid(p,i,suf){ return 'ad_'+p+'_'+i+(suf||''); }
+    function compressImg(file,cb){ try{ var rd=new FileReader();
+        rd.onload=function(){ var im=new Image(); im.onload=function(){ var mw=1000, sc=Math.min(1,mw/im.width); var w=Math.round(im.width*sc), h=Math.round(im.height*sc); var cv=document.createElement('canvas'); cv.width=w; cv.height=h; cv.getContext('2d').drawImage(im,0,0,w,h); try{ cb(cv.toDataURL('image/jpeg',0.82)); }catch(e){ cb(''); } }; im.onerror=function(){ cb(''); }; im.src=rd.result; };
+        rd.onerror=function(){ cb(''); }; rd.readAsDataURL(file);
+      }catch(e){ cb(''); } }
+    function buildAdCards(){ var box=$('adCards'); if(!box || box.getAttribute('data-built')) return; var h='',k,c;
+      for(k=0;k<AD_SLOTS.length;k++){ var s=AD_SLOTS[k], p=s[0], i=s[1];
+        var ccs=''; for(c=0;c<CCLIST.length;c++){ ccs+='<button type="button" class="ad-cc" data-p="'+p+'" data-i="'+i+'" data-c="'+CCLIST[c]+'">'+cname(CCLIST[c])+'</button>'; }
+        h+='<div class="adm-card"><h4>'+s[2]+' <label class="adm-switch"><input type="checkbox" id="'+pid(p,i,'on')+'"><span class="tg"></span>ظاهر</label></h4>'
+          +'<div class="adm-field"><label>صورة الإعلان</label><div><label class="ad-up">اختر صورة<input type="file" accept="image/*" id="'+pid(p,i,'file')+'"></label><button type="button" class="ad-rm" id="'+pid(p,i,'rm')+'">إزالة</button></div></div>'
+          +'<img class="adm-prev" id="'+pid(p,i,'prev')+'" alt="">'
+          +'<div class="adm-field"><label>رابط عند الضغط (اختياري)</label><input type="url" id="'+pid(p,i,'href')+'" placeholder="اتركه فارغاً لإعلان بدون رابط"></div>'
+          +'<div class="adm-field"><label>يظهر للدول (بدون تحديد = كل الدول)</label><div class="ad-ccs" id="'+pid(p,i,'ccs')+'">'+ccs+'</div></div>'
+          +'<div class="ad-clicks">النقرات: <b id="'+pid(p,i,'clk')+'">—</b></div></div>'; }
       box.innerHTML=h; box.setAttribute('data-built','1');
-      for(k=0;k<AD_SLOTS.length;k++){ (function(s){ var im=$(adId(s[0],s[1],'img')); if(im) im.addEventListener('input',function(){ adPrev(s[0],s[1]); }); })(AD_SLOTS[k]); }
+      box.addEventListener('click',function(e){ var b=e.target;
+        if(b.classList&&b.classList.contains('ad-cc')){ var key=b.getAttribute('data-p')+'_'+b.getAttribute('data-i'), cc=b.getAttribute('data-c'); AD_CC[key]=AD_CC[key]||[]; var ix=AD_CC[key].indexOf(cc); if(ix>=0){ AD_CC[key].splice(ix,1); b.classList.remove('on'); } else { AD_CC[key].push(cc); b.classList.add('on'); } }
+        else if(b.classList&&b.classList.contains('ad-rm')){ var m=b.id.match(/^ad_(.+)_(\d+)rm$/); if(m){ var kk=m[1]+'_'+m[2], pv=$('ad_'+m[1]+'_'+m[2]+'prev'); AD_IMG[kk]=''; if(pv){ pv.classList.remove('on'); pv.removeAttribute('src'); } } } });
+      box.addEventListener('change',function(e){ var f=e.target; if(f&&f.type==='file'){ var m=f.id.match(/^ad_(.+)_(\d+)file$/); if(m&&f.files&&f.files[0]){ var kk=m[1]+'_'+m[2], pv=$('ad_'+m[1]+'_'+m[2]+'prev'); compressImg(f.files[0],function(b64){ if(b64){ AD_IMG[kk]=b64; if(pv){ pv.src=b64; pv.classList.add('on'); } } }); } } });
     }
     buildAdCards();
+    function adClicksFor(a){ var cl=a&&a.clicks; if(!cl) return 0; var from=AD_RANGE.from||'2020-01-01', to=AD_RANGE.to||ymd(new Date()), t=0,kk; for(kk in cl){ if(kk>=from&&kk<=to) t+=cl[kk]||0; } return t; }
+    function fillAdCards(){ var k; for(k=0;k<AD_SLOTS.length;k++){ var s=AD_SLOTS[k], p=s[0], i=s[1], key=p+'_'+i, a=(WSM_ADS&&WSM_ADS[key])||{};
+        AD_IMG[key]=a.img||''; AD_CC[key]=(a.countries||[]).slice();
+        var on=$(pid(p,i,'on')); if(on) on.checked=(a.on!==false);
+        var hr=$(pid(p,i,'href')); if(hr) hr.value=a.href||'';
+        var pv=$(pid(p,i,'prev')); if(pv){ if(a.img){ pv.src=a.img; pv.classList.add('on'); } else { pv.classList.remove('on'); pv.removeAttribute('src'); } }
+        var ccs=$(pid(p,i,'ccs')); if(ccs){ var bs=ccs.querySelectorAll('.ad-cc'),j; for(j=0;j<bs.length;j++){ var cc=bs[j].getAttribute('data-c'); bs[j].classList.toggle('on', AD_CC[key].indexOf(cc)>=0); } }
+        var clk=$(pid(p,i,'clk')); if(clk) clk.textContent=adClicksFor(a); } }
+    function refreshAdCards(){ if(!WSM_ADS){ loadAds(function(){ fillAdCards(); }); return; } fillAdCards(); }
+    function setAdRange(r){ var to=ymd(new Date()); AD_RANGE=(r==='today')?{from:to,to:to}:{from:'2020-01-01',to:to}; }
+    setAdRange('today');
+    (function(){ var af=$('adFilters'); if(!af) return;
+      af.addEventListener('click',function(e){ var b=e.target; while(b&&b.tagName!=='BUTTON') b=b.parentNode; if(!b) return; var r=b.getAttribute('data-r'), bs=af.children,i; for(i=0;i<bs.length;i++) bs[i].classList.toggle('active', bs[i]===b);
+        if(r==='custom'){ $('adRange').hidden=false; } else { $('adRange').hidden=true; setAdRange(r); fillAdCards(); } });
+      if($('adGo')) $('adGo').onclick=function(){ var f=$('adFrom').value, t=$('adTo').value; if(f&&t){ AD_RANGE={from:f,to:t}; fillAdCards(); } };
+    })();
 
     function saveCfg(partial, okId){
       var ok=$(okId), d=getDB(); var k; for(k in partial) CFG[k]=partial[k]; applyPublic();
@@ -1834,9 +1875,14 @@
     }
 
     $('saveAds').onclick=function(){
-      var adsP={},k; for(k=0;k<AD_SLOTS.length;k++){ var s=AD_SLOTS[k]; if(!adsP[s[0]]) adsP[s[0]]=[];
-        adsP[s[0]][s[1]]={img:$(adId(s[0],s[1],'img')).value.trim(), href:$(adId(s[0],s[1],'href')).value.trim()||'#', on:$(adId(s[0],s[1],'on')).checked}; }
-      saveCfg({adsP:adsP},'adsOk');
+      var d=getDB(), ok=$('adsOk'); if(!d){ ok.style.color='#C0392B'; ok.textContent='تعذّر الحفظ — قاعدة البيانات غير مربوطة'; return; }
+      ok.style.color='var(--leaf)'; ok.textContent='جارٍ الحفظ…';
+      var batch=d.batch(), col=d.collection('wsm_ads'),k;
+      for(k=0;k<AD_SLOTS.length;k++){ var s=AD_SLOTS[k], p=s[0], i=s[1], key=p+'_'+i;
+        var rec={ img:AD_IMG[key]||'', href:($(pid(p,i,'href')).value||'').trim(), on:$(pid(p,i,'on')).checked, countries:(AD_CC[key]||[]) };
+        batch.set(col.doc(key), rec, {merge:true}); }
+      batch.commit().then(function(){ ok.textContent='تم الحفظ ✓'; setTimeout(function(){ ok.textContent=''; },2500); loadAds(function(){ if(window.wsmPaintAds) window.wsmPaintAds(); fillAdCards(); }); })
+        .catch(function(){ ok.style.color='#C0392B'; ok.textContent='تعذّر الحفظ — تحقّق من قواعد Firestore'; });
     };
 
     function renderLinks(){ var L=CFG.links||[], box=$('linksEditor'), h='', i; for(i=0;i<L.length;i++){ h+=linkRow(L[i].label||'', L[i].url||''); } box.innerHTML=h; }
