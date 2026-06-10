@@ -188,9 +188,27 @@
   .aq-cell span{font-size:.8rem;color:var(--soil-2);font-weight:600}
   .aq-cell b{font-family:'Cairo',sans-serif;font-size:1.05rem;font-weight:800;color:var(--soil)}
   .aq-cell b i{font-style:normal;font-size:.72rem;font-weight:600;color:var(--muted)}
+  .aq-bar{position:relative;height:8px;border-radius:5px;margin-top:8px;background:linear-gradient(to right,#2E9E5B 0%,#7FB733 24%,#C9971B 48%,#E67E22 72%,#C0392B 100%)}
+  .aq-bar-hero{height:10px;margin:6px 16px 14px}
+  .aq-mark{position:absolute;top:-8px;transform:translateX(-50%);width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:9px solid #F2C200;filter:drop-shadow(0 1px 1px rgba(0,0,0,.35))}
+  .aq-legend{display:flex;align-items:center;gap:7px;padding:0 16px 12px;font-family:'Cairo',sans-serif;font-size:.74rem;color:var(--muted);font-weight:600;flex-wrap:wrap}
+  .aq-legend b{font-weight:800}
+  .aq-lg-tri{display:inline-block;width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-top:7px solid #F2C200;vertical-align:middle}
   .aq-retry{margin-top:6px;font-family:'Cairo',sans-serif;font-weight:700;font-size:.9rem;color:#fff;
     background:var(--leaf);border:none;border-radius:10px;padding:8px 16px;cursor:pointer}
   @media (min-width:680px){.aq-grid{grid-template-columns:repeat(4,1fr)}}
+  .env-section{padding:26px 16px 0}
+  .env-wrap{border-radius:18px;overflow:hidden;border:1px solid var(--line);box-shadow:0 8px 22px -16px rgba(32,53,42,.4);background:var(--paper-2);margin-bottom:16px}
+  .env-title{font-family:'Cairo',sans-serif;font-weight:800;color:var(--soil);font-size:1.02rem;padding:13px 14px 0}
+  .env-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);margin-top:12px}
+  .env-cell{background:var(--paper);padding:12px 13px;display:flex;flex-direction:column;gap:4px}
+  .env-cell span{font-size:.8rem;color:var(--soil-2);font-weight:600}
+  .env-cell b{font-family:'Cairo',sans-serif;font-size:1.25rem;font-weight:800;color:var(--soil)}
+  .env-cell b i{font-style:normal;font-size:.72rem;font-weight:600;color:var(--muted)}
+  .env-note{font-family:'Cairo',sans-serif;font-size:.84rem;color:var(--muted);font-weight:600;line-height:1.95;padding:12px 14px 14px;margin:0}
+  .env-note b{color:var(--soil-2);font-weight:800}
+  .env-loading{padding:20px;text-align:center;color:var(--muted);font-family:'Cairo',sans-serif;font-weight:600}
+  @media (min-width:680px){.env-grid{grid-template-columns:repeat(4,1fr)}}
 
   nav.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:50;
     height:calc(var(--nav-h) + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom);
@@ -436,6 +454,7 @@
         "clock    moon"
         "clock    wx"
         "air      air"
+        "env      env"
         "sections sections"
         "plant    plant"
         "ad       ad"
@@ -446,6 +465,7 @@
     .moon-section{grid-area:moon;padding:14px 0 0}
     .wx-section{grid-area:wx;padding:26px 0 0}
     .aq-section{grid-area:air;padding:26px 0 0}
+    .env-section{grid-area:env;padding:26px 0 0}
     .sections{grid-area:sections;padding:38px 0 6px}
     .plant-section{grid-area:plant;padding:38px 0 0}
     #adSlot{grid-area:ad;margin:34px 0 0}
@@ -500,6 +520,10 @@
         <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 14V9"/><path d="M12 9c-3 0-5-2-5-5 3 0 5 2 5 5Z"/><path d="M12 9c0-3 2-5 5-5 0 3-2 5-5 5Z"/><path d="M6 14h12l-1.2 6.2a1 1 0 0 1-1 .8H8.2a1 1 0 0 1-1-.8L6 14Z"/></svg></div>
         <h3>نباتات داخلية</h3>
       </div>
+      <div class="card cal-open" id="cardHydro" role="button" tabindex="0">
+        <div class="ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c3.6 4.2 6 7.2 6 10.2A6 6 0 0 1 6 13.2C6 10.2 8.4 7.2 12 3Z"/><path d="M9.5 13.4c0 1.4 1.1 2.5 2.5 2.5"/></svg></div>
+        <h3>الزراعة المائية</h3>
+      </div>
       <div class="card cal-open" id="cardNews" role="button" tabindex="0">
         <div class="ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h13a1 1 0 0 1 1 1v12a2 2 0 0 0 2-2V8"/><path d="M4 5v13a2 2 0 0 0 2 2h12"/><path d="M7 9h7M7 13h7M7 17h4"/></svg></div>
         <h3>أخبار وإعلانات</h3>
@@ -541,6 +565,54 @@
       <div class="aq-box" id="aqBox"><div class="aq-loading">يتم جلب جودة الهواء…</div></div>
     </div>
   </section>
+
+  <section class="env-section" id="sec-env">
+    <div class="sec-head"><span>الأرض والشمس</span><div class="ln"></div></div>
+    <div class="env-wrap">
+      <div class="env-title">حرارة الأرض والتبخر</div>
+      <div class="env-grid" id="envSoil"><div class="env-loading">يتم جلب البيانات…</div></div>
+      <p class="env-note">حرارة الأرض تؤثر مباشرة على <b>إنبات البذور</b> ونشاط الجذور وامتصاص الماء والمغذيات؛ أغلب البذور تنبت بين 18–30°م. أمّا <b>معدّل التبخر (ET₀)</b> فيقدّر كمية الماء التي تفقدها التربة والنبات يومياً — كلما ارتفع احتاج محصولك ريّاً أكثر، فيساعدك على <b>جدولة الري</b> دون إفراط أو تقصير.</p>
+    </div>
+    <div class="env-wrap">
+      <div class="env-title">الشمس وطول النهار</div>
+      <div class="env-grid" id="envSun"><div class="env-loading">يتم جلب البيانات…</div></div>
+      <p class="env-note">طول النهار يحدّد كمية الضوء المتاحة <b>للتمثيل الضوئي</b> ونمو النبات، وكثير من المحاصيل تزهر حسب طول النهار. ومعرفة <b>الشروق والغروب</b> تساعدك على اختيار أفضل أوقات <b>الري والرش</b> (الصباح الباكر أو بعد الغروب) لتقليل التبخر وحروق الأوراق.</p>
+    </div>
+  </section>
+  <script>
+    /* ===== الأرض والشمس (Open-Meteo) ===== */
+    (function(){
+      var soilBox=document.getElementById('envSoil'), sunBox=document.getElementById('envSun');
+      if(!soilBox||!sunBox) return;
+      var LAT=29.38, LON=47.99;
+      function n1(v){ return (v==null)?'—':(Math.round(v*10)/10); }
+      function pad(n){ return (n<10?'0':'')+n; }
+      function cellH(label,val,unit){ return '<div class="env-cell"><span>'+label+'</span><b>'+val+(unit?' <i>'+unit+'</i>':'')+'</b></div>'; }
+      function fmtTime(iso){ if(!iso) return '—'; var t=String(iso).split('T')[1]||''; var hm=t.split(':'); if(hm.length<2) return '—';
+        var h=parseInt(hm[0],10), m=parseInt(hm[1],10); var ap=h<12?'ص':'م'; var h12=h%12; if(h12===0)h12=12; return h12+':'+pad(m)+' '+ap; }
+      function dur(sec){ if(sec==null) return '—'; var h=Math.floor(sec/3600), m=Math.round((sec%3600)/60); if(m===60){h++;m=0;} return h+'س '+pad(m)+'د'; }
+      function render(d){
+        var cur=d.current||{}, H=d.hourly||{}, D=d.daily||{};
+        var idx=0; if(H.time&&cur.time){ var key=String(cur.time).slice(0,13); for(var i=0;i<H.time.length;i++){ if(String(H.time[i]).slice(0,13)===key){ idx=i; break; } } }
+        var s0=H.soil_temperature_0cm?H.soil_temperature_0cm[idx]:null;
+        var s6=H.soil_temperature_6cm?H.soil_temperature_6cm[idx]:null;
+        var et=(D.et0_fao_evapotranspiration&&D.et0_fao_evapotranspiration[0]!=null)?D.et0_fao_evapotranspiration[0]:(H.et0_fao_evapotranspiration?H.et0_fao_evapotranspiration[idx]:null);
+        soilBox.innerHTML=cellH('حرارة سطح الأرض', n1(s0),'°م')+cellH('حرارة منطقة الجذور (6سم)', n1(s6),'°م')+cellH('معدّل التبخر اليومي ET₀', n1(et),'مم/يوم');
+        var sr=D.sunrise?D.sunrise[0]:null, ss=D.sunset?D.sunset[0]:null, dl=D.daylight_duration?D.daylight_duration[0]:null;
+        var night=(dl!=null)?(86400-dl):null;
+        sunBox.innerHTML=cellH('الشروق', fmtTime(sr),'')+cellH('الغروب', fmtTime(ss),'')+cellH('طول النهار', dur(dl),'')+cellH('طول الليل', dur(night),'');
+      }
+      function fail(){ soilBox.innerHTML='<div class="env-loading">تعذّر جلب البيانات الآن</div>'; sunBox.innerHTML=''; }
+      var url='https://api.open-meteo.com/v1/forecast?latitude='+LAT+'&longitude='+LON
+        +'&current=temperature_2m'
+        +'&hourly=soil_temperature_0cm,soil_temperature_6cm,et0_fao_evapotranspiration'
+        +'&daily=sunrise,sunset,daylight_duration,et0_fao_evapotranspiration'
+        +'&timezone=auto&forecast_days=1';
+      function load(){ soilBox.innerHTML='<div class="env-loading">يتم جلب البيانات…</div>'; sunBox.innerHTML='';
+        try{ fetch(url,{cache:'no-store'}).then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(render).catch(fail); }catch(e){ fail(); } }
+      load();
+    })();
+  </script>
 
   <section class="links-sec" id="linksSec" hidden>
     <h2>روابط مهمة</h2>
@@ -735,6 +807,101 @@
   <div id="tipsList" class="tips-list"></div>
   <div id="tipsArticle" hidden></div>
 </div>
+
+<!-- ===== شاشة الزراعة المائية ===== -->
+<style>
+  .hydro-intro{max-width:1120px;margin:0 auto;padding:14px 16px 0;font-family:'Cairo',sans-serif;color:var(--muted);font-size:.86rem;font-weight:600;line-height:1.9}
+  .hydro-search{max-width:1120px;margin:10px auto 0;padding:0 16px;display:flex}
+  .hydro-search input{flex:1;font-family:'Cairo',sans-serif;font-size:.95rem;padding:11px 14px;border:1px solid var(--line);border-radius:12px;background:var(--paper-2);color:var(--ink);outline:none}
+  .hydro-search input:focus{border-color:var(--leaf)}
+  .hydro-wrap{max-width:1120px;margin:14px auto 28px;padding:0 16px}
+  .hydro-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:14px;background:var(--paper-2)}
+  table.hydro-tbl{width:100%;border-collapse:collapse;font-family:'Cairo',sans-serif;min-width:520px}
+  .hydro-tbl thead th{background:var(--soil);color:#fff;font-weight:700;font-size:.82rem;padding:11px 8px;text-align:center;border:1px solid var(--soil-2)}
+  .hydro-tbl thead tr:nth-child(2) th{background:var(--soil-2);font-size:.74rem;font-weight:600}
+  .hydro-tbl td{padding:9px 8px;text-align:center;font-size:.86rem;color:var(--ink);border:1px solid var(--line);white-space:nowrap}
+  .hydro-tbl td.nm{text-align:right;font-weight:700;color:var(--soil);white-space:normal}
+  .hydro-tbl tbody tr:nth-child(even):not(.hydro-grp){background:rgba(255,255,255,.4)}
+  .hydro-grp td{background:var(--leaf);color:#fff;font-weight:800;text-align:right;font-size:.86rem;letter-spacing:.3px}
+  .hydro-unit{display:block;font-size:.66rem;color:rgba(255,255,255,.72);font-weight:600;margin-top:1px}
+  .hydro-empty{padding:26px;text-align:center;color:var(--muted);font-family:'Cairo',sans-serif;font-weight:600}
+  .hydro-src{margin-top:12px;font-family:'Cairo',sans-serif;font-size:.76rem;color:var(--muted);font-weight:600;line-height:1.8}
+  .hydro-src a{color:var(--leaf);font-weight:700;text-decoration:none}
+</style>
+<div class="cal-screen" id="hydroScreen" hidden>
+  <div class="cal-top">
+    <button class="cal-back" id="hydroBack" aria-label="رجوع">→</button>
+    <div class="cal-htext">
+      <div class="t">الزراعة المائية</div>
+      <div class="s">جدول الأملاح (EC/PPM) ودرجة الحموضة pH لأصناف الزراعة المائية</div>
+    </div>
+  </div>
+  <div class="hydro-intro">القيم مأخوذة من جدول جامعة ولاية أوكلاهوما (OSU Extension — نشرة HLA‑6722). الـ EC ودرجة الحموضة pH من المرجع مباشرة، والـ PPM محسوبة منها على مقياس 500 (‎1.0 mS/cm ≈ 500 ppm‎). تبقى القيم نطاقات إرشادية تختلف حسب الصنف ومرحلة النمو والنظام — والقياس الفعلي عندك هو الأدق.</div>
+  <div class="hydro-search"><input id="hydroQ" type="search" placeholder="ابحث عن صنف… (مثال: طماطم، خس، ريحان)"></div>
+  <div class="hydro-wrap"><div class="hydro-scroll"><div id="hydroBody"></div></div><div class="hydro-src">المصدر: Oklahoma State University — Cooperative Extension، نشرة HLA‑6722 «Electrical Conductivity and pH Guide for Hydroponics» (Singh &amp; Dunn، 2016). <a href="https://extension.okstate.edu/fact-sheets/electrical-conductivity-and-ph-guide-for-hydroponics" target="_blank" rel="noopener">رابط المصدر ↗</a></div></div>
+</div>
+<script>
+  /* ===== الزراعة المائية: جدول الأملاح (EC/PPM) و pH ===== */
+  (function(){
+    var screen=document.getElementById('hydroScreen'); if(!screen) return;
+    var DATA=[
+      {g:'خضار ورقية'},
+      {n:'خس', ec:'1.2–1.8', ppm:'600–900', ph:'6.0–7.0'},
+      {n:'سبانخ', ec:'1.8–2.3', ppm:'900–1150', ph:'6.0–7.0'},
+      {n:'بوك تشوي', ec:'1.5–2.0', ppm:'750–1000', ph:'7.0'},
+      {n:'بقدونس', ec:'1.8–2.2', ppm:'900–1100', ph:'6.0–6.5'},
+      {n:'كرفس', ec:'1.8–2.4', ppm:'900–1200', ph:'6.5'},
+      {n:'ملفوف (كرنب)', ec:'2.5–3.0', ppm:'1250–1500', ph:'6.5–7.0'},
+      {n:'بروكلي', ec:'2.8–3.5', ppm:'1400–1750', ph:'6.0–6.8'},
+      {g:'ثمريات وبقوليات'},
+      {n:'طماطم', ec:'2.0–4.0', ppm:'1000–2000', ph:'6.0–6.5'},
+      {n:'خيار', ec:'1.7–2.0', ppm:'850–1000', ph:'5.0–5.5'},
+      {n:'فلفل', ec:'0.8–1.8', ppm:'400–900', ph:'5.5–6.0'},
+      {n:'باذنجان', ec:'2.5–3.5', ppm:'1250–1750', ph:'6.0'},
+      {n:'كوسا', ec:'1.8–2.4', ppm:'900–1200', ph:'6.0'},
+      {n:'قرع', ec:'1.8–2.4', ppm:'900–1200', ph:'6.0'},
+      {n:'بامية', ec:'2.0–2.4', ppm:'1000–1200', ph:'6.5'},
+      {n:'فاصوليا', ec:'2.0–4.0', ppm:'1000–2000', ph:'6.0'},
+      {n:'فراولة', ec:'1.8–2.2', ppm:'900–1100', ph:'6.0'},
+      {n:'موز', ec:'1.8–2.2', ppm:'900–1100', ph:'5.5–6.5'},
+      {g:'أعشاب'},
+      {n:'ريحان (حبق)', ec:'1.0–1.6', ppm:'500–800', ph:'5.5–6.0'},
+      {n:'مريمية', ec:'1.0–1.6', ppm:'500–800', ph:'5.5–6.5'},
+      {g:'جذور وسيقان'},
+      {n:'كرّاث', ec:'1.4–1.8', ppm:'700–900', ph:'6.5–7.0'},
+      {n:'هليون', ec:'1.4–1.8', ppm:'700–900', ph:'6.0–6.8'},
+      {n:'راوند (روبارب)', ec:'1.6–2.0', ppm:'800–1000', ph:'5.5–6.0'},
+      {g:'نباتات زينة'},
+      {n:'البنفسج الأفريقي', ec:'1.2–1.5', ppm:'600–750', ph:'6.0–7.0'},
+      {n:'قرنفل', ec:'2.0–3.5', ppm:'1000–1750', ph:'6.0'},
+      {n:'فيكس', ec:'1.6–2.4', ppm:'800–1200', ph:'5.5–6.0'},
+      {n:'ورد', ec:'1.5–2.5', ppm:'750–1250', ph:'5.5–6.0'}
+    ];
+    function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+    function build(q){
+      q=(q||'').trim();
+      var h='<table class="hydro-tbl"><thead>'
+        +'<tr><th rowspan="2">الصنف</th><th colspan="2">الأملاح</th><th rowspan="2">الأس الهيدروجيني<span class="hydro-unit">pH</span></th></tr>'
+        +'<tr><th>EC<span class="hydro-unit">mS/cm</span></th><th>PPM<span class="hydro-unit">ppm</span></th></tr>'
+        +'</thead><tbody>';
+      var i, r, shown=0, pend='';
+      for(i=0;i<DATA.length;i++){ r=DATA[i];
+        if(r.g){ pend=r.g; continue; }
+        if(q && r.n.indexOf(q)<0) continue;
+        if(pend){ h+='<tr class="hydro-grp"><td colspan="4">'+esc(pend)+'</td></tr>'; pend=''; }
+        h+='<tr><td class="nm">'+esc(r.n)+'</td><td>'+esc(r.ec)+'</td><td>'+esc(r.ppm)+'</td><td>'+esc(r.ph)+'</td></tr>';
+        shown++;
+      }
+      h+='</tbody></table>';
+      if(!shown) return '<div class="hydro-empty">ما فيه نتائج مطابقة 🔍</div>';
+      return h;
+    }
+    var qEl=document.getElementById('hydroQ'), body=document.getElementById('hydroBody');
+    function paint(){ if(body) body.innerHTML=build(qEl?qEl.value:''); }
+    if(qEl) qEl.addEventListener('input', paint);
+    (window.__wsmCal=window.__wsmCal||{}).hydro={el:screen, render:paint};
+  })();
+</script>
 
 <!-- ===== شاشة أخبار وإعلانات ===== -->
 <div class="cal-screen" id="newsScreen" hidden>
@@ -1142,38 +1309,26 @@
     function num(v){ return (v==null)?'—':Math.round(v); }
 
     function render(data){
-      var cur=data.current||{}, d=data.daily||{}, h=data.hourly, i;
-      var wMax=d.wind_speed_10m_max||[], pProb=d.precipitation_probability_max||[];
-      var c=cond(cur.weather_code, wMax[0], pProb[0]||0), info=COND[c];
-      elT.className='wx-today '+info.cls;
-      elT.innerHTML=
-        '<div class="wt-top"><span class="wt-label">طقس اليوم · الكويت</span></div>'
-        +'<div class="wt-main">'
-          +'<div class="wt-ic">'+icon(c)+'</div>'
-          +'<div class="wt-temp">'+num(cur.temperature_2m)+'°</div>'
-          +'<div class="wt-info"><div class="wt-cond">'+info.name+'</div>'
-            +'<div class="wt-feel">إحساس '+num(cur.apparent_temperature)+'°</div></div>'
+      var cur=data.current||{}, aqi=cur.us_aqi, info=aqiInfo(aqi);
+      var hp=pctOf(aqi,300);
+      box.innerHTML=
+        '<div class="aq-hero">'
+          +'<div class="aq-dot" style="background:'+info.col+'">'+n0(aqi)+'</div>'
+          +'<div class="aq-hero-t"><div class="aq-status" style="color:'+info.col+'">'+info.name+'</div>'
+            +'<div class="aq-sub">مؤشر جودة الهواء (US AQI) · الكويت</div></div>'
         +'</div>'
-        +'<div class="wt-stats">'
-          +'<div><span>الرطوبة</span><b>'+num(cur.relative_humidity_2m)+'%</b></div>'
-          +'<div><span>الرياح</span><b>'+num(cur.wind_speed_10m)+' كم/س</b></div>'
-          +'<div><span>احتمال المطر</span><b>'+(pProb[0]!=null?pProb[0]:0)+'%</b></div>'
-          +'<div><span>العظمى / الصغرى</span><b>'+num(d.temperature_2m_max&&d.temperature_2m_max[0])+'° / '+num(d.temperature_2m_min&&d.temperature_2m_min[0])+'°</b></div>'
+        +barHtml(hp,' aq-bar-hero')
+        +'<div class="aq-legend"><span class="aq-lg-tri"></span><span>المسطرة: <b style="color:#2E9E5B">أخضر = جيد</b> ← <b style="color:#C0392B">أحمر = خطر</b> · المثلث الأصفر = موقع القراءة الحالية</span></div>'
+        +'<div class="aq-grid">'
+          +cell('الجسيمات PM2.5', cur.pm2_5,'µg/m³',150,1)
+          +cell('الجسيمات PM10', cur.pm10,'µg/m³',350,1)
+          +cell('الأوزون O₃', cur.ozone,'µg/m³',240,0)
+          +cell('ثاني أكسيد النيتروجين NO₂', cur.nitrogen_dioxide,'µg/m³',200,1)
+          +cell('ثاني أكسيد الكبريت SO₂', cur.sulphur_dioxide,'µg/m³',350,1)
+          +cell('أول أكسيد الكربون CO', cur.carbon_monoxide,'µg/m³',10000,0)
+          +cell('الغبار', cur.dust,'µg/m³',500,0)
+          +cell('الأشعة فوق البنفسجية', cur.uv_index,'',11,1)
         +'</div>';
-
-      var html='';
-      for(i=1;i<=6;i++){
-        if(!d.time||d.time[i]==null) break;
-        var cc=cond(d.weather_code[i], wMax[i], pProb[i]||0), ci=COND[cc];
-        var dt=new Date(d.time[i]+'T00:00'), hum=dailyHum(h,d.time[i]);
-        html+='<div class="wx-day '+ci.cls+'">'
-          +'<div class="wd-day">'+wd[dt.getDay()]+'</div>'
-          +'<div class="wd-ic">'+icon(cc)+'</div>'
-          +'<div class="wd-temp">'+num(d.temperature_2m_max[i])+'°</div>'
-          +'<div class="wd-hum"><svg viewBox="0 0 24 24" width="9" height="11" fill="currentColor"><path d="M12 3c4 6 6 9 6 12a6 6 0 0 1-12 0c0-3 2-6 6-12Z"/></svg>'+(hum!=null?hum+'%':'—')+'</div>'
-        +'</div>';
-      }
-      elD.innerHTML=html;
     }
     function fail(){
       elT.className='wx-today';
@@ -1211,7 +1366,9 @@
     }
     function n0(v){ return (v==null)?'—':Math.round(v); }
     function n1(v){ return (v==null)?'—':(Math.round(v*10)/10); }
-    function cell(label,val,unit){ return '<div class="aq-cell"><span>'+label+'</span><b>'+val+(unit?' <i>'+unit+'</i>':'')+'</b></div>'; }
+    function pctOf(v,max){ if(v==null||!(max>0)) return null; var p=v/max*100; if(p<0)p=0; if(p>100)p=100; return Math.round(p*10)/10; }
+    function barHtml(p,extra){ if(p==null) return ''; return '<div class="aq-bar'+(extra||'')+'"><div class="aq-mark" style="left:'+p+'%"></div></div>'; }
+    function cell(label,raw,unit,max,d){ var p=pctOf(raw,max); return '<div class="aq-cell"><span>'+label+'</span><b>'+(d?n1(raw):n0(raw))+(unit?' <i>'+unit+'</i>':'')+'</b>'+barHtml(p,'')+'</div>'; }
     function render(data){
       var cur=data.current||{}, aqi=cur.us_aqi, info=aqiInfo(aqi);
       box.innerHTML=
@@ -1351,7 +1508,7 @@
       if(u.indexOf('wa.me')>=0||u.indexOf('whatsapp')>=0) return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.5 8.5 0 0 1-12.7 7.4L3 21l2.2-5.2A8.5 8.5 0 1 1 21 11.5Z"/></svg>';
       if(u.indexOf('instagram')>=0) return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>';
       return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7 0l2-2a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-2 2a5 5 0 0 0 7 7l1-1"/></svg>'; }
-    var PAGEMAP={ agri:['cardCal','navAgri'], palm:['cardPalm','navPalm'], sidr:['cardSidr','navSidr'], tips:['cardTips','navTips'], indoor:['cardIndoor'], news:['cardNews'], plant:['sec-plant'], moon:['sec-moon'], weather:['sec-weather'], air:['sec-air'] };
+    var PAGEMAP={ agri:['cardCal','navAgri'], palm:['cardPalm','navPalm'], sidr:['cardSidr','navSidr'], tips:['cardTips','navTips'], indoor:['cardIndoor'], hydro:['cardHydro'], news:['cardNews'], plant:['sec-plant'], moon:['sec-moon'], weather:['sec-weather'], air:['sec-air'], env:['sec-env'] };
     function applyPublic(){
       var sub=$('subtitle'); if(sub&&CFG.subtitle) sub.textContent=CFG.subtitle;
       var an=$('annc'); if(an){ if(CFG.annOn&&CFG.annText){ an.textContent=CFG.annText; an.hidden=false; } else an.hidden=true; }
@@ -1487,7 +1644,7 @@
       return html;
     }
 
-    var SECTIONS=[{k:'agri',nm:'التقويم الزراعي'},{k:'palm',nm:'تقويم النخلة'},{k:'sidr',nm:'تقويم السدرة'},{k:'tips',nm:'نصائح ومقالات'},{k:'news',nm:'أخبار وإعلانات'},{k:'plant',nm:'قسم «ماذا نزرع»'},{k:'moon',nm:'قسم القمر'},{k:'weather',nm:'قسم الطقس'}];
+    var SECTIONS=[{k:'agri',nm:'التقويم الزراعي'},{k:'palm',nm:'تقويم النخلة'},{k:'sidr',nm:'تقويم السدرة'},{k:'tips',nm:'نصائح ومقالات'},{k:'news',nm:'أخبار وإعلانات'},{k:'hydro',nm:'الزراعة المائية'},{k:'plant',nm:'قسم «ماذا نزرع»'},{k:'moon',nm:'قسم القمر'},{k:'weather',nm:'قسم الطقس'},{k:'env',nm:'الأرض والشمس'}];
     function renderPages(){
       var P=CFG.pages||{}, h='', i; for(i=0;i<SECTIONS.length;i++){ var s=SECTIONS[i], on=(P[s.k]!==false);
         h+='<div class="toggle-row"><div><div class="nm">'+s.nm+'</div><div class="ds">'+(on?'ظاهرة للزوّار':'معلّقة (مخفية)')+'</div></div><label class="adm-switch"><input type="checkbox" data-k="'+s.k+'"'+(on?' checked':'')+'><span class="tg"></span></label></div>'; }
@@ -2407,6 +2564,7 @@
     bind(document.getElementById('cardSidr'), function(){ open('sidr'); });
     bind(document.getElementById('cardTips'), function(){ open('tips'); });
     bind(document.getElementById('cardIndoor'), function(){ open('indoor'); });
+    bind(document.getElementById('cardHydro'), function(){ open('hydro'); });
     bind(document.getElementById('cardNews'), function(){ open('news'); });
     /* شريط التنقّل */
     bind(tabs.home, home);
@@ -2419,6 +2577,7 @@
     bind(document.getElementById('palmBack'), home);
     bind(document.getElementById('sidrBack'), home);
     bind(document.getElementById('indoorBack'), home);
+    bind(document.getElementById('hydroBack'), home);
     bind(document.getElementById('newsBack'), home);
   })();
 </script>
