@@ -980,6 +980,8 @@
   .ask-send{background:var(--leaf);color:#fff}
   .ask-send:disabled{opacity:.5;cursor:default}
   .ask-clip{background:var(--paper);border:1px solid var(--line);color:var(--soil)}
+  .ask-prod{display:inline-block;margin-top:8px;background:var(--leaf);color:#fff !important;text-decoration:none;font-family:'Cairo',sans-serif;font-weight:700;font-size:.9rem;padding:9px 15px;border-radius:12px;box-shadow:0 2px 8px rgba(78,122,58,.25)}
+  .ask-link{color:var(--leaf);text-decoration:underline;word-break:break-all}
 </style>
 <!-- ===== شاشة مساعد وسم الذكي ===== -->
 <div class="cal-screen" id="askScreen" hidden>
@@ -1006,7 +1008,8 @@
     var msgs=document.getElementById('askMsgs'), ta=document.getElementById('askTA'), sendBtn=document.getElementById('askSend'), clip=document.getElementById('askClip'), fileInput=document.getElementById('askFile'), prev=document.getElementById('askPrev');
     var history=[], pendingImg=null, busy=false, welcomed=false;
     function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
-    function addMsg(role,text,img){ var d=document.createElement('div'); d.className='ask-msg '+(role==='user'?'ask-u':'ask-a'); var h=''; if(img) h+='<img class="ask-img" src="'+img+'" alt="">'; h+=esc(text); d.innerHTML=h; msgs.appendChild(d); msgs.scrollTop=msgs.scrollHeight; return d; }
+    function linkify(t){ var e=esc(t); return e.replace(/(https?:\/\/[^\s<>"']+)/g,function(u){ var tail=''; var mm=u.match(/[).,،؛!؟?]+$/); if(mm){ tail=mm[0]; u=u.slice(0,-tail.length); } var prod=u.indexOf('q8organic.com')>=0; var label=prod?'🛒 افتح في كويت أورجانيك ↗':u; return '<a class="'+(prod?'ask-prod':'ask-link')+'" href="'+u+'" target="_blank" rel="noopener">'+label+'</a>'+tail; }); }
+    function addMsg(role,text,img){ var d=document.createElement('div'); d.className='ask-msg '+(role==='user'?'ask-u':'ask-a'); var h=''; if(img) h+='<img class="ask-img" src="'+img+'" alt="">'; h+=linkify(text); d.innerHTML=h; msgs.appendChild(d); msgs.scrollTop=msgs.scrollHeight; return d; }
     function welcome(){ if(welcomed) return; welcomed=true; addMsg('assistant','هلا! أنا وسم 🌱 اسألني عن الزراعة في الكويت، أو صوّر نبتتك وأشخّص لك مشكلتها.\n\n(ملاحظة: أنا مساعد ذكي وقد أخطئ — تحقّق قبل القرارات المهمة.)'); }
     function showPrev(img){ prev.innerHTML='<div class="wrap"><img src="'+img+'" alt=""><button id="askPrevX" type="button" aria-label="حذف">×</button></div>'; prev.hidden=false; document.getElementById('askPrevX').onclick=function(){ pendingImg=null; prev.hidden=true; prev.innerHTML=''; }; }
     function resizeImg(file,cb){ var img=new Image(), url=URL.createObjectURL(file); img.onload=function(){ var max=1024,w=img.width,h=img.height; if(w>=h&&w>max){ h=Math.round(h*max/w); w=max; } else if(h>w&&h>max){ w=Math.round(w*max/h); h=max; } var c=document.createElement('canvas'); c.width=w; c.height=h; c.getContext('2d').drawImage(img,0,0,w,h); var durl=null; try{ durl=c.toDataURL('image/jpeg',0.82); }catch(e){} URL.revokeObjectURL(url); cb(durl); }; img.onerror=function(){ URL.revokeObjectURL(url); cb(null); }; img.src=url; }
