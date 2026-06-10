@@ -1559,10 +1559,10 @@
       if(WSM_CC){ cb&&cb(WSM_CC); return; }
       try{ var c=localStorage.getItem('wsm_cc'); if(c){ WSM_CC=c; cb&&cb(c); return; } }catch(e){}
       fetch('https://ipwho.is/?fields=success,country_code').then(function(r){return r.json();})
-        .then(function(g){ WSM_CC=(g&&g.country_code)?g.country_code:'??'; try{localStorage.setItem('wsm_cc',WSM_CC);}catch(e){} cb&&cb(WSM_CC); })
+        .then(function(g){ var c=(g&&g.country_code)?g.country_code:''; if(c){ WSM_CC=c; try{localStorage.setItem('wsm_cc',c);}catch(e){} } else { WSM_CC='??'; } cb&&cb(WSM_CC); })
         .catch(function(){ WSM_CC='??'; cb&&cb('??'); });
     }
-    function adCountryOK(a){ var cs=a&&a.countries; if(!cs||!cs.length) return true; if(!WSM_CC||WSM_CC==='??') return false; for(var i=0;i<cs.length;i++) if(cs[i]===WSM_CC) return true; return false; }
+    function adCountryOK(a){ var cs=a&&a.countries; if(!cs||!cs.length) return true; if(!WSM_CC||WSM_CC==='??') return true; for(var i=0;i<cs.length;i++) if(cs[i]===WSM_CC) return true; return false; }
     window.wsmAdHTML=function(page,idx){ return '<div class="ad-host" data-ad="'+page+'_'+idx+'"></div>'; };
     function adAnchor(key,a){ var img='<img src="'+a.img+'" alt="إعلان">';
       if(a.href){ return '<a class="cal-ad" href="'+a.href+'" target="_blank" rel="noopener" data-adkey="'+key+'">'+img+'</a>'; }
