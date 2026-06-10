@@ -7,7 +7,7 @@
 <title>وسم</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Reem+Kufi:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root{
     --paper:#F4F0E5;--paper-2:#ECE6D5;--line:#E0D8C3;
@@ -27,14 +27,14 @@
   .stars{position:absolute;inset:0;pointer-events:none;overflow:hidden}
   .star{fill:var(--gold);opacity:0;animation:twinkle 4s ease-in-out infinite}
   @keyframes twinkle{0%,100%{opacity:.16}50%{opacity:.55}}
-  .mark{font-family:'Reem Kufi',sans-serif;font-weight:700;color:var(--soil);
+  .mark{font-family:'Cairo',sans-serif;font-weight:700;color:var(--soil);
     font-size:clamp(4.6rem,25vw,7.2rem);line-height:1;letter-spacing:.01em;
     position:relative;display:inline-block;user-select:none}
   .rainline{width:0;height:3px;margin:12px auto 0;
     background:linear-gradient(90deg,transparent,var(--gold),transparent);
     border-radius:3px;animation:grow 1.2s .3s cubic-bezier(.2,.8,.2,1) forwards}
   @keyframes grow{to{width:130px}}
-  .subtitle{font-family:'Reem Kufi',sans-serif;font-size:1.18rem;color:var(--soil-2);margin-top:14px;font-weight:500}
+  .subtitle{font-family:'Cairo',sans-serif;font-size:1.18rem;color:var(--soil-2);margin-top:14px;font-weight:500}
 
   /* ===== ساعة الوسم ===== */
   .clock-card{margin:22px auto 0;padding:0 8px;text-align:center}
@@ -42,7 +42,7 @@
   .clock-readout{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;
     gap:9px;margin-top:18px}
   .r-date{font-family:'Cairo',sans-serif;font-size:1.28rem;font-weight:800;color:var(--soil)}
-  .r-fasl,.r-moosem{font-family:'Reem Kufi',sans-serif;font-size:1.06rem;font-weight:600;color:var(--soil-2)}
+  .r-fasl,.r-moosem{font-family:'Cairo',sans-serif;font-size:1.06rem;font-weight:600;color:var(--soil-2)}
   .r-sep{color:var(--line);font-weight:700}
   .r-wx{font-size:.92rem;font-weight:700;padding:4px 14px;border-radius:22px;color:#33402F}
   .clock-cap{font-size:.92rem;color:var(--muted);margin-top:10px;font-weight:600}
@@ -54,7 +54,7 @@
   .mb-head{display:flex;align-items:center;gap:7px;margin-bottom:8px}
   .mb-dot{width:9px;height:9px;border-radius:50%;background:var(--ac);flex:none}
   .mb-label{font-family:'Cairo',sans-serif;font-size:.8rem;font-weight:700;color:var(--muted)}
-  .mb-name{font-family:'Reem Kufi',sans-serif;font-size:1.55rem;font-weight:700;color:var(--soil);line-height:1.15}
+  .mb-name{font-family:'Cairo',sans-serif;font-size:1.55rem;font-weight:700;color:var(--soil);line-height:1.15}
   .mb-bar{height:7px;border-radius:6px;background:rgba(32,53,42,.10);overflow:hidden;margin-top:11px}
   .mb-bar i{display:block;height:100%;border-radius:6px;background:var(--ac)}
   .mb-stats{display:flex;flex-direction:column;margin-top:11px}
@@ -67,14 +67,14 @@
   .mb-feat{font-family:'Cairo',sans-serif;font-size:.86rem;font-weight:500;color:var(--ink);line-height:1.7;margin-top:auto;padding-top:12px}
 
   /* نصوص داخل الساعة */
-  .t-fasl{font-family:'Reem Kufi',sans-serif;font-size:12px;font-weight:600;fill:var(--soil);text-anchor:middle;dominant-baseline:central}
+  .t-fasl{font-family:'Cairo',sans-serif;font-size:12px;font-weight:600;fill:var(--soil);text-anchor:middle;dominant-baseline:central}
   .t-month{font-family:'Cairo',sans-serif;font-size:10.5px;font-weight:500;fill:#8A8F80;text-anchor:middle;dominant-baseline:central}
   .t-moosem{font-family:'Cairo',sans-serif;font-size:11.5px;font-weight:700;fill:#1F2E24;text-anchor:middle;dominant-baseline:central}
   .div{stroke:#FFFFFF;stroke-width:1;opacity:.5}
 
   .sections{padding:30px 16px 10px}
   .sec-head{display:flex;align-items:center;gap:12px;margin:0 6px 18px}
-  .sec-head span{font-family:'Reem Kufi',sans-serif;font-size:1.15rem;color:var(--soil);white-space:nowrap;font-weight:600}
+  .sec-head span{font-family:'Cairo',sans-serif;font-size:1.15rem;color:var(--soil);white-space:nowrap;font-weight:600}
   .sec-head .ln{flex:1;height:1px;background:var(--line)}
   .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
   .card{background:var(--paper-2);border:1px solid var(--line);border-radius:18px;
@@ -107,7 +107,7 @@
   .plant-intro b{color:var(--leaf);font-weight:800}
   .plant-grid{display:grid;gap:14px}
   .plant{display:flex;flex-direction:column;align-items:center;gap:9px}
-  .plant-name{font-family:'Reem Kufi',sans-serif;font-size:1.16rem;font-weight:700;color:var(--soil)}
+  .plant-name{font-family:'Cairo',sans-serif;font-size:1.16rem;font-weight:700;color:var(--soil)}
   .plant-pic{width:100%;aspect-ratio:1/1;border-radius:14px;overflow:hidden;position:relative;
     background:rgba(78,122,58,.10);display:grid;place-items:center}
   .plant-fallback{color:var(--leaf);opacity:.55}
@@ -129,7 +129,7 @@
   .moon-art{flex:none;position:relative;z-index:1;filter:drop-shadow(0 0 14px rgba(205,222,255,.30))}
   .moon-txt{flex:1;position:relative;z-index:1;color:#EFE8D6}
   .moon-eye{font-family:'Cairo',sans-serif;font-size:.8rem;font-weight:700;color:#AEB7DA;letter-spacing:.03em}
-  .moon-name{font-family:'Reem Kufi',sans-serif;font-size:1.7rem;font-weight:700;color:#F7F0DD;margin-top:5px;line-height:1.2}
+  .moon-name{font-family:'Cairo',sans-serif;font-size:1.7rem;font-weight:700;color:#F7F0DD;margin-top:5px;line-height:1.2}
   .moon-meta{font-family:'Cairo',sans-serif;font-size:.92rem;font-weight:600;color:#C8CEE8;margin-top:9px}
 
   /* ===== الطقس ===== */
@@ -142,7 +142,7 @@
   .wt-ic .icn{width:56px;height:56px}
   .wt-temp{font-family:'Cairo',sans-serif;font-size:2.7rem;font-weight:800;line-height:1}
   .wt-info{margin-right:auto;text-align:left}
-  .wt-cond{font-family:'Reem Kufi',sans-serif;font-size:1.25rem;font-weight:700}
+  .wt-cond{font-family:'Cairo',sans-serif;font-size:1.25rem;font-weight:700}
   .wt-feel{font-size:.9rem;color:var(--soil-2);font-weight:600}
   .wt-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px 12px;margin-top:15px}
   .wt-stats div{display:flex;justify-content:space-between;align-items:baseline;
@@ -183,7 +183,7 @@
   .admin-ov[hidden]{display:none}
   .admin-box{background:var(--paper);border-radius:22px;width:100%;max-width:520px;padding:24px 22px;position:relative;box-shadow:0 24px 60px -20px rgba(0,0,0,.55)}
   .admin-x{position:absolute;top:14px;left:14px;width:34px;height:34px;border-radius:50%;border:none;background:var(--paper-2);font-size:1.3rem;line-height:1;color:var(--soil);cursor:pointer}
-  .admin-h{font-family:'Reem Kufi',sans-serif;font-size:1.6rem;color:var(--soil);text-align:center;font-weight:700}
+  .admin-h{font-family:'Cairo',sans-serif;font-size:1.6rem;color:var(--soil);text-align:center;font-weight:700}
   .admin-sub{text-align:center;color:var(--muted);margin:6px 0 16px;font-weight:600}
   .admin-input{width:100%;padding:13px 14px;border:1px solid var(--line);border-radius:12px;font-family:'Cairo',sans-serif;font-size:1rem;background:var(--paper-2);color:var(--ink)}
   .admin-btn{width:100%;margin-top:12px;padding:13px;border:none;border-radius:12px;background:var(--leaf);color:#fff;font-family:'Cairo',sans-serif;font-weight:700;font-size:1rem;cursor:pointer}
@@ -199,7 +199,7 @@
   .admin-total small{color:var(--muted);font-weight:700}
   .admin-chart{display:flex;align-items:flex-end;gap:3px;height:92px;margin:16px 0;overflow-x:auto}
   .admin-chart .bar{flex:1;min-width:6px;background:var(--leaf);border-radius:3px 3px 0 0;opacity:.85}
-  .admin-h3{font-family:'Reem Kufi',sans-serif;font-size:1.15rem;color:var(--soil);margin:14px 0 10px;font-weight:700}
+  .admin-h3{font-family:'Cairo',sans-serif;font-size:1.15rem;color:var(--soil);margin:14px 0 10px;font-weight:700}
   .admin-countries{display:flex;flex-direction:column;gap:10px}
   .crow{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px}
   .cname{font-family:'Cairo',sans-serif;font-weight:700;color:var(--soil);font-size:.95rem;white-space:nowrap}
@@ -218,7 +218,7 @@
   .adm-field input,.adm-field textarea{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:11px;font-family:'Cairo',sans-serif;font-size:.95rem;background:var(--paper-2);color:var(--ink)}
   .adm-field textarea{min-height:62px;resize:vertical;line-height:1.7}
   .adm-card{background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:14px}
-  .adm-card h4{font-family:'Reem Kufi',sans-serif;font-size:1.02rem;color:var(--soil);font-weight:700;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .adm-card h4{font-family:'Cairo',sans-serif;font-size:1.02rem;color:var(--soil);font-weight:700;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:8px}
   .adm-prev{width:100%;aspect-ratio:16/6;border-radius:10px;background:var(--paper);border:1px dashed var(--line);object-fit:cover;margin-top:9px;display:none}
   .adm-prev.on{display:block}
   .adm-switch{display:inline-flex;align-items:center;gap:8px;cursor:pointer;font-family:'Cairo',sans-serif;font-weight:700;font-size:.8rem;color:var(--soil-2)}
@@ -240,7 +240,7 @@
   /* روابط مهمة */
   .links-sec{margin:26px 16px 0}
   .links-sec[hidden]{display:none}
-  .links-sec h2{font-family:'Reem Kufi',sans-serif;font-size:1.15rem;color:var(--soil);font-weight:700;margin-bottom:13px;text-align:center}
+  .links-sec h2{font-family:'Cairo',sans-serif;font-size:1.15rem;color:var(--soil);font-weight:700;margin-bottom:13px;text-align:center}
   .links-grid{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
   .link-btn{display:inline-flex;align-items:center;gap:8px;background:var(--paper-2);border:1px solid var(--line);border-radius:12px;
     padding:11px 16px;text-decoration:none;color:var(--soil);font-family:'Cairo',sans-serif;font-weight:700;font-size:.95rem;box-shadow:0 2px 8px rgba(0,0,0,.04)}
@@ -249,7 +249,7 @@
   .dash-screen{position:fixed;inset:0;z-index:300;background:var(--paper);overflow-y:auto;-webkit-overflow-scrolling:touch}
   .dash-screen[hidden]{display:none}
   .dash-top{position:sticky;top:0;z-index:5;background:var(--soil);color:#fff;display:flex;align-items:center;gap:12px;padding:14px 16px;box-shadow:0 2px 14px rgba(0,0,0,.22)}
-  .dash-top h1{font-family:'Reem Kufi',sans-serif;font-size:1.28rem;font-weight:700;flex:1;margin:0}
+  .dash-top h1{font-family:'Cairo',sans-serif;font-size:1.28rem;font-weight:700;flex:1;margin:0}
   .dash-x{flex:none;width:36px;height:36px;border-radius:10px;border:none;background:rgba(255,255,255,.16);color:#fff;font-size:1.3rem;line-height:1;cursor:pointer}
   .dash-tabs{display:flex;gap:7px;overflow-x:auto;padding:12px 16px;background:var(--paper-2);border-bottom:1px solid var(--line);position:sticky;top:64px;z-index:4;-webkit-overflow-scrolling:touch}
   .dash-tabs button{flex:none;padding:9px 15px;border:1px solid var(--line);background:var(--paper);border-radius:999px;font-family:'Cairo',sans-serif;font-weight:700;font-size:.85rem;color:var(--soil-2);cursor:pointer;white-space:nowrap}
@@ -262,16 +262,16 @@
   .kpi.g2::before{background:var(--gold)} .kpi.g3::before{background:var(--soil-2)} .kpi.g4::before{background:#4FA38C}
   .kpi .v{font-family:'Cairo',sans-serif;font-weight:800;font-size:2.1rem;color:var(--soil);line-height:1}
   .kpi .l{font-family:'Cairo',sans-serif;font-weight:700;color:var(--muted);font-size:.84rem;margin-top:7px}
-  .dash-sec-title{font-family:'Reem Kufi',sans-serif;font-size:1.18rem;color:var(--soil);font-weight:700;margin:24px 0 12px}
+  .dash-sec-title{font-family:'Cairo',sans-serif;font-size:1.18rem;color:var(--soil);font-weight:700;margin:24px 0 12px}
   .dash-chart{display:flex;align-items:flex-end;gap:3px;height:120px;margin:6px 0 4px;overflow-x:auto;padding-bottom:4px}
   .dash-chart .bar{flex:1;min-width:7px;background:var(--leaf);border-radius:4px 4px 0 0;opacity:.9;position:relative}
   .dash-chart .bar.gold{background:var(--gold)}
   .dash-card2{background:var(--paper-2);border:1px solid var(--line);border-radius:16px;padding:16px}
   .toggle-row{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--paper-2);border:1px solid var(--line);border-radius:13px;padding:13px 15px;margin-bottom:10px}
-  .toggle-row .nm{font-family:'Reem Kufi',sans-serif;font-weight:700;color:var(--soil);font-size:1.02rem}
+  .toggle-row .nm{font-family:'Cairo',sans-serif;font-weight:700;color:var(--soil);font-size:1.02rem}
   .toggle-row .ds{font-family:'Cairo',sans-serif;font-size:.78rem;color:var(--muted);margin-top:2px}
   .art-row{display:flex;align-items:center;gap:8px;background:var(--paper-2);border:1px solid var(--line);border-radius:13px;padding:11px 13px;margin-bottom:10px;flex-wrap:wrap}
-  .art-row .t{flex:1;min-width:120px;font-family:'Reem Kufi',sans-serif;font-weight:700;color:var(--soil);font-size:1rem}
+  .art-row .t{flex:1;min-width:120px;font-family:'Cairo',sans-serif;font-weight:700;color:var(--soil);font-size:1rem}
   .art-row.off{opacity:.5}
   .art-btn{flex:none;border:none;border-radius:9px;padding:7px 11px;font-family:'Cairo',sans-serif;font-weight:700;font-size:.78rem;cursor:pointer}
   .art-edit{background:rgba(78,122,58,.14);color:var(--leaf)} .art-sus{background:#FBEAB9;color:#5A3D0E} .art-del{background:#F2DAD5;color:#C0392B}
@@ -289,13 +289,13 @@
     border-bottom:1px solid var(--line)}
   .cal-back{flex:none;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);
     background:var(--paper-2);color:var(--soil);font-size:1.4rem;line-height:1;cursor:pointer;display:grid;place-items:center}
-  .cal-htext .t{font-family:'Reem Kufi',sans-serif;font-size:1.5rem;font-weight:700;color:var(--soil);line-height:1.1}
+  .cal-htext .t{font-family:'Cairo',sans-serif;font-size:1.5rem;font-weight:700;color:var(--soil);line-height:1.1}
   .cal-htext .s{font-family:'Cairo',sans-serif;font-size:.8rem;color:var(--muted);font-weight:600;margin-top:2px}
   .cal-grid{display:grid;grid-template-columns:1fr;gap:14px;padding:16px;max-width:1120px;margin:0 auto;align-items:start}
   .cal-month{background:var(--paper-2);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
   .cal-m-head{display:flex;align-items:center;gap:9px;padding:11px 14px;border-top:3px solid var(--leaf);border-bottom:1px solid var(--line)}
   .cal-m-dot{width:11px;height:11px;border-radius:50%;flex:none}
-  .cal-m-name{font-family:'Reem Kufi',sans-serif;font-size:1.22rem;font-weight:700;color:var(--soil)}
+  .cal-m-name{font-family:'Cairo',sans-serif;font-size:1.22rem;font-weight:700;color:var(--soil)}
   .cal-m-count{margin-right:auto;font-family:'Cairo',sans-serif;font-size:.74rem;font-weight:700;color:var(--muted);
     background:var(--paper);border:1px solid var(--line);padding:3px 11px;border-radius:20px;white-space:nowrap}
   .cal-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(94px,1fr));gap:8px;padding:13px 13px 15px}
@@ -340,7 +340,7 @@
   .ig-pic{width:100%;height:0;padding-bottom:76%;position:relative;background:var(--paper);overflow:hidden;border-bottom:1px solid var(--line)}
   .ig-pic img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:contain;padding:14px 14px 8px;box-sizing:border-box;display:block}
   .ig-body{padding:14px 15px 16px}
-  .ig-name{font-family:'Reem Kufi',sans-serif;font-size:1.32rem;font-weight:700;color:var(--soil);line-height:1.2}
+  .ig-name{font-family:'Cairo',sans-serif;font-size:1.32rem;font-weight:700;color:var(--soil);line-height:1.2}
   .ig-alt{font-family:'Cairo',sans-serif;font-size:.8rem;font-weight:600;color:var(--leaf);margin-top:1px}
   .ig-sci{font-family:'Cairo',sans-serif;font-style:italic;font-size:.82rem;color:var(--muted);font-weight:600;margin-top:3px;direction:ltr;text-align:right}
   .ig-num{direction:ltr;unicode-bidi:isolate;font-variant-numeric:tabular-nums}
@@ -351,7 +351,7 @@
   .ig-pill .tx{flex:1;min-width:0;font-family:'Cairo',sans-serif;font-size:.82rem;font-weight:600;color:var(--soil-2);line-height:1.5}
   .ig-pill .tx b{display:block;color:var(--leaf);font-weight:800;font-size:.72rem;margin-bottom:1px}
   .ig-spec{font-family:'Cairo',sans-serif;font-size:.88rem;font-weight:500;color:var(--soil-2);line-height:1.8;margin:0 0 13px}
-  .ig-tips-h{font-family:'Reem Kufi',sans-serif;font-size:1rem;font-weight:600;color:var(--soil);margin-bottom:8px;display:flex;align-items:center;gap:7px}
+  .ig-tips-h{font-family:'Cairo',sans-serif;font-size:1rem;font-weight:600;color:var(--soil);margin-bottom:8px;display:flex;align-items:center;gap:7px}
   .ig-tips-h svg{width:16px;height:16px;color:var(--leaf);flex:none}
   .ig-tips{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
   .ig-tips li{position:relative;padding-right:19px;font-family:'Cairo',sans-serif;font-size:.85rem;font-weight:500;color:var(--soil-2);line-height:1.7}
@@ -365,21 +365,21 @@
     border-right:4px solid var(--leaf);border-radius:14px;padding:14px 15px;cursor:pointer;text-align:right;transition:transform .15s ease}
   .tip-card:active{transform:scale(.99)}
   .tip-card .n{flex:none;width:30px;height:30px;border-radius:9px;background:rgba(78,122,58,.13);color:var(--leaf);
-    display:grid;place-items:center;font-family:'Noto Naskh Arabic',sans-serif;font-weight:800;font-size:.9rem}
-  .tip-card .ttl{flex:1;font-family:'Noto Naskh Arabic',sans-serif;font-size:1.1rem;font-weight:600;color:var(--soil);line-height:1.4}
+    display:grid;place-items:center;font-family:'Cairo',sans-serif;font-weight:800;font-size:.9rem}
+  .tip-card .ttl{flex:1;font-family:'Cairo',sans-serif;font-size:1.1rem;font-weight:600;color:var(--soil);line-height:1.4}
   .tip-card .arr{flex:none;color:var(--muted);display:grid;place-items:center}
   .article{max-width:680px;margin:0 auto;padding:16px 18px 34px;background:#FBF8EE}
-  .a-back{display:inline-flex;align-items:center;gap:6px;font-family:'Noto Naskh Arabic',sans-serif;font-weight:700;font-size:.9rem;
+  .a-back{display:inline-flex;align-items:center;gap:6px;font-family:'Cairo',sans-serif;font-weight:700;font-size:.9rem;
     color:var(--leaf);background:none;border:none;cursor:pointer;padding:6px 0;margin-bottom:4px}
-  .article h1{font-family:'Noto Naskh Arabic',sans-serif;font-size:1.65rem;font-weight:700;color:var(--soil);line-height:1.45;margin:6px 0 0}
+  .article h1{font-family:'Cairo',sans-serif;font-size:1.65rem;font-weight:700;color:var(--soil);line-height:1.45;margin:6px 0 0}
   .a-rule{height:3px;width:72px;background:linear-gradient(90deg,var(--gold),transparent);border-radius:3px;margin:12px 0 18px}
-  .article p{font-family:'Noto Naskh Arabic',sans-serif;font-size:1.02rem;line-height:2.05;color:#2C3A2C;margin:0 0 15px;font-weight:400}
-  .article h2{font-family:'Noto Naskh Arabic',sans-serif;font-size:1.26rem;font-weight:700;color:var(--soil-2);margin:24px 0 10px}
+  .article p{font-family:'Cairo',sans-serif;font-size:1.02rem;line-height:2.05;color:#2C3A2C;margin:0 0 15px;font-weight:400}
+  .article h2{font-family:'Cairo',sans-serif;font-size:1.26rem;font-weight:700;color:var(--soil-2);margin:24px 0 10px}
   .article ul{margin:0 0 16px;padding-right:20px}
-  .article li{font-family:'Noto Naskh Arabic',sans-serif;font-size:1rem;line-height:1.95;color:#2C3A2C;margin-bottom:8px}
+  .article li{font-family:'Cairo',sans-serif;font-size:1rem;line-height:1.95;color:#2C3A2C;margin-bottom:8px}
   .article b{color:var(--soil);font-weight:700}
   .a-note{background:rgba(78,122,58,.08);border:1px solid var(--line);border-radius:12px;padding:13px 15px;
-    font-family:'Noto Naskh Arabic',sans-serif;font-size:.93rem;color:var(--soil-2);line-height:1.95;margin-top:10px}
+    font-family:'Cairo',sans-serif;font-size:.93rem;color:var(--soil-2);line-height:1.95;margin-top:10px}
 
   /* ===== تصميم اللابتوب / الشاشات الكبيرة ===== */
   @media (min-width:920px){
