@@ -1639,7 +1639,7 @@
           if(x.adsP) CFG.adsP=x.adsP; else if(x.ads) migrateAds(x.ads); if(x.links) CFG.links=x.links;
           if(typeof x.subtitle==='string') CFG.subtitle=x.subtitle;
           CFG.annOn=!!x.annOn; if(typeof x.annText==='string') CFG.annText=x.annText;
-          if(typeof x.pass==='string') CFG.pass=x.pass; if(x.pages) CFG.pages=x.pages;
+          if(x.pages) CFG.pages=x.pages;
         }
         adsPInit(); applyPublic();
       }).catch(function(){ applyPublic(); });
@@ -1662,9 +1662,56 @@
     function openLogin(){ ov.hidden=false; $('adminErr').textContent=''; $('adminPass').value=''; }
     $('adminX').onclick=function(){ ov.hidden=true; };
     $('dashClose').onclick=function(){ dash.hidden=true; document.body.style.overflow=''; };
+    /* ===== تأمين كلمة المرور: تهيئة PBKDF2-SHA256 + ملح عشوائي، مخزّنة بمستند منفصل wsm_config/admin ===== */
+    function _hex(buf){ var b=new Uint8Array(buf),s='',i; for(i=0;i<b.length;i++) s+=('0'+b[i].toString(16)).slice(-2); return s; }
+    function _hexBytes(h){ var n=h.length/2,a=new Uint8Array(n),i; for(i=0;i<n;i++) a[i]=parseInt(h.substr(i*2,2),16); return a; }
+    function _randSalt(){ var a=new Uint8Array(16); crypto.getRandomValues(a); return _hex(a.buffer); }
+    function _ctEq(a,b){ a=String(a); b=String(b); if(a.length!==b.length) return false; var r=0,i; for(i=0;i<a.length;i++) r|=(a.charCodeAt(i)^b.charCodeAt(i)); return r===0; }
+    var ADMIN_ITER=150000;
+    function deriveHash(pwd,saltHex,iter){
+      var enc=new TextEncoder();
+      return crypto.subtle.importKey('raw', enc.encode(pwd), {name:'PBKDF2'}, false, ['deriveBits'])
+        .then(function(key){ return crypto.subtle.deriveBits({name:'PBKDF2', salt:_hexBytes(saltHex), iterations:iter, hash:'SHA-256'}, key, 256); })
+        .then(function(bits){ return _hex(bits); });
+    }
+    function setAdminPassword(pwd){
+      var d=getDB(); if(!d) return Promise.reject(new Error('no-db'));
+      var salt=_randSalt();
+      return deriveHash(pwd, salt, ADMIN_ITER).then(function(h){
+        var batch=d.batch();
+        batch.set(d.collection('wsm_config').doc('admin'), {algo:'PBKDF2-SHA256', salt:salt, iter:ADMIN_ITER, hash:h, ts:Date.now()});
+        batch.set(d.collection('wsm_config').doc('site'), {pass:firebase.firestore.FieldValue.delete()}, {merge:true});
+        return batch.commit();
+      });
+    }
+    function legacyPass(){
+      var d=getDB(); if(!d) return Promise.resolve(PASS);
+      return d.collection('wsm_config').doc('site').get()
+        .then(function(doc){ var x=(doc&&doc.exists)?(doc.data()||{}):{}; return (typeof x.pass==='string'&&x.pass)?x.pass:PASS; })
+        .catch(function(){ return PASS; });
+    }
+    function loginAttempt(pwd){
+      var d=getDB();
+      if(!d) return Promise.resolve(_ctEq(pwd, PASS));
+      return d.collection('wsm_config').doc('admin').get().then(function(doc){
+        if(doc&&doc.exists){ var x=doc.data()||{};
+          if(x.hash&&x.salt) return deriveHash(pwd, x.salt, x.iter||ADMIN_ITER).then(function(h){ return _ctEq(h, x.hash); }); }
+        /* أول تشغيل/ترقية: ما فيه مستند تحقّق بعد — نقبل كلمة المرور القديمة مرّة وحدة ونُهيّئها ونمسح النص الصريح */
+        return legacyPass().then(function(lp){
+          if(_ctEq(pwd, lp)) return setAdminPassword(pwd).then(function(){ return true; }, function(){ return true; });
+          return false;
+        });
+      });
+    }
     $('adminLoginBtn').onclick=function(){
-      if($('adminPass').value===(CFG.pass||PASS)){ ov.hidden=true; dash.hidden=false; document.body.style.overflow='hidden'; initDash(); }
-      else $('adminErr').textContent='كلمة المرور غير صحيحة';
+      var btn=this; if(btn.disabled) return;
+      var pwd=$('adminPass').value;
+      btn.disabled=true; $('adminErr').textContent='جارٍ التحقق…';
+      loginAttempt(pwd).then(function(ok){
+        btn.disabled=false;
+        if(ok){ $('adminErr').textContent=''; ov.hidden=true; dash.hidden=false; document.body.style.overflow='hidden'; initDash(); }
+        else $('adminErr').textContent='كلمة المرور غير صحيحة';
+      }, function(){ btn.disabled=false; $('adminErr').textContent='تعذّر التحقق — حاول مرّة أخرى'; });
     };
     $('adminPass').addEventListener('keydown',function(e){ if(e.key==='Enter') $('adminLoginBtn').click(); });
 
@@ -1899,8 +1946,12 @@
 
     $('saveSettings').onclick=function(){
       var partial={subtitle:$('setSubtitle').value.trim(), annOn:$('setAnncOn').checked, annText:$('setAnncText').value.trim()};
-      var np=$('setPass').value; if(np) partial.pass=np;
-      saveCfg(partial,'setOk'); if(np) $('setPass').value='';
+      saveCfg(partial,'setOk');
+      var np=$('setPass').value;
+      if(np){ var ok=$('setOk');
+        setAdminPassword(np).then(function(){ $('setPass').value=''; if(ok){ ok.style.color='var(--leaf)'; ok.textContent='تم الحفظ ✓ — كلمة المرور محدّثة'; setTimeout(function(){ ok.textContent=''; },2500); } },
+          function(){ if(ok){ ok.style.color='#C0392B'; ok.textContent='تعذّر تحديث كلمة المرور'; } });
+      }
     };
   })();
 </script>
