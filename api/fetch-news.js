@@ -53,6 +53,13 @@ function matchesKeywords(text) {
   const t = String(text || "");
   return KEYWORDS.some((k) => t.indexOf(k) >= 0);
 }
+
+// فلتر الكويت: نُبقي الخبر فقط إذا كان كويتيًا (نص فيه «كويت» أو مصدره جريدة كويتية)
+const KUWAIT_HINTS = ["كويت", "القبس", "الأنباء", "الراي", "السياسة", "كونا", "الجريدة"];
+function isKuwait(it) {
+  const t = (it.title || "") + " " + (it.desc || "") + " " + (it.source || "");
+  return KUWAIT_HINTS.some((h) => t.indexOf(h) >= 0);
+}
 function buildQuery() {
   // كلمات الزراعة/الثروة الحيوانية + الكويت، آخر أسبوع — استعلام مركّز وموثوق
   var kw = [
@@ -157,6 +164,7 @@ module.exports = async (req, res) => {
       if (!it.title || !it.link) continue;
       if (it.pub && now - it.pub > WEEK_MS) continue;
       if (!matchesKeywords(it.title + " " + it.desc)) continue;
+      if (!isKuwait(it)) continue;                                // الكويت فقط
       const id = sha1(it.link), sig = titleSig(it.title);
       if (seenUrls.has(it.link) || seenSigs.has(sig)) continue;
       seenUrls.add(it.link); seenSigs.add(sig);
