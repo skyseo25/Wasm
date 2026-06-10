@@ -1,0 +1,8 @@
+{
+  "name": "wasm",
+  "private": true,
+  "dependencies": {
+    "firebase-admin": "^12.6.0",
+    "fast-xml-parser": "^4.4.1"
+  }
+}
