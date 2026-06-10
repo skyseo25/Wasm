@@ -1564,8 +1564,9 @@
     }
     function adCountryOK(a){ var cs=a&&a.countries; if(!cs||!cs.length) return true; if(!WSM_CC||WSM_CC==='??') return true; for(var i=0;i<cs.length;i++) if(cs[i]===WSM_CC) return true; return false; }
     window.wsmAdHTML=function(page,idx){ return '<div class="ad-host" data-ad="'+page+'_'+idx+'"></div>'; };
-    function adAnchor(key,a){ var img='<img src="'+a.img+'" alt="إعلان">';
-      if(a.href){ return '<a class="cal-ad" href="'+a.href+'" target="_blank" rel="noopener" data-adkey="'+key+'">'+img+'</a>'; }
+    function adNorm(u){ u=(u||'').trim(); if(!u) return ''; if(/^[a-z][a-z0-9+.-]*:/i.test(u)) return u; return 'https://'+u; }
+    function adAnchor(key,a){ var img='<img src="'+a.img+'" alt="إعلان">', href=adNorm(a.href);
+      if(href){ return '<a class="cal-ad" href="'+href+'" target="_blank" rel="noopener" data-adkey="'+key+'">'+img+'</a>'; }
       return '<div class="cal-ad">'+img+'</div>'; }
     window.wsmPaintAds=function(){ if(!WSM_ADS) return; var hosts=document.querySelectorAll('.ad-host[data-ad]'),i;
       for(i=0;i<hosts.length;i++){ var host=hosts[i], key=host.getAttribute('data-ad'), a=WSM_ADS[key]||{};
