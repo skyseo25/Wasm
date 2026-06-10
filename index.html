@@ -1420,26 +1420,42 @@
     function num(v){ return (v==null)?'—':Math.round(v); }
 
     function render(data){
-      var cur=data.current||{}, aqi=cur.us_aqi, info=aqiInfo(aqi);
-      var hp=pctOf(aqi,300);
-      box.innerHTML=
-        '<div class="aq-hero">'
-          +'<div class="aq-dot" style="background:'+info.col+'">'+n0(aqi)+'</div>'
-          +'<div class="aq-hero-t"><div class="aq-status" style="color:'+info.col+'">'+info.name+'</div>'
-            +'<div class="aq-sub">مؤشر جودة الهواء (US AQI) · الكويت</div></div>'
+      var c=data.current||{}, d=data.daily||{}, h=data.hourly||{};
+      var k=cond(c.weather_code,c.wind_speed_10m,c.precipitation);
+      var info=COND[k]||COND.clear;
+      var pp=(d.precipitation_probability_max&&d.precipitation_probability_max.length)?d.precipitation_probability_max[0]:null;
+      elT.className='wx-today '+info.cls;
+      elT.innerHTML=
+        '<div class="wt-top"><span class="wt-label">الطقس الآن · الكويت</span></div>'
+        +'<div class="wt-main">'
+          +'<div class="wt-ic">'+icon(k)+'</div>'
+          +'<div class="wt-temp">'+num(c.temperature_2m)+'°</div>'
+          +'<div class="wt-info">'
+            +'<div class="wt-cond">'+info.name+'</div>'
+            +'<div class="wt-feel">إحساس '+num(c.apparent_temperature)+'°</div>'
+          +'</div>'
         +'</div>'
-        +barHtml(hp,' aq-bar-hero')
-        +'<div class="aq-legend"><span class="aq-lg-tri"></span><span>المسطرة: <b style="color:#2E9E5B">أخضر = جيد</b> ← <b style="color:#C0392B">أحمر = خطر</b> · المثلث الأصفر = موقع القراءة الحالية</span></div>'
-        +'<div class="aq-grid">'
-          +cell('الجسيمات PM2.5', cur.pm2_5,'µg/m³',150,1)
-          +cell('الجسيمات PM10', cur.pm10,'µg/m³',350,1)
-          +cell('الأوزون O₃', cur.ozone,'µg/m³',240,0)
-          +cell('ثاني أكسيد النيتروجين NO₂', cur.nitrogen_dioxide,'µg/m³',200,1)
-          +cell('ثاني أكسيد الكبريت SO₂', cur.sulphur_dioxide,'µg/m³',350,1)
-          +cell('أول أكسيد الكربون CO', cur.carbon_monoxide,'µg/m³',10000,0)
-          +cell('الغبار', cur.dust,'µg/m³',500,0)
-          +cell('الأشعة فوق البنفسجية', cur.uv_index,'',11,1)
+        +'<div class="wt-stats">'
+          +'<div><span>الرطوبة</span><b>'+num(c.relative_humidity_2m)+'%</b></div>'
+          +'<div><span>الرياح</span><b>'+num(c.wind_speed_10m)+' كم/س</b></div>'
+          +'<div><span>الأمطار</span><b>'+num(c.precipitation)+' ملم</b></div>'
+          +'<div><span>احتمال المطر</span><b>'+(pp==null?'—':pp+'%')+'</b></div>'
         +'</div>';
+      var days=d.time||[], html='', i;
+      for(i=1;i<days.length&&i<=6;i++){
+        var ds=days[i];
+        var dk=cond(d.weather_code?d.weather_code[i]:null, d.wind_speed_10m_max?d.wind_speed_10m_max[i]:null);
+        var dInfo=COND[dk]||COND.clear;
+        var dt=new Date(ds+'T00:00:00');
+        var hum=dailyHum(h,ds);
+        html+='<div class="wx-day '+dInfo.cls+'">'
+          +'<div class="wd-day">'+wd[dt.getDay()]+'</div>'
+          +'<div class="wd-ic">'+icon(dk)+'</div>'
+          +'<div class="wd-temp">'+num(d.temperature_2m_max?d.temperature_2m_max[i]:null)+'° / '+num(d.temperature_2m_min?d.temperature_2m_min[i]:null)+'°</div>'
+          +'<div class="wd-hum">'+(hum==null?'—':hum+'%')+'</div>'
+        +'</div>';
+      }
+      elD.innerHTML=html;
     }
     function fail(){
       elT.className='wx-today';
