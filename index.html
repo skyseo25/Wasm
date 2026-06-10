@@ -961,7 +961,8 @@
 </div>
 
 <style>
-  #askScreen{overflow:hidden;display:flex;flex-direction:column}
+  #askScreen{overflow:hidden}
+  #askScreen:not([hidden]){display:flex;flex-direction:column}
   .ask-body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:16px;display:flex;flex-direction:column;gap:12px;background:var(--paper)}
   .ask-msg{max-width:86%;padding:11px 14px;border-radius:16px;font-family:'Cairo',sans-serif;font-size:.95rem;line-height:1.85;white-space:pre-wrap;word-wrap:break-word;overflow-wrap:anywhere}
   .ask-u{align-self:flex-start;background:var(--leaf);color:#fff;border-bottom-right-radius:5px}
