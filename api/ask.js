@@ -11,7 +11,7 @@ const MODEL = "claude-haiku-4-5-20251001";
 const MAX_TOKENS = 700;
 const MAX_Q = 2000;          // أقصى طول للسؤال
 const MAX_IMG_B64 = 2600000; // ~2.6MB base64 (حماية من الصور الضخمة)
-const ALLOWED_HOSTS = ["wasm-omega.vercel.app", "localhost", "127.0.0.1"];
+const ALLOWED_HOSTS = ["alwasm.net", "www.alwasm.net", "wasm-omega.vercel.app", "localhost", "127.0.0.1"];
 
 const CATALOG =
   "الفئات:\n" +
