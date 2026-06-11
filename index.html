@@ -148,6 +148,10 @@
 
   footer{text-align:center;padding:22px 20px 12px;color:var(--muted);font-size:.9rem;font-weight:500}
   footer .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--line)}
+  .foot-links{display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:center;margin-top:14px;font-size:.86rem;font-weight:600}
+  .foot-links a{color:var(--soil-2);text-decoration:none}
+  .foot-links a:active{color:var(--leaf)}
+  .foot-copy{margin-top:10px;font-size:.8rem;color:var(--muted)}
 
   /* مساحة إعلانية */
   .ad-slot{display:block;margin:28px 16px 0;border-radius:18px;overflow:hidden;
@@ -735,7 +739,16 @@
     <div class="links-grid" id="linksGrid"></div>
   </section>
 
-  <footer><span class="dot" id="adminDot"></span></footer>
+  <footer>
+    <span class="dot" id="adminDot"></span>
+    <nav class="foot-links">
+      <a href="/about">من نحن</a>
+      <a href="/contact">تواصل معنا</a>
+      <a href="/privacy">سياسة الخصوصية</a>
+      <a href="/terms">الشروط والأحكام</a>
+    </nav>
+    <div class="foot-copy">© 2026 وسم — alwasm.net</div>
+  </footer>
 
   <!-- نافذة الدخول (٥ ضغطات على وسم) -->
   <div class="admin-ov" id="adminOv" hidden>
