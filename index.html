@@ -800,6 +800,11 @@
         <div class="dash-chart" id="admHours"></div>
         <div class="dash-sec-title">مصدر الزيارة (من أين وصلوا)</div>
         <div class="admin-countries" id="admRefs"></div>
+        <div class="dash-sec-title">دخول الأقسام (كم مرة فُتح كل قسم)</div>
+        <div class="admin-countries" id="admSections"></div>
+        <div class="dash-sec-title">متوسّط مدّة البقاء بكل قسم</div>
+        <div class="admin-countries" id="admDwell"></div>
+        <div class="admin-total"><span id="admAsk">—</span><small>سؤال إلى «اسأل وسم»</small></div>
         <div class="admin-note" id="admNote"></div>
       </div>
 
@@ -1107,7 +1112,7 @@
     clip.addEventListener('click',function(){ fileInput.click(); });
     fileInput.addEventListener('change',function(){ var f=fileInput.files&&fileInput.files[0]; if(!f) return; resizeImg(f,function(durl){ if(durl){ pendingImg=durl; showPrev(durl); } }); fileInput.value=''; });
     ta.addEventListener('input',function(){ ta.style.height='auto'; ta.style.height=Math.min(ta.scrollHeight,120)+'px'; });
-    function send(){ if(busy) return; var q=ta.value.trim(); if(!q&&!pendingImg) return; var sentImg=pendingImg; addMsg('user', q||'📷 صورة', sentImg); ta.value=''; ta.style.height='42px'; pendingImg=null; prev.hidden=true; prev.innerHTML='';
+    function send(){ if(busy) return; var q=ta.value.trim(); if(!q&&!pendingImg) return; if(window.wsmStat) wsmStat.ask(); var sentImg=pendingImg; addMsg('user', q||'📷 صورة', sentImg); ta.value=''; ta.style.height='42px'; pendingImg=null; prev.hidden=true; prev.innerHTML='';
       var typing=addMsg('assistant','•••'); typing.classList.add('ask-typing'); busy=true; sendBtn.disabled=true;
       var payload={ question:q, history:history.slice(-6) };
       if(sentImg){ var m=sentImg.match(/^data:(.*?);base64,(.*)$/); if(m){ payload.image={media_type:m[1], data:m[2]}; } }
@@ -1726,6 +1731,27 @@
       });
     })();
 
+    /* ===== تتبّع دخول الأقسام + مدّة البقاء + أسئلة «اسأل وسم» ===== */
+    window.wsmStat=(function(){
+      var cur=null, t0=0;
+      function bump(field,key,amt){
+        var d=getDB(); if(!d) return;
+        try{
+          var ds=ymd(new Date()), inc=firebase.firestore.FieldValue.increment(amt);
+          var obj={date:ds};
+          if(key==null){ obj[field]=inc; } else { obj[field]={}; obj[field][key]=inc; }
+          d.collection('wsm_stats').doc(ds).set(obj,{merge:true});
+        }catch(e){}
+      }
+      function flush(){ if(!cur) return; var s=Math.round((Date.now()-t0)/1000); t0=Date.now(); if(s>=1&&s<=1800) bump('st',cur,s); }
+      function enter(key){ flush(); cur=key||null; t0=Date.now(); if(key) bump('sv',key,1); }
+      function leave(){ flush(); cur=null; }
+      function ask(){ bump('q',null,1); }
+      document.addEventListener('visibilitychange',function(){ if(document.visibilityState==='hidden') flush(); else t0=Date.now(); });
+      window.addEventListener('pagehide',flush);
+      return { enter:enter, leave:leave, ask:ask };
+    })();
+
     var CN={KW:'الكويت',SA:'السعودية',AE:'الإمارات',QA:'قطر',BH:'البحرين',OM:'عُمان',IQ:'العراق',EG:'مصر',JO:'الأردن',SY:'سوريا',LB:'لبنان',PS:'فلسطين',YE:'اليمن',SD:'السودان',LY:'ليبيا',TN:'تونس',DZ:'الجزائر',MA:'المغرب',US:'أمريكا',GB:'بريطانيا',IN:'الهند',PK:'باكستان',BD:'بنغلاديش',PH:'الفلبين',ID:'إندونيسيا',TR:'تركيا',IR:'إيران',DE:'ألمانيا',FR:'فرنسا',CA:'كندا',AU:'أستراليا'};
     function cname(c){ return CN[c]||c; }
 
@@ -1825,12 +1851,14 @@
       d.collection('wsm_stats').get().then(function(snap){ STATS=[]; snap.forEach(function(doc){ STATS.push(doc.data()); }); STATS.sort(function(a,b){ return (a.date<b.date)?-1:1; }); cb(true); }).catch(function(){ cb(false); });
     }
     function aggregate(from,to){
-      var o={total:0,daily:[],c:{},h:{},r:{}},i,k; if(!STATS) return o;
+      var o={total:0,daily:[],c:{},h:{},r:{},sv:{},st:{},q:0},i,k; if(!STATS) return o;
       for(i=0;i<STATS.length;i++){ var x=STATS[i]; if(!x.date||x.date<from||x.date>to) continue;
-        o.total+=x.total||0; o.daily.push({date:x.date,total:x.total||0});
+        o.total+=x.total||0; o.daily.push({date:x.date,total:x.total||0}); o.q+=x.q||0;
         if(x.c) for(k in x.c) o.c[k]=(o.c[k]||0)+x.c[k];
         if(x.h) for(k in x.h) o.h[k]=(o.h[k]||0)+x.h[k];
         if(x.r) for(k in x.r) o.r[k]=(o.r[k]||0)+x.r[k];
+        if(x.sv) for(k in x.sv) o.sv[k]=(o.sv[k]||0)+x.sv[k];
+        if(x.st) for(k in x.st) o.st[k]=(o.st[k]||0)+x.st[k];
       }
       o.daily.sort(function(a,b){ return a.date<b.date?-1:1; }); return o;
     }
@@ -1881,6 +1909,10 @@
         var hc=''; for(j=0;j<24;j++){ var v=a.h[j]||0, hh2=Math.max(3,Math.round(v/hmax*100)); hc+='<div class="bar gold" style="height:'+hh2+'%" title="'+j+':00 — '+v+' زيارة"></div>'; }
         $('admHours').innerHTML=hc;
         $('admRefs').innerHTML=rows(a.r,a.total,refName)||'<div style="color:var(--muted)">—</div>';
+        $('admSections').innerHTML=rows(a.sv,sumVals(a.sv),secName)||'<div style="color:var(--muted)">—</div>';
+        var dw={},dk; for(dk in a.sv){ var n=a.sv[dk]||0, tt=a.st[dk]||0; if(n>0) dw[dk]=Math.round(tt/n); }
+        $('admDwell').innerHTML=dwellRows(dw)||'<div style="color:var(--muted)">—</div>';
+        $('admAsk').textContent=a.q;
       });
     }
     function refName(k){ return k==='مباشر'?'دخول مباشر':(k==='زيارة داخلية'?k:k.replace(/_/g,'.')); }
@@ -1889,6 +1921,12 @@
       var html='',i; for(i=0;i<arr.length;i++){ var pct=total>0?Math.round(arr[i][1]/total*100):0; html+='<div class="crow"><span class="cname">'+namefn(arr[i][0])+'</span><span class="cbar"><i style="width:'+pct+'%"></i></span><span class="ccount">'+arr[i][1]+'</span></div>'; }
       return html;
     }
+
+    var SECNAMES={agri:'التقويم الزراعي',palm:'تقويم النخلة',sidr:'تقويم السدرة',tips:'نصائح ومقالات',indoor:'نباتات داخلية',hydro:'الزراعة المائية',news:'أخبار وإعلانات',ask:'اسأل وسم'};
+    function secName(k){ return SECNAMES[k]||k; }
+    function sumVals(m){ var s=0,k; for(k in m) s+=m[k]; return s; }
+    function fmtDur(s){ s=Math.max(0,Math.round(s)); if(s<60) return s+' ث'; var m=Math.floor(s/60), r=s%60; return r?(m+' د '+r+' ث'):(m+' د'); }
+    function dwellRows(map){ var arr=[],k; for(k in map) arr.push([k,map[k]]); arr.sort(function(a,b){return b[1]-a[1];}); var mx=1,i; for(i=0;i<arr.length;i++) if(arr[i][1]>mx) mx=arr[i][1]; var h=''; for(i=0;i<arr.length;i++){ var pct=Math.round(arr[i][1]/mx*100); h+='<div class="crow"><span class="cname">'+secName(arr[i][0])+'</span><span class="cbar"><i style="width:'+pct+'%"></i></span><span class="ccount">'+fmtDur(arr[i][1])+'</span></div>'; } return h; }
 
     var SECTIONS=[{k:'agri',nm:'التقويم الزراعي'},{k:'palm',nm:'تقويم النخلة'},{k:'sidr',nm:'تقويم السدرة'},{k:'tips',nm:'نصائح ومقالات'},{k:'news',nm:'أخبار وإعلانات'},{k:'hydro',nm:'الزراعة المائية'},{k:'plant',nm:'قسم «ماذا نزرع»'},{k:'moon',nm:'قسم القمر'},{k:'weather',nm:'قسم الطقس'},{k:'env',nm:'الأرض والشمس'},{k:'ask',nm:'مساعد وسم الذكي'}];
     function renderPages(){
@@ -2833,11 +2871,12 @@
     };
     function setActive(key){ for(var k in tabs){ if(tabs[k]) tabs[k].classList.toggle('active', k===key); } }
     function hideAll(){ for(var k in reg){ if(reg[k]&&reg[k].el) reg[k].el.hidden=true; } }
-    function home(){ hideAll(); document.body.style.overflow=''; setActive('home'); window.scrollTo(0,0); }
+    function home(){ if(window.wsmStat) wsmStat.leave(); hideAll(); document.body.style.overflow=''; setActive('home'); window.scrollTo(0,0); }
     function open(key){
       var c=reg[key]; if(!c||!c.el){ return; }
       hideAll(); if(c.render) c.render();
       c.el.hidden=false; c.el.scrollTop=0; document.body.style.overflow='hidden'; setActive(key);
+      if(window.wsmStat) wsmStat.enter(key);
     }
     function bind(el,fn){ if(el){ el.addEventListener('click',function(e){ e.preventDefault(); fn(); }); } }
     window.__wsmHome=home;
