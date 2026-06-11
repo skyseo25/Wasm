@@ -494,7 +494,7 @@
   .tips-list{display:flex;flex-direction:column;gap:11px;padding:16px;max-width:760px;margin:0 auto}
   .tips-list[hidden]{display:none}
   .tip-card{display:flex;align-items:center;gap:12px;background:var(--paper-2);border:1px solid var(--line);
-    border-right:4px solid var(--leaf);border-radius:14px;padding:14px 15px;cursor:pointer;text-align:right;transition:transform .15s ease}
+    border-right:4px solid var(--leaf);border-radius:14px;padding:14px 15px;cursor:pointer;text-align:right;text-decoration:none;color:inherit;transition:transform .15s ease}
   .tip-card:active{transform:scale(.99)}
   .tip-card .n{flex:none;width:30px;height:30px;border-radius:9px;background:rgba(78,122,58,.13);color:var(--leaf);
     display:grid;place-items:center;font-family:'Cairo',sans-serif;font-weight:800;font-size:.9rem}
@@ -2744,13 +2744,15 @@
     ];
 
     function arts(){ return (window.WSM_ARTICLES&&window.WSM_ARTICLES.length)?window.WSM_ARTICLES:ART; }
+    function slugify(t){ return String(t==null?'':t).trim().replace(/[\s\u00A0]+/g,'-').replace(/[^\p{L}\p{N}-]+/gu,'').replace(/-+/g,'-').replace(/^-+|-+$/g,''); }
     function showList(){
       artEl.hidden=true; artEl.innerHTML=''; listEl.hidden=false;
       if(titleEl) titleEl.textContent='نصائح ومقالات';
       if(subEl){ subEl.textContent='مقالات زراعية مبسّطة للمزارع'; subEl.style.display=''; }
       var A=arts(), h='';
       for(var i=0;i<A.length;i++){
-        h+='<div class="tip-card" data-i="'+i+'"><span class="n">'+(i+1)+'</span><span class="ttl">'+A[i].t+'</span><span class="arr">'+chev+'</span></div>';
+        var _sl=encodeURIComponent(slugify(A[i].t));
+        h+='<a class="tip-card" href="/article/'+_sl+'" data-i="'+i+'"><span class="n">'+(i+1)+'</span><span class="ttl">'+A[i].t+'</span><span class="arr">'+chev+'</span></a>';
       }
       listEl.innerHTML=h; screen.scrollTop=0;
     }
@@ -2764,7 +2766,10 @@
     }
     listEl.addEventListener('click',function(e){
       var c=e.target.closest?e.target.closest('.tip-card'):null;
-      if(c){ openArticle(parseInt(c.getAttribute('data-i'),10)); }
+      if(!c) return;
+      if(e.metaKey||e.ctrlKey||e.shiftKey||e.button===1) return;
+      e.preventDefault();
+      openArticle(parseInt(c.getAttribute('data-i'),10));
     });
     var tb=document.getElementById('tipsBack');
     if(tb){ tb.addEventListener('click',function(e){ e.preventDefault();
