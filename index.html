@@ -1599,10 +1599,22 @@
     var WSM_ADS=null, WSM_CC=null;
     function ccResolve(cb){
       if(WSM_CC){ cb&&cb(WSM_CC); return; }
-      try{ var c=localStorage.getItem('wsm_cc'); if(c){ WSM_CC=c; cb&&cb(c); return; } }catch(e){}
-      fetch('https://ipwho.is/?fields=success,country_code').then(function(r){return r.json();})
-        .then(function(g){ var c=(g&&g.country_code)?g.country_code:''; if(c){ WSM_CC=c; try{localStorage.setItem('wsm_cc',c);}catch(e){} } else { WSM_CC='??'; } cb&&cb(WSM_CC); })
-        .catch(function(){ WSM_CC='??'; cb&&cb('??'); });
+      try{ var c=localStorage.getItem('wsm_cc'); if(c&&c!=='??'){ WSM_CC=c; cb&&cb(c); return; } }catch(e){}
+      var PROV=[
+        {u:'https://ipwho.is/?fields=country_code',p:function(j){return j&&j.country_code;}},
+        {u:'https://api.country.is/',p:function(j){return j&&j.country;}},
+        {u:'https://ipapi.co/json/',p:function(j){return j&&j.country_code;}}
+      ];
+      function tryNext(i){
+        if(i>=PROV.length){ WSM_CC='??'; cb&&cb('??'); return; }
+        fetch(PROV[i].u,{cache:'no-store'})
+          .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+          .then(function(j){ var c=PROV[i].p(j);
+            if(c){ WSM_CC=c; try{localStorage.setItem('wsm_cc',c);}catch(e){} cb&&cb(c); }
+            else { tryNext(i+1); } })
+          .catch(function(){ tryNext(i+1); });
+      }
+      tryNext(0);
     }
     function adCountryOK(a){ var cs=a&&a.countries; if(!cs||!cs.length) return true; if(!WSM_CC||WSM_CC==='??') return true; for(var i=0;i<cs.length;i++) if(cs[i]===WSM_CC) return true; return false; }
     window.wsmAdHTML=function(page,idx){ return '<div class="ad-host" data-ad="'+page+'_'+idx+'"></div>'; };
