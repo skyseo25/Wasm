@@ -35,6 +35,12 @@
     border-radius:3px;animation:grow 1.2s .3s cubic-bezier(.2,.8,.2,1) forwards}
   @keyframes grow{to{width:130px}}
   .subtitle{font-family:'Cairo',sans-serif;font-size:1.18rem;color:var(--soil-2);margin-top:14px;font-weight:500}
+  .brand-domain{display:inline-flex;align-items:center;gap:11px;margin-top:9px;
+    font-family:'Cairo',system-ui,sans-serif;font-size:.9rem;font-weight:600;
+    letter-spacing:.3em;color:var(--gold);text-transform:lowercase;padding-inline-start:.3em}
+  .brand-domain::before,.brand-domain::after{content:"";display:block;width:30px;height:1px;
+    background:linear-gradient(90deg,transparent,var(--gold))}
+  .brand-domain::after{transform:scaleX(-1)}
 
   /* ===== ساعة الوسم ===== */
   .clock-card{margin:22px auto 0;padding:0 8px;text-align:center}
@@ -334,12 +340,20 @@
   .cal-screen{position:fixed;inset:0;z-index:40;background:var(--paper);overflow-y:auto;-webkit-overflow-scrolling:touch;
     padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom) + 16px)}
   .cal-screen[hidden]{display:none}
-  .cal-top{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:13px;
+  .cal-top{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:10px;
     padding:16px 18px 14px;padding-top:calc(16px + env(safe-area-inset-top));
     background:rgba(244,240,229,.93);backdrop-filter:saturate(140%) blur(10px);-webkit-backdrop-filter:saturate(140%) blur(10px);
     border-bottom:1px solid var(--line)}
-  .cal-back{flex:none;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);
-    background:var(--paper-2);color:var(--soil);font-size:1.4rem;line-height:1;cursor:pointer;display:grid;place-items:center}
+  .cal-back,.cal-home{flex:none;width:44px;height:44px;border-radius:13px;cursor:pointer;
+    display:grid;place-items:center;transition:background .15s,border-color .15s,transform .12s}
+  .cal-back svg,.cal-home svg{width:23px;height:23px;fill:none;stroke:currentColor;
+    stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+  .cal-back{border:1.5px solid var(--leaf);background:rgba(78,122,58,.12);color:var(--leaf)}
+  .cal-back:hover{background:rgba(78,122,58,.2)}
+  .cal-back:active{transform:scale(.92)}
+  .cal-home{border:1px solid var(--line);background:var(--paper-2);color:var(--soil)}
+  .cal-home:hover{border-color:var(--leaf);color:var(--leaf);background:rgba(78,122,58,.08)}
+  .cal-home:active{transform:scale(.92)}
   .cal-htext .t{font-family:'Cairo',sans-serif;font-size:1.5rem;font-weight:700;color:var(--soil);line-height:1.1}
   .cal-htext .s{font-family:'Cairo',sans-serif;font-size:.8rem;color:var(--muted);font-weight:600;margin-top:2px}
   .cal-grid{display:grid;grid-template-columns:1fr;gap:14px;padding:16px;max-width:1120px;margin:0 auto;align-items:start}
@@ -501,7 +515,8 @@
 
   <header class="brand">
     <div class="stars" id="stars"></div>
-    <h1 class="mark" id="mark">وسم</h1>
+    <h1 class="mark" id="mark">الوسم</h1>
+    <div class="brand-domain">alwasm.net</div>
     <div class="rainline"></div>
     <div class="subtitle" id="subtitle">تقويم المواسم والزراعة في الخليج</div>
   </header>
@@ -807,7 +822,8 @@
 <!-- ===== شاشة التقويم الزراعي ===== -->
 <div class="cal-screen" id="calScreen" hidden>
   <div class="cal-top">
-    <button class="cal-back" id="calBack" aria-label="رجوع">→</button>
+    <button class="cal-back" id="calBack" aria-label="رجوع"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16"/><path d="M14 6l6 6-6 6"/></svg></button>
+    <button class="cal-home" data-home aria-label="الصفحة الرئيسية"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7.5 9 7.5"/><path d="M5.5 9.5V20h13V9.5"/></svg></button>
     <div class="cal-htext">
       <div class="t">التقويم الزراعي</div>
       <div class="s">مواعيد زراعة البذور في الكويت — شهرًا بشهر</div>
@@ -819,7 +835,8 @@
 <!-- ===== شاشة تقويم النخلة ===== -->
 <div class="cal-screen" id="palmScreen" hidden>
   <div class="cal-top">
-    <button class="cal-back" id="palmBack" aria-label="رجوع">→</button>
+    <button class="cal-back" id="palmBack" aria-label="رجوع"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16"/><path d="M14 6l6 6-6 6"/></svg></button>
+    <button class="cal-home" data-home aria-label="الصفحة الرئيسية"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7.5 9 7.5"/><path d="M5.5 9.5V20h13V9.5"/></svg></button>
     <div class="cal-htext">
       <div class="t">تقويم النخلة</div>
       <div class="s">عمليات خدمة نخيل التمر في الكويت — شهرًا بشهر</div>
@@ -831,7 +848,8 @@
 <!-- ===== شاشة تقويم السدرة ===== -->
 <div class="cal-screen" id="sidrScreen" hidden>
   <div class="cal-top">
-    <button class="cal-back" id="sidrBack" aria-label="رجوع">→</button>
+    <button class="cal-back" id="sidrBack" aria-label="رجوع"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16"/><path d="M14 6l6 6-6 6"/></svg></button>
+    <button class="cal-home" data-home aria-label="الصفحة الرئيسية"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7.5 9 7.5"/><path d="M5.5 9.5V20h13V9.5"/></svg></button>
     <div class="cal-htext">
       <div class="t">تقويم السدرة</div>
       <div class="s">عمليات خدمة شجرة السدر (النبق) — شهرًا بشهر</div>
@@ -843,7 +861,8 @@
 <!-- ===== شاشة النباتات الداخلية ===== -->
 <div class="cal-screen" id="indoorScreen" hidden>
   <div class="cal-top">
-    <button class="cal-back" id="indoorBack" aria-label="رجوع">→</button>
+    <button class="cal-back" id="indoorBack" aria-label="رجوع"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16"/><path d="M14 6l6 6-6 6"/></svg></button>
+    <button class="cal-home" data-home aria-label="الصفحة الرئيسية"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7.5 9 7.5"/><path d="M5.5 9.5V20h13V9.5"/></svg></button>
     <div class="cal-htext">
       <div class="t">النباتات الداخلية</div>
       <div class="s">دليل العناية بنباتات الزينة المنزلية — الضوء والحرارة والمواصفات</div>
@@ -855,7 +874,8 @@
 <!-- ===== شاشة نصائح ومقالات ===== -->
 <div class="cal-screen" id="tipsScreen" hidden>
   <div class="cal-top">
-    <button class="cal-back" id="tipsBack" aria-label="رجوع">→</button>
+    <button class="cal-back" id="tipsBack" aria-label="رجوع"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16"/><path d="M14 6l6 6-6 6"/></svg></button>
+    <button class="cal-home" data-home aria-label="الصفحة الرئيسية"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7.5 9 7.5"/><path d="M5.5 9.5V20h13V9.5"/></svg></button>
     <div class="cal-htext">
       <div class="t" id="tipsTitle">نصائح ومقالات</div>
       <div class="s" id="tipsSub">مقالات زراعية مبسّطة للمزارع</div>
@@ -888,7 +908,8 @@
 </style>
 <div class="cal-screen" id="hydroScreen" hidden>
   <div class="cal-top">
-    <button class="cal-back" id="hydroBack" aria-label="رجوع">→</button>
+    <button class="cal-back" id="hydroBack" aria-label="رجوع"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16"/><path d="M14 6l6 6-6 6"/></svg></button>
+    <button class="cal-home" data-home aria-label="الصفحة الرئيسية"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7.5 9 7.5"/><path d="M5.5 9.5V20h13V9.5"/></svg></button>
     <div class="cal-htext">
       <div class="t">الزراعة المائية</div>
       <div class="s">جدول الأملاح (EC/PPM) ودرجة الحموضة pH لأصناف الزراعة المائية</div>
@@ -965,7 +986,8 @@
 <!-- ===== شاشة أخبار وإعلانات ===== -->
 <div class="cal-screen" id="newsScreen" hidden>
   <div class="cal-top">
-    <button class="cal-back" id="newsBack" aria-label="رجوع">→</button>
+    <button class="cal-back" id="newsBack" aria-label="رجوع"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16"/><path d="M14 6l6 6-6 6"/></svg></button>
+    <button class="cal-home" data-home aria-label="الصفحة الرئيسية"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7.5 9 7.5"/><path d="M5.5 9.5V20h13V9.5"/></svg></button>
     <div class="cal-htext">
       <div class="t">أخبار وإعلانات</div>
       <div class="s">أخبار الزراعة والمزارعين والثروة الحيوانية في الكويت</div>
@@ -1001,7 +1023,8 @@
 <!-- ===== شاشة مساعد وسم الذكي ===== -->
 <div class="cal-screen" id="askScreen" hidden>
   <div class="cal-top">
-    <button class="cal-back" id="askBack" aria-label="رجوع">→</button>
+    <button class="cal-back" id="askBack" aria-label="رجوع"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16"/><path d="M14 6l6 6-6 6"/></svg></button>
+    <button class="cal-home" data-home aria-label="الصفحة الرئيسية"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7.5 9 7.5"/><path d="M5.5 9.5V20h13V9.5"/></svg></button>
     <div class="cal-htext">
       <div class="t">اسأل وسم</div>
       <div class="s">مساعد زراعي ذكي — اكتب سؤالك أو أرفق صورة لنبتتك</div>
@@ -2753,6 +2776,9 @@
     }
     function bind(el,fn){ if(el){ el.addEventListener('click',function(e){ e.preventDefault(); fn(); }); } }
     window.__wsmHome=home;
+    /* أزرار البيت — رجوع مباشر للرئيسية في كل الشاشات */
+    var homeBtns=document.querySelectorAll('[data-home]');
+    for(var hi=0;hi<homeBtns.length;hi++){ bind(homeBtns[hi], home); }
     /* البطاقات */
     bind(document.getElementById('cardCal'),  function(){ open('agri'); });
     bind(document.getElementById('cardPalm'), function(){ open('palm'); });
