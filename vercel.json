@@ -7,6 +7,10 @@
   "functions": {
     "api/fetch-news.js": { "maxDuration": 300 }
   },
+  "rewrites": [
+    { "source": "/article/:slug", "destination": "/api/article?slug=:slug" },
+    { "source": "/sitemap.xml", "destination": "/api/sitemap" }
+  ],
   "headers": [
     {
       "source": "/(.*)",
