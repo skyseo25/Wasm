@@ -65,6 +65,9 @@ function page(article, slug) {
   return '<!DOCTYPE html>\n' +
 '<html lang="ar" dir="rtl">\n' +
 '<head>\n' +
+"<!-- Google Tag Manager -->\n" +
+"<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-5DXT7NTK');</script>\n" +
+"<!-- End Google Tag Manager -->\n" +
 '<meta charset="UTF-8">\n' +
 '<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">\n' +
 '<meta name="theme-color" content="#20352A">\n' +
@@ -111,6 +114,9 @@ function page(article, slug) {
 '</style>\n' +
 '</head>\n' +
 '<body>\n' +
+'<!-- Google Tag Manager (noscript) -->\n' +
+'<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5DXT7NTK" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>\n' +
+'<!-- End Google Tag Manager -->\n' +
 '<div class="wrap">\n' +
 '<header class="brand"><a class="mark" href="/">وسم</a><div class="rainline"></div><div class="eyebrow">تقويم المواسم والزراعة في الكويت والخليج</div></header>\n' +
 '<main><article><h1>' + esc(article.title) + '</h1><div class="a-rule"></div>' + article.body + '</article>\n' +
